@@ -18,7 +18,6 @@ class SectionList extends Component {
       return sections.map((section) => {
         return (
           <div>
-            <h1>Section List</h1>
             <Section key={section._id} section={section} />
           </div>
         );

@@ -12,8 +12,9 @@ class App extends Component {
       <div>
         <Header title={this.props.title} />
         <div className="wrapper">
-          <SectionList sections={this.props.sections} />
           <AddSection />
+          <h1>Section List</h1>
+          <SectionList sections={this.props.sections} />
         </div>
       </div>
     );
