@@ -1,0 +1,9 @@
+.section {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.section__actions {
+  flex-shrink: 0;
+}

@@ -1,1 +1,6 @@
-console.log('Log from /client/main.js');
+import { Meteor } from 'meteor/meteor';
+import { Sections } from './../imports/api/collections/sections';
+
+Meteor.startup(() => {
+
+});
