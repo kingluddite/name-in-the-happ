@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Sections } from './../../api/collections/sections';
+import { SectionsCollection } from './../../../api/sections/sections-collection';
 
 class AddSection extends Component {
   handleSubmit(e) {
@@ -12,7 +12,7 @@ class AddSection extends Component {
       this.refs.name.value = '';
       this.refs.code.value = '';
 
-      Sections.insert({
+      SectionsCollection.insert({
         name,
         code
       });

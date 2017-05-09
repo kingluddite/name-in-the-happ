@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 
 
-class Header extends Component {
+class PageHeader extends Component {
 
   renderSlogan() {
     if (this.props.slogan) {
@@ -13,7 +14,7 @@ class Header extends Component {
     return (
       <header className="header">
         <div className="wrapper">
-          <h1>{this.props.title}</h1>
+          <h1><Link to="/">{this.props.title}</Link></h1>
           <h2 className="header__slogan">{this.renderSlogan()}</h2>
         </div>
       </header>
@@ -21,13 +22,13 @@ class Header extends Component {
   }
 };
 
-Header.propTypes = {
+PageHeader.propTypes = {
   title: PropTypes.string.isRequired,
   slogan: PropTypes.string
 }
 
-Header.defaultProps = {
+PageHeader.defaultProps = {
   title: 'Name from the Happ'
 }
 
-export default Header;
+export default PageHeader;

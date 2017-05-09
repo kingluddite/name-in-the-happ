@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-import { Sections } from './../imports/api/collections/sections';
+import { SectionsCollection } from './../imports/api/sections/sections-collection';
 
 Meteor.startup(() => {
-
+  
 });
