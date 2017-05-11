@@ -20,15 +20,15 @@ class PageHeader extends Component {
       </header>
     );
   }
-};
+}
 
 PageHeader.propTypes = {
   title: PropTypes.string.isRequired,
-  slogan: PropTypes.string
-}
+  slogan: PropTypes.string,
+};
 
 PageHeader.defaultProps = {
-  title: 'Name from the Happ'
-}
+  title: 'Name from the Happ',
+};
 
 export default PageHeader;

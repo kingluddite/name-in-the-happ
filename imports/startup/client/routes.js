@@ -15,15 +15,18 @@ import Sections from '../../ui/pages/sections/Sections';
 const unauthenticatedPages = ['/', '/signup', '/login'];
 const authenticatedPages = ['/sections'];
 
+const onEnterPublicPage = () => {
+  if (Meteor.userId()) {
+    browserHistory.replace('/sections');
+  }
+};
 
-// const authenticate = (nextState, replace) => {
-//   if (!Meteor.loggingIn() && !Meteor.userId()) {
-//     replace({
-//       pathname: '/login',
-//       state: { nextPathname: nextState.location.pathname },
-//     });
-//   }
-// };
+const onEnterPrivatePage = () => {
+  if (!Meteor.userId()) {
+    browserHistory.replace('/');
+  }
+};
+
 Tracker.autorun(() => {
   const isAuthenticated = !!Meteor.userId();
   const pathname = browserHistory.getCurrentLocation().pathname;
@@ -39,17 +42,6 @@ Tracker.autorun(() => {
   }
 });
 
-const onEnterPublicPage = () => {
-  if (Meteor.userId()) {
-    browserHistory.replace('/sections');
-  }
-}
-
-const onEnterPrivatePage = () => {
-  if (!Meteor.userId()) {
-    browserHistory.replace('/');
-  }
-}
 
 Meteor.startup(() => {
   render(

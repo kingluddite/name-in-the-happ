@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 // collections
-import { SectionsCollection } from './../../../api/sections/sections-collection';
 
 // components
-import SectionsList from './../../components/SectionsList';
 import AddSection from './AddSection';
 
 class Sections extends Component {
@@ -22,18 +19,14 @@ class Sections extends Component {
               <p className="section__stats">{code}</p> */}
             </div>
             <div className="section__actions">
-              {/* <button className="button button--round" onClick={() => Sections.remove(_id)}>X</button> */}
+              {/* <button className="button button--round"
+              onClick={() => Sections.remove(_id)}>X</button> */}
             </div>
           </div>
         </div>
-        <SectionsList />
       </div>
     );
   }
-}
-
-Sections.propTypes = {
-  // section: PropTypes.object.isRequired
 }
 
 export default Sections;

@@ -7,18 +7,22 @@ class Login extends Component {
     super(props);
 
     this.state = {
-      error: ''
+      error: '',
     };
   }
 
   handleSubmit(e) {
-    const email = this.refs.email.value.trim();
-    const password = this.refs.password.value.trim();
+    const email = this.email.value.trim();
+    const password = this.password.value.trim();
 
     e.preventDefault();
 
     Meteor.loginWithPassword({ email }, password, (err) => {
-      console.log('Login callback', err);
+      if (err) {
+        this.setState({ error: 'Unable to login. Check email and password' });
+      } else {
+        this.setState({ error: '' });
+      }
     });
   }
 
@@ -27,9 +31,15 @@ class Login extends Component {
       <div>
         {this.state.error ? <p>{this.state.error}</p> : undefined}
 
-        <form className="form" onSubmit={this.handleSubmit.bind(this)}>
-          <input type="email" ref="email" placeholder="Email" />
-          <input type="password" ref="password" placeholder="Password"/>
+        <form
+          className="form"
+          onSubmit={this.handleSubmit.bind(this)}
+          noValidate
+          >
+          <input type="email" ref={ (input) => { this.email = input; }} placeholder="Email" />
+          <input
+            type="password"
+            ref={ (input) => { this.password = input; }} placeholder="Password"/>
           <button type="submit">Login</button>
         </form>
 
@@ -37,6 +47,6 @@ class Login extends Component {
       </div>
     );
   }
-};
+}
 
 export default Login;

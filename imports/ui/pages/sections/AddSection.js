@@ -3,18 +3,18 @@ import { SectionsCollection } from './../../../api/sections/sections-collection'
 
 class AddSection extends Component {
   handleSubmit(e) {
-    const name = this.refs.name.value.trim();
-    const code = this.refs.code.value.trim();
+    const name = this.name.value.trim();
+    const code = this.code.value.trim();
 
     e.preventDefault();
 
     if (name) {
-      this.refs.name.value = '';
-      this.refs.code.value = '';
+      this.name.value = '';
+      this.code.value = '';
 
       SectionsCollection.insert({
         name,
-        code
+        code,
       });
     }
   }
@@ -25,14 +25,17 @@ class AddSection extends Component {
         <h2>Add Your Section/Class</h2>
         <div className="item">
           <form className="form" onSubmit={this.handleSubmit.bind(this)}>
-            <input className="form__input" type="text" ref="name" placeholder="Section Name" />
-            <input type="text" ref="code" placeholder="Class Code" />
+            <input
+              className="form__input" type="text"
+              ref={ (input) => { this.name = input; }}
+              placeholder="Section Name" />
+            <input type="text" ref={ (input) => { this.code = input; }} placeholder="Class Code" />
             <button>Create Section</button>
           </form>
         </div>
       </div>
     );
   }
-};
+}
 
 export default AddSection;
