@@ -1,0 +1,60 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+// Colors
+$tall-poppy: #b12737;
+$summer-green: #9cbca5;
+$putty: #e9d09c;
+$emperor: #4f424b;
+$emperor-alt: lighten($emperor, 10%);
+$burning-orange: #fd7335;
+$white: #ffffff;
+$red: #ff0000;
+$black: #000000;
+
+/// Fonts
+$text-font-stack: 'Open Sans', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
+$base-font-size: 1.6rem;
+$text-color: $black !default;
+
+/// Main brand color
+/// @type Color
+$brand-primary: $tall-poppy !default;
+
+/// Light grey
+/// @type Color
+$light-grey: rgb(237, 237, 237) !default;
+
+/// Medium grey
+/// @type Color
+$mid-grey: rgb(153, 153, 153) !default;
+
+/// Dark grey
+/// @type Color
+$dark-grey: rgb(68, 68, 68) !default;
+
+// Spacing
+$space: 1.4rem;
+$site-max-width: 60rem;
+
+// Boxed View
+$boxed-view-overlay-bg: $light-grey;
+$boxed-view-bg: $white;
+
+// Form inputs
+$input-border: $light-grey;
+$input-spacing: 1rem;
+
+// Button
+$button-bg: $brand-primary;
+$button-color: $white;
+$button-pill-color: $brand-primary;
+
+// Header
+$header-bg: $brand-primary;
+$header-color: $white;
+$header-link-color: $white;
+
+// Item
+$item-border-width: 4px;

@@ -1,22 +1,43 @@
+// -----------------------------------------------------------------------------
+// This file contains very basic styles.
+// -----------------------------------------------------------------------------
+
+/**
+ * Set up a decent box model on the root element
+ */
 html {
+  box-sizing: border-box;
   font-size: 62.5%;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: $text-font-stack;
+}
+
+/**
+ * Make all elements from the DOM inherit from the parent box-sizing
+ * Since `*` has a specificity of 0, it does not override the `html` value
+ * making all elements inheriting from the root box-sizing value
+ * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 body {
   background: $summer-green;
-  color: $white;
-  font-size: 1.6rem;
+  color: $text-color;
+  font-size: $base-font-size;
 }
 
 h1 {
-  font-size: 2.4rem;
   font-weight: 300;
+  margin-bottom: $space;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 2.1rem;
   font-weight: 200;
+  margin-bottom: $space / 2;
 }
 
 h3,
@@ -25,13 +46,28 @@ p {
   padding: 0;
 }
 
-input,
-button,
-select {
-  font-size: 1.5rem;
+p {
+  margin-bottom: $space;
 }
 
+[type=text],
+[type=email],
+[type=password] {
+  font-size: $base-font-size;
+  padding: 1rem;
+  border: 1px solid $input-border;
+  color: $text-color;
+}
+
+/**
+ * Basic styles for links
+ */
 a {
-  color: $white;
+  color: $brand-primary;
   text-decoration: none;
+
+  @include on-event {
+    color: $text-color;
+    text-decoration: underline;
+  }
 }

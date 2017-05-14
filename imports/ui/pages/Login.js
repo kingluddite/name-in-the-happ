@@ -11,6 +11,10 @@ class Login extends Component {
     };
   }
 
+  componentDidMount() {
+    this.email.focus();
+  }
+
   handleSubmit(e) {
     const email = this.email.value.trim();
     const password = this.password.value.trim();
@@ -28,11 +32,12 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
-        {this.state.error ? <p>{this.state.error}</p> : undefined}
+      <div className="boxed-view">
+        <div className="boxed-view__box">
+        {this.state.error ? <p className="errors">{this.state.error}</p> : undefined}
 
         <form
-          className="form"
+          className="boxed-view__form"
           onSubmit={this.handleSubmit.bind(this)}
           noValidate
           >
@@ -40,11 +45,14 @@ class Login extends Component {
           <input
             type="password"
             ref={ (input) => { this.password = input; }} placeholder="Password"/>
-          <button type="submit">Login</button>
+          <button className="button" type="submit">Login</button>
         </form>
 
         <Link to="/signup">Have an account?</Link>
       </div>
+      {/* END .boxed-view__box */}
+    </div>
+    // END .boxed-view
     );
   }
 }

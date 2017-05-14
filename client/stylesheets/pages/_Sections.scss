@@ -1,9 +1,9 @@
-.section {
-  align-items: center;
+.sections {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
-.section__actions {
+.sections__actions {
   flex-shrink: 0;
 }

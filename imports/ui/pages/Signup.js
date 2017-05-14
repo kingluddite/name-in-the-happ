@@ -11,6 +11,10 @@ class Signup extends Component {
     };
   }
 
+  componentDidMount() {
+    this.email.focus();
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     const email = this.email.value.trim();
@@ -20,7 +24,6 @@ class Signup extends Component {
       return this.setState({ error: 'Password must be more than 8 characters' });
     }
 
-
     Accounts.createUser({ email, password }, (err) => {
       if (err) {
         this.setState({ error: err.reason });
@@ -28,15 +31,16 @@ class Signup extends Component {
         this.setState({ error: '' });
       }
     });
+    return false;
   }
   render() {
     return (
-      <div>
-        <h1>Signup</h1>
-        { this.state.error ? <p>{this.state.error}</p> : undefined }
+      <div className="boxed-view">
+        <div className="boxed-view__box">
+        { this.state.error ? <p className="errors">{this.state.error}</p> : undefined }
 
         <form
-          className="form"
+          className="boxed-view__form"
           onSubmit={this.handleSubmit.bind(this)}
           noValidate
           >
@@ -47,10 +51,13 @@ class Signup extends Component {
           <input
             type="password"
             ref={ (input) => { this.password = input; }} placeholder="Password"/>
-          <button type="submit">Create Account</button>
+          <button className="button" type="submit">Create Account</button>
         </form>
-        <Link to="/login">Already Have An Account?</Link>
+        <Link to="/">Already Have An Account?</Link>
       </div>
+      {/* END .boxed-view__box */}
+    </div>
+    // END .boxed-view
     );
   }
 }

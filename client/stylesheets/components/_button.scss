@@ -1,0 +1,62 @@
+.button {
+  border: 0;
+  background-color: $brand-primary;
+  color: $white;
+  cursor: pointer;
+  line-height: 1.2;
+  font-size: $base-font-size;
+  outline: none;
+  padding: $input-spacing;
+  text-transform: uppercase;
+  transition: background 0.3s ease, transform 0.3s ease;
+
+  &:hover,
+  &:focus {
+    background: $putty;
+    color: $text-color;
+  }
+
+  &:active {
+    background: $putty;
+    transform: scale(1.1);
+  }
+}
+
+// button modifiers
+.button--round {
+  border-radius: 50%;
+  height: 4rem;
+  width: 4rem;
+  margin: 0 $space / 2;
+}
+
+.button--link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.button--pill {
+  background-color: transparent;
+  border: 1px solid $black;
+  color: $black;
+}
+
+.button--delete {
+  background-color: transparent;
+  border: 1px solid $black;
+  color: $black;
+  &:hover {
+    background-color: $red;
+    color: $white;
+  }
+}
+
+.button--edit {
+  background-color: transparent;
+  border: 1px solid $black;
+  color: $black;
+  &:hover {
+    background-color: $summer-green;
+    color: $white;
+  }
+}

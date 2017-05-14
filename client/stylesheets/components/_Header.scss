@@ -1,0 +1,19 @@
+.header {
+  background: $brand-primary;
+  border-bottom: 10px solid $putty;
+}
+
+.header__slogan {
+  font-size: 1.3rem;
+  font-style: italic;
+  font-weight: 200;
+}
+
+.header__logo {
+  color: $white;
+
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+}

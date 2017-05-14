@@ -2,18 +2,20 @@
 
 import React from 'react';
 import { render } from 'react-dom';
+import { Session } from 'meteor/session';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
+
+// Components
 import App from '../../ui/layouts/App';
-import Index from '../../ui/pages/Index';
 import Login from '../../ui/pages/Login';
 import NotFound from '../../ui/pages/NotFound';
 import Signup from '../../ui/pages/Signup';
-import Sections from '../../ui/pages/sections/Sections';
+import Sections from '../../ui/pages/Sections';
+import ViewSection from '../../ui/pages/ViewSection';
 
-const unauthenticatedPages = ['/', '/signup', '/login'];
-const authenticatedPages = ['/sections'];
+const publicPages = ['/', '/signup', '/'];
+const privatePages = ['/sections'];
 
 const onEnterPublicPage = () => {
   if (Meteor.userId()) {
@@ -27,36 +29,41 @@ const onEnterPrivatePage = () => {
   }
 };
 
-Tracker.autorun(() => {
-  const isAuthenticated = !!Meteor.userId();
+const onLeaveSectionPage = () => {
+  Session.set('currentSectionId', null);
+};
+
+const onAuthChange = (isAuthenticated) => {
   const pathname = browserHistory.getCurrentLocation().pathname;
-  const isUnauthenticatedPage = unauthenticatedPages.includes(pathname);
-  const isAuthenticatedPage = authenticatedPages.includes(pathname);
+  const isPublicPage = publicPages.includes(pathname);
+  const isPrivatePage = privatePages.includes(pathname);
 
   // if public page and logged in - let them in
-  if (isUnauthenticatedPage && isAuthenticated) {
+  if (isPublicPage && isAuthenticated) {
     browserHistory.replace('/sections');
-  } else if (isAuthenticatedPage && !isAuthenticated) {
-    // if private page and not logged in - kick them onSubmit
+  } else if (isPrivatePage && !isAuthenticated) {
+    // if private page and not logged in - kick them out
     browserHistory.replace('/');
   }
-});
+};
 
 
 Meteor.startup(() => {
+  Session.set('currentSectionId', null);
   render(
     <Router history={ browserHistory } >
       <Route path="/" component={ App }>
-        <IndexRoute name="index" component={ Index } onEnter={ onEnterPublicPage } />
-        <Route name="login" path="/login" component={ Login } onEnter={ onEnterPublicPage } />
+        <IndexRoute name="login" component={ Login } onEnter={ onEnterPublicPage } />
         <Route name="signup" path="/signup" component={ Signup } onEnter={ onEnterPublicPage }/>
         <Route name="sections" path="/sections" component={ Sections } onEnter={ onEnterPrivatePage } />
         {/* <Route name="newSection" path="/sections/new" component={ NewSection } onEnter={ authenticate } />
-        <Route name="editSection" path="/sections/:_id/edit" component={ EditSection } onEnter={ authenticate } />
-        <Route name="viewSection" path="/sections/:_id" component={ ViewSection } onEnter={ authenticate } /> */}
+        <Route name="editSection" path="/sections/:_id/edit" component={ EditSection } onEnter={ authenticate } />*/}
+        <Route name="viewSection" path="/sections/:_id" component={ ViewSection } onEnter={ onEnterPrivatePage } onLeave={onLeaveSectionPage} />
         <Route path="*" component={ NotFound } />
       </Route>
     </Router>,
     document.getElementById('react-root'),
   );
 });
+
+export default onAuthChange;

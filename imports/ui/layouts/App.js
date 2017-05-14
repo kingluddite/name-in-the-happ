@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import AppNavigation from '../components/AppNavigation';
-import PageHeader from './../components/PageHeader';
+import Header from './../components/Header';
 
 const App = ({ children }) => (
   <div>
-    <PageHeader />
-    <div>
-      { children }
-    </div>
+    <Header />
+      <div className="page-content">
+        { children }
+      </div>
+      {/* END .page-content */}
   </div>
 );
 
