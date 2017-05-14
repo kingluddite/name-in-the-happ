@@ -15,18 +15,6 @@ import Sections from '../../ui/pages/Sections';
 import ViewSection from '../../ui/components/sections/ViewSection';
 import EditSection from '../../ui/components/sections/EditSection';
 
-const onEnterPublicPage = () => {
-  if (Meteor.userId()) {
-    browserHistory.replace('/sections');
-  }
-};
-
-const onEnterPrivatePage = () => {
-  if (!Meteor.userId()) {
-    browserHistory.replace('/');
-  }
-};
-
 const onEnterSectionPage = (nextState) => {
   Session.set('selectedSectionId', nextState.params.id);
 };
@@ -63,11 +51,11 @@ Meteor.startup(() => {
     <Router history={ browserHistory } >
       <Route onEnter={globalOnEnter} onChange={globalOnChange}>
       <Route path="/" component={ App }>
-        <IndexRoute name="login" component={ Login } privacy="unauth" onEnter={ onEnterPublicPage } />
-        <Route name="signup" path="/signup" component={ Signup } privacy="unauth" onEnter={ onEnterPublicPage }/>
-        <Route name="sections" path="/sections" privacy="auth" component={ Sections } onEnter={ onEnterPrivatePage } />
+        <IndexRoute name="login" component={ Login } privacy="unauth" />
+        <Route name="signup" path="/signup" component={ Signup } privacy="unauth" />
+        <Route name="sections" path="/sections" privacy="auth" component={ Sections } />
         {/* <Route name="newSection" path="/sections/new" component={ NewSection } onEnter={ authenticate } />*/}
-        <Route name="editSection" path="/sections/:_id/edit" privacy="auth" component={ EditSection } onEnter={ onEnterPrivatePage } />
+        <Route name="editSection" path="/sections/:_id/edit" privacy="auth" component={ EditSection } />
         <Route name="viewSection" path="/sections/:_id" privacy="auth" component={ ViewSection } onEnter={ onEnterSectionPage } onLeave={onLeaveSectionPage} />
         <Route path="*" component={ NotFound } />
       </Route>
