@@ -45,7 +45,7 @@ class Login extends Component {
           <input
             type="password"
             ref={ (input) => { this.password = input; }} placeholder="Password"/>
-          <button className="button" type="submit">Login</button>
+          <button className="button form__button" type="submit">Login</button>
         </form>
 
         <Link to="/signup">Have an account?</Link>

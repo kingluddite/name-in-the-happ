@@ -51,7 +51,7 @@ class Signup extends Component {
           <input
             type="password"
             ref={ (input) => { this.password = input; }} placeholder="Password"/>
-          <button className="button" type="submit">Create Account</button>
+          <button className="button form__button" type="submit">Create Account</button>
         </form>
         <Link to="/">Already Have An Account?</Link>
       </div>
