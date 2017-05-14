@@ -1,6 +1,17 @@
 .header {
   background: $brand-primary;
+  color: $white;
   border-bottom: 10px solid $putty;
+}
+
+.header__content {
+  display: flex;
+  align-items: center;
+  height: 8rem;
+  justify-content: space-between;
+  max-width: 100rem;
+  margin: 0 auto;
+  padding: $space;
 }
 
 .header__slogan {
@@ -10,8 +21,6 @@
 }
 
 .header__logo {
-  color: $white;
-
   &:hover {
     text-decoration: none;
     color: inherit;

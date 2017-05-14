@@ -12,27 +12,25 @@ $burning-orange: #fd7335;
 $white: #ffffff;
 $red: #ff0000;
 $black: #000000;
+/// Light grey
+/// @type Color
+$light-grey: rgb(237, 237, 237) !default;
+/// Medium grey
+/// @type Color
+$mid-grey: rgb(153, 153, 153) !default;
+/// Dark grey
+/// @type Color
+$dark-grey: rgb(68, 68, 68) !default;
 
 /// Fonts
 $text-font-stack: 'Open Sans', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
 $base-font-size: 1.6rem;
-$text-color: $black !default;
+$text-color: $emperor-alt !default;
 
 /// Main brand color
 /// @type Color
 $brand-primary: $tall-poppy !default;
 
-/// Light grey
-/// @type Color
-$light-grey: rgb(237, 237, 237) !default;
-
-/// Medium grey
-/// @type Color
-$mid-grey: rgb(153, 153, 153) !default;
-
-/// Dark grey
-/// @type Color
-$dark-grey: rgb(68, 68, 68) !default;
 
 // Spacing
 $space: 1.4rem;

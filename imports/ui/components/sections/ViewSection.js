@@ -5,10 +5,10 @@ import { Tracker } from 'meteor/tracker';
 import PropTypes from 'prop-types';
 
 // collections
-import SectionsCollection from './../../api/sections';
+import SectionsCollection from './../../../api/sections';
 // components
-import AddPresentation from './../components/presentations/AddPresentation';
-import PresentationsList from './../components/presentations/PresentationsList';
+import AddPresentation from './../presentations/AddPresentation';
+import PresentationsList from './../presentations/PresentationsList';
 
 class ViewSection extends Component {
   constructor(props) {
@@ -33,7 +33,6 @@ class ViewSection extends Component {
   componentWillUnmount() {
     this.sectionTracker.stop();
   }
-
   renderSection() {
     if (this.state.section !== undefined) {
       return (
@@ -43,6 +42,7 @@ class ViewSection extends Component {
          </div>
       );
     }
+    return undefined;
   }
 
   render() {

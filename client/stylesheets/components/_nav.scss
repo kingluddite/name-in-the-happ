@@ -1,0 +1,19 @@
+.nav {
+  //
+}
+
+.nav__ul {
+  list-style-type: none;
+  margin: 0;
+  float: right;
+  padding: 1em 0 0;
+}
+
+.nav li {
+  display: inline;
+  margin: 20px;
+}
+
+.nav a {
+  color: $white;
+}

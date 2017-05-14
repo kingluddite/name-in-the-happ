@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router';
 import PropTypes from 'prop-types';
+import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import { Link } from 'react-router';
 
 const PageHeader = (props) => {
   const renderSlogan = () => {
@@ -12,14 +13,36 @@ const PageHeader = (props) => {
     return undefined;
   };
 
+  const handleLogout = () => {
+    Accounts.logout();
+  };
+
+  const renderNav = () => {
+    if (Meteor.userId()) {
+      return (
+        <div>
+          <button className="button" onClick={handleLogout}>Logout</button>
+        </div>
+      );
+    }
+    return (
+      <nav className="nav">
+        <ul className="nav__ul">
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/signup">Sign Up</Link></li>
+          <li><Link to="/">Log In</Link></li>
+        </ul>
+      </nav>
+    );
+  };
+
   return (
     <header className="header">
-      <div className="wrapper">
-        <h1><Link to="/" className="header__logo">{props.title}</Link></h1>
+      <div className="header__content">
+        <h1>{props.title}</h1>
         <h2 className="header__slogan">{renderSlogan()}</h2>
-        <button
-          className="button"
-          onClick={() => Accounts.logout() }>Logout</button>
+        {renderNav()}
         </div>
       </header>
   );

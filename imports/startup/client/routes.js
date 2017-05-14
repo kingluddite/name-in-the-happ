@@ -8,6 +8,7 @@ import { Meteor } from 'meteor/meteor';
 
 // Components
 import App from '../../ui/layouts/App';
+import About from '../../ui/pages/About';
 import Login from '../../ui/pages/Login';
 import NotFound from '../../ui/pages/NotFound';
 import Signup from '../../ui/pages/Signup';
@@ -53,6 +54,7 @@ Meteor.startup(() => {
       <Route path="/" component={ App }>
         <IndexRoute name="login" component={ Login } privacy="unauth" />
         <Route name="signup" path="/signup" component={ Signup } privacy="unauth" />
+        <Route name="about" path="/about" component={ About } privacy="unauth" />
         <Route name="sections" path="/sections" privacy="auth" component={ Sections } />
         {/* <Route name="newSection" path="/sections/new" component={ NewSection } onEnter={ authenticate } />*/}
         <Route name="editSection" path="/sections/:_id/edit" privacy="auth" component={ EditSection } />

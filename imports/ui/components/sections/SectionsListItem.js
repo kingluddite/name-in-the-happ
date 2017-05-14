@@ -14,6 +14,12 @@ class SectionsListItem extends Component {
     Session.set('currentSectionId', id);
     browserHistory.push(`/sections/${id}`);
   }
+
+  handleClickEdit() {
+    const id = this.props.section._id;
+    Session.set('currentSectionId', id);
+    browserHistory.push(`/sections/${id}/edit`);
+  }
   render() {
     return (
       <div className="item">
@@ -23,7 +29,9 @@ class SectionsListItem extends Component {
            <p className="item__code">{this.props.section.code}</p>
          </div>
        <div className="sections__actions">
-         <button className="button button--edit button--round">
+         <button
+           onClick={this.handleClickEdit.bind(this)}
+           className="button button--edit button--round">
            <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
          </button>
          <button
