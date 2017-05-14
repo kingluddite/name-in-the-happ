@@ -12,10 +12,8 @@ import Login from '../../ui/pages/Login';
 import NotFound from '../../ui/pages/NotFound';
 import Signup from '../../ui/pages/Signup';
 import Sections from '../../ui/pages/Sections';
-import ViewSection from '../../ui/pages/ViewSection';
-
-const publicPages = ['/', '/signup', '/'];
-const privatePages = ['/sections'];
+import ViewSection from '../../ui/components/sections/ViewSection';
+import EditSection from '../../ui/components/sections/EditSection';
 
 const onEnterPublicPage = () => {
   if (Meteor.userId()) {
@@ -29,14 +27,17 @@ const onEnterPrivatePage = () => {
   }
 };
 
-const onLeaveSectionPage = () => {
-  Session.set('currentSectionId', null);
+const onEnterSectionPage = (nextState) => {
+  Session.set('selectedSectionId', nextState.params.id);
 };
 
-const onAuthChange = (isAuthenticated) => {
-  const pathname = browserHistory.getCurrentLocation().pathname;
-  const isPublicPage = publicPages.includes(pathname);
-  const isPrivatePage = privatePages.includes(pathname);
+const onLeaveSectionPage = () => {
+  Session.set('selectedSectionId', undefined);
+};
+
+const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
+  const isPublicPage = currentPagePrivacy === 'unauth';
+  const isPrivatePage = currentPagePrivacy === 'auth';
 
   // if public page and logged in - let them in
   if (isPublicPage && isAuthenticated) {
@@ -47,22 +48,32 @@ const onAuthChange = (isAuthenticated) => {
   }
 };
 
+export const globalOnEnter = (nextState) => {
+  const lastRoute = nextState.routes[nextState.routes.length - 1];
+  Session.set('currentPagePrivacy', lastRoute.privacy);
+};
+
+export const globalOnChange = (prevState, nextState) => {
+  globalOnEnter(nextState);
+};
 
 Meteor.startup(() => {
   Session.set('currentSectionId', null);
   render(
     <Router history={ browserHistory } >
+      <Route onEnter={globalOnEnter} onChange={globalOnChange}>
       <Route path="/" component={ App }>
-        <IndexRoute name="login" component={ Login } onEnter={ onEnterPublicPage } />
-        <Route name="signup" path="/signup" component={ Signup } onEnter={ onEnterPublicPage }/>
-        <Route name="sections" path="/sections" component={ Sections } onEnter={ onEnterPrivatePage } />
-        {/* <Route name="newSection" path="/sections/new" component={ NewSection } onEnter={ authenticate } />
-        <Route name="editSection" path="/sections/:_id/edit" component={ EditSection } onEnter={ authenticate } />*/}
-        <Route name="viewSection" path="/sections/:_id" component={ ViewSection } onEnter={ onEnterPrivatePage } onLeave={onLeaveSectionPage} />
+        <IndexRoute name="login" component={ Login } privacy="unauth" onEnter={ onEnterPublicPage } />
+        <Route name="signup" path="/signup" component={ Signup } privacy="unauth" onEnter={ onEnterPublicPage }/>
+        <Route name="sections" path="/sections" privacy="auth" component={ Sections } onEnter={ onEnterPrivatePage } />
+        {/* <Route name="newSection" path="/sections/new" component={ NewSection } onEnter={ authenticate } />*/}
+        <Route name="editSection" path="/sections/:_id/edit" privacy="auth" component={ EditSection } onEnter={ onEnterPrivatePage } />
+        <Route name="viewSection" path="/sections/:_id" privacy="auth" component={ ViewSection } onEnter={ onEnterSectionPage } onLeave={onLeaveSectionPage} />
         <Route path="*" component={ NotFound } />
       </Route>
-    </Router>,
-    document.getElementById('react-root'),
+    </Route>
+  </Router>,
+  document.getElementById('react-root'),
   );
 });
 
