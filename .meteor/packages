@@ -23,3 +23,4 @@ react-meteor-data
 accounts-password
 fortawesome:fontawesome
 session
+practicalmeteor:mocha
