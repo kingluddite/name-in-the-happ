@@ -1,5 +1,29 @@
 .page-content {
+  display: flex;
   max-width: $site-max-width;
   margin: 0 auto;
-  padding: $space 0;
+  height: $page-content-height;
+
+  @include desktop {
+    padding: $large-space $space;
+  }
+}
+
+.page-content__sidebar {
+  display: none;
+  width: $page-content-sidebar-width;
+  padding-right: $large-space;
+
+  @include desktop {
+    display: flex;
+  }
+}
+
+.page-content__main {
+  display: flex;
+  width: 100%;
+
+  @include desktop {
+    width: $page-content-main-width;
+  }
 }

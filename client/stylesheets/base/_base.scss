@@ -24,9 +24,10 @@ html {
 }
 
 body {
-  background: $summer-green;
-  color: $text-color;
+  background: $body-bg-color;
+  color: $body-default-color;
   font-size: $base-font-size;
+  font-family: $body-default-font-family;
 }
 
 h1 {
@@ -58,11 +59,14 @@ strong {
 
 [type=text],
 [type=email],
-[type=password] {
-  font-size: $base-font-size;
-  padding: 1rem;
+[type=password],
+textarea {
   border: 1px solid $input-border;
-  color: $text-color;
+  color: $body-default-color;
+  font-size: $base-font-size;
+  margin-bottom: $space;
+  padding: $input-spacing;
+  font-family: $body-default-font-family;
 }
 
 /**
@@ -71,9 +75,4 @@ strong {
 a {
   color: $brand-primary;
   text-decoration: none;
-
-  @include on-event {
-    color: $text-color;
-    text-decoration: underline;
-  }
 }

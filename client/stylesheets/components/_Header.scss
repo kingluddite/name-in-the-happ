@@ -7,7 +7,7 @@
 .header__content {
   display: flex;
   align-items: center;
-  height: 8rem;
+  height: $header-height;
   justify-content: space-between;
   max-width: 100rem;
   margin: 0 auto;

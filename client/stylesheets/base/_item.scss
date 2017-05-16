@@ -1,11 +1,17 @@
 .item {
-  background: $white;
-  border: 1px solid $black;
   padding: $space;
   margin-bottom: $space;
   cursor: pointer;
   border: $item-border-width solid transparent;
   transition: background-color 0.3s ease, border-left 0.3s ease;
+}
+
+// Item List
+.item-list {
+  background-color: $white;
+  border: 1px solid $light-grey;
+  overflow-y: scroll;
+  width: 100%;
 }
 
 .item:hover {
@@ -22,10 +28,13 @@
 }
 
 .item__message {
-  font-size: 1.3rem;
+  //
+}
+
+.item__status-message {
   font-style: italic;
-  font-weight: 300;
   text-align: center;
+  margin: 0;
 }
 
 .item__empty {
@@ -40,4 +49,19 @@
 .item--selected:hover {
   background-color: $light-grey;
   border-left: $item-border-width solid $brand-primary;
+}
+
+.item__title {
+  font-weight: normal;
+  font-size: $base-font-size;
+  margin-bottom: 0.4rem;
+}
+
+.item--selected .item__title {
+  font-weight: bold;
+}
+
+.item__subtitle {
+  color: $dark-grey;
+  margin: 0;
 }

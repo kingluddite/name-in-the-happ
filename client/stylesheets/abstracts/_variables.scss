@@ -24,21 +24,32 @@ $dark-grey: rgb(68, 68, 68) !default;
 
 /// Fonts
 $text-font-stack: 'Open Sans', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
+
+// Font Sizes
 $base-font-size: 1.6rem;
+$large-font-size: 2.2rem;
+
+// Font Colors
 $text-color: $emperor-alt !default;
 
 /// Main brand color
 /// @type Color
 $brand-primary: $tall-poppy !default;
 
+// Body
+$body-bg-color: $summer-green;
+$body-default-color: $emperor-alt;
+$body-default-font-family: Helvetica, Arial, sans-serif;
 
 // Spacing
 $space: 1.4rem;
-$site-max-width: 60rem;
+$site-max-width: 100rem;
+$large-space: 2.8rem;
 
 // Boxed View
 $boxed-view-overlay-bg: $light-grey;
 $boxed-view-bg: $white;
+$boxed-view-border-color: $dark-grey;
 
 // Form inputs
 $input-border: $light-grey;
@@ -53,6 +64,12 @@ $button-pill-color: $brand-primary;
 $header-bg: $brand-primary;
 $header-color: $white;
 $header-link-color: $white;
+$header-height: 6rem;
 
 // Item
 $item-border-width: 4px;
+
+// Page Content
+$page-content-sidebar-width: 30rem;
+$page-content-main-width: calc(#{$site-max-width} - #{$page-content-sidebar-width});
+$page-content-height: calc(100vh - #{$header-height});

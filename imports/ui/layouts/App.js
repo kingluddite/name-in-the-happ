@@ -4,11 +4,8 @@ import Header from './../components/Header';
 
 const App = ({ children }) => (
   <div>
-    <Header />
-      <div className="page-content">
-        { children }
-      </div>
-      {/* END .page-content */}
+    <Header title="Name from the Happ" />
+    {children}
   </div>
 );
 

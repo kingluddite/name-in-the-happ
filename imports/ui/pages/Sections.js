@@ -9,9 +9,13 @@ class Sections extends Component {
   render() {
     // const { _id, name, code } = this.props.section;
     return (
-      <div>
-        <AddSection />
-        <SectionsList />
+      <div className="page-content">
+        <aside className="page-content__sidebar">
+          <AddSection />
+        </aside>
+        <main className="page-content__main">
+          <SectionsList />
+        </main>
       </div>
     );
   }
