@@ -1,41 +1,26 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import moment from 'moment';
 import SimpleSchema from 'simpl-schema';
 
 const PresentationsCollection = new Mongo.Collection('presentations');
 
-if (Meteor.isServer) {
-  Meteor.publish('presentationsPub', function () { // eslint-disable-line func-names
-    return PresentationsCollection.find({ userId: this.userId });
-  });
-}
-
 Meteor.methods({
-  'presentations.insert': function (name, sectionId) { // eslint-disable-line func-names
+  /* eslint func-names: ["error", "as-needed"] */
+  'presentations.insert': function () {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
 
-    new SimpleSchema({
-      name: {
-        type: String,
-        min: 5,
-      },
-      sectionId: {
-        type: String,
-      },
-    }).validate({
-      name,
-      sectionId,
-    });
-
-    PresentationsCollection.insert({
-      name,
-      sectionId,
+    return PresentationsCollection.insert({
+      title: '',
+      body: '',
       userId: this.userId,
+      updatedAt: moment().valueOf(), // new Date().getTime()
     });
   },
-  'presentations.remove': function (_id) { // eslint-disable-line func-names
+
+  'presentations.remove': function (_id) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -43,14 +28,46 @@ Meteor.methods({
     new SimpleSchema({
       _id: {
         type: String,
-        min: 17,
+        min: 1,
       },
     }).validate({
       _id,
     });
-    PresentationsCollection.remove({ _id });
-  },
-});
 
+    return PresentationsCollection.remove({ _id, userId: this.userId });
+  },
+
+  'notes.update': function (_id, updates) {
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+
+    new SimpleSchema({
+      _id: {
+        type: String,
+        min: 1,
+      },
+      title: {
+        type: String,
+        optional: true,
+      },
+      body: {
+        type: String,
+        optional: true,
+      },
+    }).validate({
+      _id,
+      ...updates,
+    });
+
+    PresentationsCollection.update(_id, {
+      $set: {
+        updatedAt: moment().valueOf(),
+        ...updates,
+      },
+    });
+  },
+
+});
 
 export default PresentationsCollection;
