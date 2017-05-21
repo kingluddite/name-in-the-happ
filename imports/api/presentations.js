@@ -5,6 +5,12 @@ import SimpleSchema from 'simpl-schema';
 
 const PresentationsCollection = new Mongo.Collection('presentations');
 
+if (Meteor.isServer) {
+  Meteor.publish('presentationsPublication', function () { // eslint-disable-line func-names
+    return PresentationsCollection.find({ userId: this.userId });
+  });
+}
+
 Meteor.methods({
   /* eslint func-names: ["error", "as-needed"] */
   'presentations.insert': function () {
@@ -37,7 +43,7 @@ Meteor.methods({
     return PresentationsCollection.remove({ _id, userId: this.userId });
   },
 
-  'notes.update': function (_id, updates) {
+  'presentations.update': function (_id, updates) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
@@ -60,12 +66,16 @@ Meteor.methods({
       ...updates,
     });
 
-    PresentationsCollection.update(_id, {
-      $set: {
-        updatedAt: moment().valueOf(),
-        ...updates,
-      },
-    });
+    PresentationsCollection.update(
+      {
+        _id,
+        userId: this.userId,
+      }, {
+        $set: {
+          updatedAt: moment().valueOf(),
+          ...updates,
+        },
+      });
   },
 
 });
