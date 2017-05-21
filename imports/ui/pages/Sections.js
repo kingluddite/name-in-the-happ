@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 // components
-import AddSection from './../components/sections/AddSection';
-import SectionsList from './../components/sections/SectionsList';
+import PresentationsListHeader from './../components/presentations/PresentationsListHeader';
+import PresentationsList from './../components/presentations/PresentationsList';
 
 class Sections extends Component {
 
@@ -11,10 +11,10 @@ class Sections extends Component {
     return (
       <div className="page-content">
         <aside className="page-content__sidebar">
-          <AddSection />
+          <PresentationsListHeader />
         </aside>
         <main className="page-content__main">
-          <SectionsList />
+          <PresentationsList />
         </main>
       </div>
     );

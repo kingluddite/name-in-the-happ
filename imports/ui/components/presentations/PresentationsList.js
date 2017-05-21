@@ -1,55 +1,41 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
-import { Session } from 'meteor/session';
 
-// Collections
-import PresentationsCollection from './../../../api/presentations';
+// collections
+import PresentationsCollection from '../../../api/presentations';
 
-// Components
+// components
+import PresentationsListHeader from './PresentationsListHeader';
 import PresentationsListItem from './PresentationsListItem';
+import PresentationsListEmptyItem from './PresentationsListEmptyItem';
 
-class PresentationsList extends Component {
-  constructor(props) {
-    super(props);
+export const PresentationsList = (props) => {
+  const renderPresentations = props.presentations.map((presentation) => {
+    return <PresentationsListItem key={presentation._id} presentation={presentation} />;
+  });
 
-    this.state = {
-      presentations: [],
-    };
-  }
-  componentDidMount() {
-    this.presentationsTracker = Tracker.autorun(() => {
-      Meteor.subscribe('presentationsPub');
-      const sectionId = Session.get('currentSectionId');
-      const presentationsCollection = PresentationsCollection.find({ sectionId }).fetch();
-      this.setState({ presentations: presentationsCollection });
-    });
-  }
+  return (
+    <div>
+      <PresentationsListHeader />
+      {(props.presentations.length === 0) ? <PresentationsListEmptyItem /> : undefined}
+      {renderPresentations}
+      PresentationsList {props.presentations.length}
+    </div>
+  );
+};
 
-  componentWillUnmount() {
-    this.presentationsTracker.stop();
-  }
+PresentationsList.propTypes = {
+  presentations: PropTypes.array.isRequired,
+};
 
-  renderSectionListItems() {
-    if (this.state.presentations.length === 0) {
-      return (
-        <div className="item item__empty">
-          <p className="item__status-message">No Presentations Found</p>
-        </div>
-      );
-    }
-    return this.state.presentations.map(presentation => (
-      <PresentationsListItem key={presentation._id} presentation={presentation} />
-    ));
-  }
+  // export default PresentationList;
 
-  render() {
-    return (
-      <div>
-        {this.renderSectionListItems()}
-      </div>
-    );
-  }
-}
+export default createContainer(() => {
+  Meteor.subscribe('presentationsPublication');
 
-export default PresentationsList;
+  return {
+    presentations: PresentationsCollection.find().fetch(),
+  };
+}, PresentationsList);

@@ -3,7 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { Session } from 'meteor/session';
 
-
 class AddPresentation extends Component {
   constructor(props) {
     super(props);

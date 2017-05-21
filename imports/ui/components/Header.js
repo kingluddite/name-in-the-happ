@@ -18,7 +18,11 @@ export const Header = (props) => {
         <h1>{props.title}</h1>
         <h2 className="header__slogan">{renderSlogan()}</h2>
         <div>
-          <button className="button" onClick={() => props.handleLogout()}>Logout</button>
+          <button
+            className="button"
+            onClick={() => { return props.handleLogout(); }}>
+            Logout
+          </button>
         </div>
         </div>
       </header>
@@ -35,6 +39,8 @@ Header.defaultProps = {
   title: 'Name from the Happ',
 };
 
-export default createContainer(() => ({
-  handleLogout: () => Accounts.logout(),
-}), Header);
+export default createContainer(() => {
+  return ({
+    handleLogout: () => { return Accounts.logout(); },
+  });
+}, Header);

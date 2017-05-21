@@ -6,6 +6,9 @@ import onAuthChange from './../imports/startup/client/routes';
 // simple Simpl-Schema
 import './../imports/startup/simple-schema-configuration';
 
+// collections
+import './../imports/api/presentations';
+
 Tracker.autorun(() => {
   const isAuthenticated = !!Meteor.userId();
   const currentPagePrivacy = Session.get('currentPagePrivacy');
