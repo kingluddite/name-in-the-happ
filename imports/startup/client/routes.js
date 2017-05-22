@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 
 import React from 'react';
 import { render } from 'react-dom';
@@ -17,8 +17,13 @@ import Presentations from '../../ui/pages/Presentations';
 import ViewSection from '../../ui/components/sections/ViewSection';
 import EditSection from '../../ui/components/sections/EditSection';
 
-const onEnterSectionPage = (nextState) => {
-  Session.set('selectedSectionId', nextState.params.id);
+const onEnterPresentationsPage = (nextState) => {
+  if (!Meteor.userId()) {
+    browserHistory.replace('/');
+  } else {
+    Session.set('selectedPresentationId', nextState.params.id);
+  }
+  // Session.set('selectedSectionId', nextState.params.id);
 };
 
 const onLeaveSectionPage = () => {
@@ -51,19 +56,39 @@ Meteor.startup(() => {
   Session.set('selectedPresentationId', undefined);
   Session.set('currentSectionId', null);
   render(
-    <Router history={ browserHistory } >
+    <Router history={browserHistory} >
       <Route onEnter={globalOnEnter} onChange={globalOnChange}>
-      <Route path="/" component={ App }>
-        <IndexRoute name="login" component={ Login } privacy="unauth" />
-        <Route name="signup" path="/signup" component={ Signup } privacy="unauth" />
-        <Route name="about" path="/about" component={ About } privacy="unauth" />
-        <Route name="sections" path="/sections" privacy="auth" component={ Sections } />
-        <Route name="presentations" path="/presentations" privacy="auth" component={ Presentations } />
-        <Route name="presentationsView" path="/presentations/:id" privacy="auth" component={ Presentations } />
-        {/* <Route name="newSection" path="/sections/new" component={ NewSection } onEnter={ authenticate } />*/}
-        <Route name="editSection" path="/sections/:_id/edit" privacy="auth" component={ EditSection } />
-        <Route name="viewSection" path="/sections/:_id" privacy="auth" component={ ViewSection } onEnter={ onEnterSectionPage } onLeave={onLeaveSectionPage} />
-        <Route path="*" component={ NotFound } />
+      <Route path="/" component={App}>
+        <IndexRoute name="login" component={Login} privacy="unauth" />
+        <Route name="signup" path="/signup" component={Signup} privacy="unauth" />
+        <Route name="about" path="/about" component={About} privacy="unauth" />
+        <Route name="sections" path="/sections" privacy="auth" component={ Sections} />
+        <Route
+          name="presentations"
+          path="/presentations"
+          privacy="auth"
+          component={Presentations} />
+        <Route
+          name="presentationsView"
+          path="/presentations/:id"
+          privacy="auth"
+          component={Presentations}
+          onEnter={onEnterPresentationsPage} />
+        {/* <Route
+          name="newSection"
+          path="/sections/new" component={ NewSection } onEnter={ authenticate } />*/}
+        <Route
+          name="editSection"
+          path="/sections/:_id/edit"
+          privacy="auth"
+          component={EditSection} />
+        <Route
+          name="viewSection"
+          path="/sections/:_id"
+          privacy="auth"
+          component={ViewSection}
+          onLeave={onLeaveSectionPage} />
+        <Route path="*" component={NotFound} />
       </Route>
     </Route>
   </Router>,
