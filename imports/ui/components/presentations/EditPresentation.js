@@ -22,8 +22,8 @@ export class EditPresentation extends Component {
 }
 
 EditPresentation.propTypes = {
-  selectedPresentationId: PropTypes.string.isRequired,
-  presentation: PropTypes.object.isRequired,
+  selectedPresentationId: PropTypes.string,
+  presentation: PropTypes.object,
 };
 
 export default createContainer(() => {
