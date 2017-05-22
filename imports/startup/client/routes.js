@@ -14,8 +14,8 @@ import NotFound from '../../ui/pages/NotFound';
 import Signup from '../../ui/pages/Signup';
 import Sections from '../../ui/pages/Sections';
 import Presentations from '../../ui/pages/Presentations';
-import ViewSection from '../../ui/components/sections/ViewSection';
-import EditSection from '../../ui/components/sections/EditSection';
+// import ViewSection from '../../ui/components/sections/ViewSection';
+// import EditSection from '../../ui/components/sections/EditSection';
 
 const onEnterPresentationsPage = (nextState) => {
   if (!Meteor.userId()) {
@@ -26,8 +26,8 @@ const onEnterPresentationsPage = (nextState) => {
   // Session.set('selectedSectionId', nextState.params.id);
 };
 
-const onLeaveSectionPage = () => {
-  Session.set('selectedSectionId', undefined);
+const onLeavePresentationsPage = () => {
+  Session.set('selectedPresentationId', undefined);
 };
 
 const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
@@ -54,7 +54,7 @@ export const globalOnChange = (prevState, nextState) => {
 
 Meteor.startup(() => {
   Session.set('selectedPresentationId', undefined);
-  Session.set('currentSectionId', null);
+  // Session.set('currentSectionId', null);
   render(
     <Router history={browserHistory} >
       <Route onEnter={globalOnEnter} onChange={globalOnChange}>
@@ -73,11 +73,12 @@ Meteor.startup(() => {
           path="/presentations/:id"
           privacy="auth"
           component={Presentations}
-          onEnter={onEnterPresentationsPage} />
+          onEnter={onEnterPresentationsPage}
+          onLeave={onLeavePresentationsPage} />
         {/* <Route
           name="newSection"
           path="/sections/new" component={ NewSection } onEnter={ authenticate } />*/}
-        <Route
+        {/* <Route
           name="editSection"
           path="/sections/:_id/edit"
           privacy="auth"
@@ -87,7 +88,7 @@ Meteor.startup(() => {
           path="/sections/:_id"
           privacy="auth"
           component={ViewSection}
-          onLeave={onLeaveSectionPage} />
+          onLeave={onLeaveSectionPage} /> */}
         <Route path="*" component={NotFound} />
       </Route>
     </Route>

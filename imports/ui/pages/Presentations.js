@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 // components
 import PresentationsListHeader from './../components/presentations/PresentationsListHeader';
 import PresentationsList from './../components/presentations/PresentationsList';
+import EditPresentation from './../components/presentations/EditPresentation';
 
 class Presentations extends Component {
 
@@ -14,6 +15,7 @@ class Presentations extends Component {
           </aside>
           <main className="page-content__main">
             <PresentationsList />
+            <EditPresentation />
           </main>
       </div>
     );
