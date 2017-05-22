@@ -10,6 +10,7 @@ export const PresentationsListItem = (props) => {
       props.Session.set('selectedPresentationId', props.presentation._id);
     }}>
       <h5>{ props.presentation.title || 'Untitled Presentation' }</h5>
+      { props.presentation.selected ? 'selected' : undefined}
       <p>{ moment(props.presentation.updatedAt).format('M/DD/YYYY') }</p>
     </div>
   );
