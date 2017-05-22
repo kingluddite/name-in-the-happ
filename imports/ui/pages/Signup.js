@@ -33,7 +33,6 @@ export class Signup extends Component {
         this.setState({ error: '' });
       }
     });
-    return false;
   }
   render() {
     return (
@@ -68,6 +67,8 @@ Signup.propTypes = {
   createUser: PropTypes.func.isRequired,
 };
 
-export default createContainer(() => ({
-  createUser: Accounts.createUser,
-}), Signup);
+export default createContainer(() => {
+  return {
+    createUser: Accounts.createUser,
+  };
+}, Signup);

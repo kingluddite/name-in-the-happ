@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
 // components
-import AddPresentation from './../components/presentations/AddPresentation';
+import PresentationsListHeader from './../components/presentations/PresentationsListHeader';
 import PresentationsList from './../components/presentations/PresentationsList';
-import PresentationView from './PresentationView';
 
 class Presentations extends Component {
 
@@ -11,11 +10,10 @@ class Presentations extends Component {
     return (
       <div>
           <aside className="page-content__sidebar">
-            <AddPresentation />
-            <PresentationsList />
+            <PresentationsListHeader />
           </aside>
           <main className="page-content__main">
-            <PresentationView />
+            <PresentationsList />
           </main>
       </div>
     );

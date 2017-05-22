@@ -7,22 +7,7 @@ import { mount } from 'enzyme';
 
 import { PresentationsList } from './PresentationsList';
 
-const presentations = [
-  {
-    _id: 'presentationId1',
-    title: 'Test title',
-    body: '',
-    updatedAt: 0,
-    userId: 'userId1',
-  },
-  {
-    _id: 'presentationId2',
-    title: 'Test title',
-    body: 'Some body content',
-    updatedAt: 0,
-    userId: 'userId2',
-  },
-];
+import presentations from './../../../fixtures/fixtures';
 
 if (Meteor.isClient) {
   describe('PresentationsList', function () {

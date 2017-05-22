@@ -5,7 +5,7 @@ import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
 
-import PresentationsListHeader from './PresentationsListHeader';
+import { PresentationsListHeader } from './PresentationsListHeader';
 
 if (Meteor.isClient) {
   describe('PresentationsListHeader', function () {

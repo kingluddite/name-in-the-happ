@@ -20,7 +20,7 @@ export const Header = (props) => {
         <div>
           <button
             className="button"
-            onClick={() => { return props.handleLogout(); }}>
+            onClick={() => { props.handleLogout(); }}>
             Logout
           </button>
         </div>
@@ -40,7 +40,7 @@ Header.defaultProps = {
 };
 
 export default createContainer(() => {
-  return ({
+  return {
     handleLogout: () => { return Accounts.logout(); },
-  });
+  };
 }, Header);

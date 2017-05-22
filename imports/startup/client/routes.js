@@ -13,6 +13,7 @@ import Login from '../../ui/pages/Login';
 import NotFound from '../../ui/pages/NotFound';
 import Signup from '../../ui/pages/Signup';
 import Sections from '../../ui/pages/Sections';
+import Presentations from '../../ui/pages/Presentations';
 import ViewSection from '../../ui/components/sections/ViewSection';
 import EditSection from '../../ui/components/sections/EditSection';
 
@@ -30,7 +31,7 @@ const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
 
   // if public page and logged in - let them in
   if (isPublicPage && isAuthenticated) {
-    browserHistory.replace('/sections');
+    browserHistory.replace('/presentations');
   } else if (isPrivatePage && !isAuthenticated) {
     // if private page and not logged in - kick them out
     browserHistory.replace('/');
@@ -47,6 +48,7 @@ export const globalOnChange = (prevState, nextState) => {
 };
 
 Meteor.startup(() => {
+  Session.set('selectedPresentationId', undefined);
   Session.set('currentSectionId', null);
   render(
     <Router history={ browserHistory } >
@@ -56,6 +58,8 @@ Meteor.startup(() => {
         <Route name="signup" path="/signup" component={ Signup } privacy="unauth" />
         <Route name="about" path="/about" component={ About } privacy="unauth" />
         <Route name="sections" path="/sections" privacy="auth" component={ Sections } />
+        <Route name="presentations" path="/presentations" privacy="auth" component={ Presentations } />
+        <Route name="presentationsView" path="/presentations/:id" privacy="auth" component={ Presentations } />
         {/* <Route name="newSection" path="/sections/new" component={ NewSection } onEnter={ authenticate } />*/}
         <Route name="editSection" path="/sections/:_id/edit" privacy="auth" component={ EditSection } />
         <Route name="viewSection" path="/sections/:_id" privacy="auth" component={ ViewSection } onEnter={ onEnterSectionPage } onLeave={onLeaveSectionPage} />
