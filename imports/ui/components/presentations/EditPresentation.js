@@ -2,15 +2,39 @@ import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
 import PropTypes from 'prop-types';
+import { Meteor } from 'meteor/meteor';
 
 // collections
 import PresentationsCollection from './../../../api/presentations';
 
 export class EditPresentation extends Component {
+  handleTitleChange(event) {
+    this.props.call('presentations.update', this.props.presentation._id, {
+      title: event.target.value,
+    });
+  }
+
+  handleBodyChange(event) {
+    this.props.call('presentations.update', this.props.presentation._id, {
+      body: event.target.value,
+    });
+  }
+
+
   render() {
     if (this.props.presentation) {
       return (
-         <p>We got the presentation!</p>
+        <div>
+         <input
+           type="text"
+           value={this.props.presentation.title}
+           placeholder="title"
+           onChange={this.handleTitleChange.bind(this)} />
+         <textarea
+           value={this.props.presentation.body}
+           placeholder="Your presentation here" onChange={this.handleBodyChange.bind(this)} />
+         <button className="button">Delete Presentation</button>
+       </div>
       );
     }
     return (
@@ -24,6 +48,7 @@ export class EditPresentation extends Component {
 EditPresentation.propTypes = {
   selectedPresentationId: PropTypes.string,
   presentation: PropTypes.object,
+  call: PropTypes.func.isRequired,
 };
 
 export default createContainer(() => {
@@ -32,5 +57,6 @@ export default createContainer(() => {
   return {
     selectedPresentationId,
     presentation: PresentationsCollection.findOne(selectedPresentationId),
+    call: Meteor.call,
   };
 }, EditPresentation);
