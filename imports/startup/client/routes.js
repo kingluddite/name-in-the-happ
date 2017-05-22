@@ -18,12 +18,7 @@ import Presentations from '../../ui/pages/Presentations';
 // import EditSection from '../../ui/components/sections/EditSection';
 
 const onEnterPresentationsPage = (nextState) => {
-  if (!Meteor.userId()) {
-    browserHistory.replace('/');
-  } else {
-    Session.set('selectedPresentationId', nextState.params.id);
-  }
-  // Session.set('selectedSectionId', nextState.params.id);
+  Session.set('selectedPresentationId', nextState.params.id);
 };
 
 const onLeavePresentationsPage = () => {

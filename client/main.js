@@ -18,6 +18,6 @@ Tracker.autorun(() => {
   if (selectedPresentationId) {
     browserHistory.replace(`/presentations/${selectedPresentationId}`);
   }
-  console.log('currentPagePrivacy', currentPagePrivacy);
+  // console.log('currentPagePrivacy', currentPagePrivacy);
   onAuthChange(isAuthenticated, currentPagePrivacy);
 });
