@@ -9,12 +9,12 @@ import { Header } from './Header';
 
 if (Meteor.isClient) {
   describe('Header', function () {
-    // it('should set button text to logout', function () {
-    //   const wrapper = mount( <Header title="Test Title" /> );
-    //   console.log(wrapper.find('button'));
-    //   const buttonText = wrapper.find('button').text();
-    //   expect(buttonText).toBe('Logout');
-    // });
+    it('should set button text to logout', function () {
+      const wrapper = mount(<Header title="Test Title" />);
+      // console.log(wrapper.find('button'));
+      const buttonText = wrapper.find('button').text();
+      expect(buttonText).toBe('Logout');
+    });
 
     it('should have h1 with title', function () {
       const title = 'Test title';
