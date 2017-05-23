@@ -79,5 +79,8 @@
       ],
       "class-methods-use-this": 0
     }
+  },
+  "engines": {
+    "node": "4.8.2"
   }
 }
