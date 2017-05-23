@@ -36,7 +36,9 @@ export default createContainer(() => {
   Meteor.subscribe('presentationsPublication');
 
   return {
-    presentations: PresentationsCollection.find().fetch().map((presentation) => {
+    presentations: PresentationsCollection.find({}, {
+      sort: { updatedAt: -1 },
+    }).fetch().map((presentation) => {
       return {
         ...presentation,
         selected: presentation._id === selectedPresentationId,
