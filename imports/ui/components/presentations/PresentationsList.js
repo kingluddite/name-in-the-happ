@@ -8,6 +8,7 @@ import { Session } from 'meteor/session';
 import PresentationsCollection from '../../../api/presentations';
 
 // components
+import PresentationsListHeader from './PresentationsListHeader';
 import PresentationsListItem from './PresentationsListItem';
 import PresentationsListEmptyItem from './PresentationsListEmptyItem';
 
@@ -17,7 +18,8 @@ export const PresentationsList = (props) => {
   });
 
   return (
-    <div>
+    <div className="item-list">
+      <PresentationsListHeader />
       {(props.presentations.length === 0) ? <PresentationsListEmptyItem /> : undefined}
       {renderPresentations}
       PresentationsList {props.presentations.length}

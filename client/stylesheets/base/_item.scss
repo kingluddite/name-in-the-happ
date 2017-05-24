@@ -1,11 +1,3 @@
-.item {
-  padding: $space;
-  margin-bottom: $space;
-  cursor: pointer;
-  border: $item-border-width solid transparent;
-  transition: background-color 0.3s ease, border-left 0.3s ease;
-}
-
 // Item List
 .item-list {
   background-color: $white;
@@ -13,6 +5,15 @@
   overflow-y: scroll;
   width: 100%;
 }
+
+.item {
+  border: $item-border-width solid transparent;
+  cursor: pointer;
+  margin-bottom: $space;
+  padding: $space;
+  transition: background-color 0.3s ease, border-left 0.3s ease;
+}
+
 
 .item:hover {
   background-color: $light-grey;
@@ -28,13 +29,14 @@
 }
 
 .item__message {
-  //
+  color: $item-text-color;
 }
 
 .item__status-message {
+  color: $item-text-color;
   font-style: italic;
-  text-align: center;
   margin: 0;
+  text-align: center;
 }
 
 .item__empty {

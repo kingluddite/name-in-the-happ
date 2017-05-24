@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 // components
-import PresentationsListHeader from './../components/presentations/PresentationsListHeader';
 import PresentationsList from './../components/presentations/PresentationsList';
 import EditPresentation from './../components/presentations/EditPresentation';
 
@@ -10,13 +9,14 @@ class Presentations extends Component {
   render() {
     return (
       <div>
+          <div className="page-content">
           <aside className="page-content__sidebar">
-            <PresentationsListHeader />
+            <PresentationsList />
           </aside>
           <main className="page-content__main">
-            <PresentationsList />
             <EditPresentation />
           </main>
+        </div>
       </div>
     );
   }

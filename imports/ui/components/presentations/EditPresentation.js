@@ -55,27 +55,34 @@ export class EditPresentation extends Component {
   render() {
     if (this.props.presentation) {
       return (
-        <div>
+        <div className="editor">
          <input
            type="text"
+           className="editor__title"
            value={this.state.title}
-           placeholder="title"
+           placeholder="Presentation Title"
            onChange={this.handleTitleChange.bind(this)} />
          <textarea
            value={this.state.body}
-           placeholder="Your presentation here" onChange={this.handleBodyChange.bind(this)} />
-         <button
-           className="button"
-           onClick={this.handleDeletePresentation.bind(this)}>
-           Delete Presentation
-         </button>
+           className="editor__body"
+           placeholder="Enter Names of Presenters here (separate with spaces)"
+           onChange={this.handleBodyChange.bind(this)} />
+         <div>
+           <button
+             className="button button--default"
+             onClick={this.handleDeletePresentation.bind(this)}>
+             Delete Presentation
+           </button>
+         </div>
        </div>
       );
     }
     return (
-      <p>
-        { this.props.selectedPresentationId ? 'Presentation not found.' : 'Pick or create a presentation to get started.'}
-      </p>
+      <div className="editor">
+        <p className="editor__message">
+          { this.props.selectedPresentationId ? 'Presentation not found.' : 'Pick or create a presentation to get started.'}
+        </p>
+      </div>
     );
   }
 }
