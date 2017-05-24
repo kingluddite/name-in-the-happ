@@ -22,7 +22,6 @@ export const PresentationsList = (props) => {
       <PresentationsListHeader />
       {(props.presentations.length === 0) ? <PresentationsListEmptyItem /> : undefined}
       {renderPresentations}
-      PresentationsList {props.presentations.length}
     </div>
   );
 };

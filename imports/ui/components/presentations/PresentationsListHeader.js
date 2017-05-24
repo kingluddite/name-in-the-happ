@@ -14,7 +14,7 @@ export const PresentationsListHeader = (props) => {
   };
 
   return (
-    <div>
+    <div className="item-list__header">
       <button className="button" onClick={handleButtonClick}>Create Presentation</button>
     </div>
   );

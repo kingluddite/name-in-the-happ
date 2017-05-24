@@ -6,6 +6,20 @@
   width: 100%;
 }
 
+.item-list__header {
+  display: flex;
+  flex-direction: column;
+  padding: $space;
+}
+
+// Empty Item
+.empty-item {
+  font-style: italic;
+  padding: $space;
+  text-align: center;
+}
+
+// Items
 .item {
   border: $item-border-width solid transparent;
   cursor: pointer;

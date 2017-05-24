@@ -3,7 +3,7 @@ import React from 'react';
 
 const PresentationsListEmptyItem = () => {
   return (
-   <div>
+   <div className="empty-item">
      <h1>No Presentations</h1>
      <p>Please add one</p>
    </div>
