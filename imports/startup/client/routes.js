@@ -49,6 +49,7 @@ export const globalOnChange = (prevState, nextState) => {
 
 Meteor.startup(() => {
   Session.set('selectedPresentationId', undefined);
+  Session.set('isNavOpen', false);
   // Session.set('currentSectionId', null);
   render(
     <Router history={browserHistory} >

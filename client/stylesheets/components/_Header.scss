@@ -1,15 +1,15 @@
 .header {
   background: $brand-primary;
-  color: $white;
   border-bottom: 10px solid $putty;
+  color: $white;
 }
 
 .header__content {
-  display: flex;
   align-items: center;
+  display: flex;
   height: $header-height;
   justify-content: space-between;
-  max-width: 100rem;
+  max-width: $site-max-width;
   margin: 0 auto;
   padding: $space;
 }
@@ -22,7 +22,17 @@
 
 .header__logo {
   &:hover {
-    text-decoration: none;
     color: inherit;
+    text-decoration: none;
+  }
+}
+
+.header__nav-toggle {
+  cursor: pointer;
+  height: 2rem;
+  width: 2rem;
+
+  @include desktop() {
+    display: none;
   }
 }

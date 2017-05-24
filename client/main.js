@@ -13,11 +13,22 @@ import './../imports/api/presentations';
 Tracker.autorun(() => {
   const isAuthenticated = !!Meteor.userId();
   const currentPagePrivacy = Session.get('currentPagePrivacy');
+
+  // console.log('currentPagePrivacy', currentPagePrivacy);
+  onAuthChange(isAuthenticated, currentPagePrivacy);
+});
+
+Tracker.autorun(() => {
   const selectedPresentationId = Session.get('selectedPresentationId');
+  Session.set('isNavOpen', false);
 
   if (selectedPresentationId) {
     browserHistory.replace(`/presentations/${selectedPresentationId}`);
   }
-  // console.log('currentPagePrivacy', currentPagePrivacy);
-  onAuthChange(isAuthenticated, currentPagePrivacy);
+});
+
+Tracker.autorun(() => {
+  const isNavOpen = Session.get('isNavOpen');
+
+  document.body.classList.toggle('is-nav-open', isNavOpen);
 });
