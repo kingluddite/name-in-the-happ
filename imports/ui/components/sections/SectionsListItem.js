@@ -8,7 +8,6 @@ export const SectionsListItem = (props) => {
   const className = props.section.selected ? 'item item--selected' : 'item';
   return (
     <div className={className} onClick={() => {
-      console.log('id from sect list item', props.section._id);
       props.Session.set('selectedSectionId', props.section._id);
     }}>
       <h5 className="item__title">{ props.section.name || 'Untitled Section' }</h5>

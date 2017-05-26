@@ -34,7 +34,8 @@ PresentationsList.propTypes = {
 
 export default createContainer(() => {
   const selectedPresentationId = Session.get('selectedPresentationId');
-  Meteor.subscribe('presentationsPublication');
+  const sectionId = Session.get('sectionId');
+  Meteor.subscribe('presentationsPublication', sectionId);
 
   return {
     presentations: PresentationsCollection.find({}, {

@@ -20,20 +20,20 @@ import Presentations from '../../ui/pages/Presentations';
 // import EditPresentation from './../../ui/components/presentations/EditPresentation';
 // import ViewPresentation from './../../ui/components/presentations/ViewPresenation';
 
-// const onEnterPresentationsPage = (nextState) => {
-//   Session.set('selectedPresentationId', nextState.params.id);
-// };
-//
-// const onLeavePresentationsPage = () => {
-//   Session.set('selectedPresentationId', undefined);
-// };
+const onEnterPresentationsPage = (nextState) => {
+  console.log('pres page section id', Session.get('selectedSectionId'));
+  Session.set('selectedPresentationId', nextState.params.id);
+};
+
+const onLeavePresentationsPage = () => {
+  Session.set('selectedPresentationId', undefined);
+};
 
 const onEnterSectionsPage = (nextState) => {
   Session.set('selectedSectionId', nextState.params._id);
 };
 
 const onLeaveSectionsPage = () => {
-  console.log('leaving page triggered');
   Session.set('selectedSectionId', undefined);
 };
 
@@ -74,6 +74,7 @@ Meteor.startup(() => {
           <Route name="sections" path="/sections" component={Sections} privacy="auth" />
           <Route name="viewSection" path="/sections/:_id" component={Sections} privacy="auth" onEnter={onEnterSectionsPage} onLeave={onLeaveSectionsPage} />
           <Route name="presentations" path="/presentations" component={Presentations} privacy="auth" />
+          <Route name="viewPresentation" path="/presentations/:_id" component={Presentations} privacy="auth" onEnter={onEnterPresentationsPage} onLeave={onLeavePresentationsPage} />
           <Route path="*" component={NotFound} />
         </Route>
     </Route>

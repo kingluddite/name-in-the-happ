@@ -32,7 +32,7 @@ SectionsList.propTypes = {
 
 export default createContainer(() => {
   const selectedSectionId = Session.get('selectedSectionId');
-  
+
   Meteor.subscribe('sectionsPublication');
 
   return {

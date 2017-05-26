@@ -3,8 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import { browserHistory } from 'react-router';
-import { Link } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 
 // collections
 import SectionsCollection from './../../../api/sections';
@@ -61,6 +60,7 @@ export class EditSection extends Component {
              </button>
              <Link
                to="/presentations"
+               onClick={ () => { Session.set('sectionId', this.props.section._id); }}
                className="button button--default">
                View Presentations
              </Link>

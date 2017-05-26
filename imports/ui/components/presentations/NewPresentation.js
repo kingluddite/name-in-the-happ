@@ -1,57 +1,36 @@
-import React, { Component } from 'react';
-import { Meteor } from 'meteor/meteor';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
+import { createContainer } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 
-class NewPresentation extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      error: '',
-    };
-  }
-
-  componentDidMount() {
-    this.name.focus();
-  }
-
-  handleSubmit(e) {
-    const name = this.name.value.trim();
-    const sectionId = Session.get('currentSectionId');
-
-    e.preventDefault();
-
-    Meteor.call('presentations.insert', name, sectionId, (err) => {
-      if (!err) {
-        this.name.value = '';
-      } else {
-        this.setState({ error: err.reason });
+export const NewPresentation = (props) => {
+  const sectionId = Session.get('sectionId');
+  const handleButtonClick = () => {
+    props.meteorCall('presentations.insert', sectionId, (err, res) => {
+      if (res) {
+        props.Session.set('selectedPresentationId', res);
       }
     });
-  }
+  };
 
-  render() {
-    return (
-      <div>
-        <h2>Add Presentation</h2>
-        { this.state.error ? <p className="errors">{this.state.error}</p> : undefined }
-        <div className="item item__form">
-          <form className="form" onSubmit={this.handleSubmit.bind(this)}>
-            <input
-              className="form__input" type="text"
-              ref={ (input) => { this.name = input; }}
-              placeholder="Presentation Name" />
-            <button className="button">Add Presentation</button>
-          </form>
-        </div>
-      </div>
-    );
-  }
-}
-
-NewPresentation.propTypes = {
-  section: PropTypes.object,
+  return (
+    <div className="item-list__header">
+      <Link to="/sections" className="button">Back</Link>
+      <button className="button" onClick={handleButtonClick}>Create Presentation</button>
+    </div>
+  );
 };
 
-export default NewPresentation;
+NewPresentation.propTypes = {
+  meteorCall: PropTypes.func.isRequired,
+  Session: PropTypes.object.isRequired,
+};
+
+export default createContainer(() => {
+  return ({
+    meteorCall: Meteor.call,
+    Session,
+  });
+}, NewPresentation);
