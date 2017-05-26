@@ -4,23 +4,23 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { Session } from 'meteor/session';
 
-export const PresentationsListHeader = (props) => {
+export const NewSection = (props) => {
   const handleButtonClick = () => {
-    props.meteorCall('presentations.insert', (err, res) => {
+    props.meteorCall('sections.insert', (err, res) => {
       if (res) {
-        props.Session.set('selectedPresentationId', res);
+        props.Session.set('selectedSectionId', res);
       }
     });
   };
 
   return (
     <div className="item-list__header">
-      <button className="button" onClick={handleButtonClick}>Create Presentation</button>
+      <button className="button" onClick={handleButtonClick}>Create Section</button>
     </div>
   );
 };
 
-PresentationsListHeader.propTypes = {
+NewSection.propTypes = {
   meteorCall: PropTypes.func.isRequired,
   Session: PropTypes.object.isRequired,
 };
@@ -30,4 +30,4 @@ export default createContainer(() => {
     meteorCall: Meteor.call,
     Session,
   });
-}, PresentationsListHeader);
+}, NewSection);

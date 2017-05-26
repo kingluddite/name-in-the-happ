@@ -1,64 +1,50 @@
-import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
-import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
-import PropTypes from 'prop-types';
-
-// collections
-import SectionsCollection from './../../../api/sections';
-// components
-import AddPresentation from './../presentations/AddPresentation';
-import PresentationsList from './../presentations/PresentationsList';
-
-class ViewSection extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      section: {},
-    };
-    this.renderSection = this.renderSection.bind(this);
-  }
-
-  componentDidMount() {
-    this.sectionTracker = Tracker.autorun(() => {
-      Meteor.subscribe('sectionsPub');
-
-      const _id = this.props.params._id;
-      const section = SectionsCollection.findOne({ _id });
-      this.setState({ section });
-    });
-  }
-
-  componentWillUnmount() {
-    this.sectionTracker.stop();
-  }
-  renderSection() {
-    if (this.state.section !== undefined) {
-      return (
-         <div>
-           <h2>{this.state.section.name}</h2>
-           <p>{this.state.section.code}</p>
-         </div>
-      );
-    }
-    return undefined;
-  }
-
-  render() {
-    return (
-      <div>
-        <button className="button" onClick={ browserHistory.goBack}>Back</button>
-        {this.renderSection()}
-        <AddPresentation section={this.state.section}/>
-        <PresentationsList />
-      </div>
-    );
-  }
-}
-
-ViewSection.propTypes = {
-  params: PropTypes.object.isRequired,
-};
-
-export default ViewSection;
+// import React, { Component } from 'react';
+// import { createContainer } from 'meteor/react-meteor-data';
+// import { Session } from 'meteor/session';
+// import PropTypes from 'prop-types';
+//
+// // collections
+// import SectionsCollection from './../../../api/Sections';
+//
+// export class ViewSection extends Component {
+//   constructor(props) {
+//     super(props);
+//
+//     this.state = {
+//       title: '',
+//       body: '',
+//     };
+//   }
+//
+//   render() {
+//     if (this.props.section) {
+//       return (
+//         <div className="editor">
+//          <h1>Section Title</h1>
+//          <p>Names in Section</p>
+//        </div>
+//       );
+//     }
+//     return (
+//       <div className="editor">
+//         <p className="editor__message">
+//           { this.props.selectedSectionId ? 'Section not found.' : 'Pick or create a section to get started.'}
+//         </p>
+//       </div>
+//     );
+//   }
+// }
+//
+// ViewSection.propTypes = {
+//   selectedSectionId: PropTypes.string,
+//   section: PropTypes.object,
+// };
+//
+// export default createContainer(() => {
+//   const selectedSectionId = Session.get('selectedSectionId');
+//
+//   return {
+//     selectedSectionId,
+//     section: SectionsCollection.findOne(selectedSectionId),
+//   };
+// }, ViewSection);

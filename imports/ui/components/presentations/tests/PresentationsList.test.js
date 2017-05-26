@@ -5,9 +5,11 @@ import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
 
-import { PresentationsList } from './PresentationsList';
+// fixtures
+import presentations from './../../../../fixtures/fixtures';
 
-import presentations from './../../../fixtures/fixtures';
+// tested component
+import { PresentationsList } from './../PresentationsList';
 
 if (Meteor.isClient) {
   describe('PresentationsList', function () {

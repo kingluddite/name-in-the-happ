@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { Session } from 'meteor/session';
 
-class AddPresentation extends Component {
+class NewPresentation extends Component {
   constructor(props) {
     super(props);
 
@@ -50,8 +50,8 @@ class AddPresentation extends Component {
   }
 }
 
-AddPresentation.propTypes = {
+NewPresentation.propTypes = {
   section: PropTypes.object,
 };
 
-export default AddPresentation;
+export default NewPresentation;

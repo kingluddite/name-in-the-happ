@@ -8,13 +8,13 @@ import onAuthChange from './../imports/startup/client/routes';
 import './../imports/startup/simple-schema-configuration';
 
 // collections
+import './../imports/api/sections';
 import './../imports/api/presentations';
 
 Tracker.autorun(() => {
   const isAuthenticated = !!Meteor.userId();
   const currentPagePrivacy = Session.get('currentPagePrivacy');
 
-  // console.log('currentPagePrivacy', currentPagePrivacy);
   onAuthChange(isAuthenticated, currentPagePrivacy);
 });
 
@@ -24,6 +24,15 @@ Tracker.autorun(() => {
 
   if (selectedPresentationId) {
     browserHistory.replace(`/presentations/${selectedPresentationId}`);
+  }
+});
+
+Tracker.autorun(() => {
+  const selectedSectionId = Session.get('selectedSectionId');
+  Session.set('isNavOpen', false);
+
+  if (selectedSectionId) {
+    browserHistory.replace(`/sections/${selectedSectionId}`);
   }
 });
 

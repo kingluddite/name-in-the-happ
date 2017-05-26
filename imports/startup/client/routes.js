@@ -1,5 +1,4 @@
-
-
+/* eslint-disable max-len */
 import React from 'react';
 import { render } from 'react-dom';
 import { Session } from 'meteor/session';
@@ -13,16 +12,29 @@ import Login from '../../ui/pages/Login';
 import NotFound from '../../ui/pages/NotFound';
 import Signup from '../../ui/pages/Signup';
 import Sections from '../../ui/pages/Sections';
-import Presentations from '../../ui/pages/Presentations';
-// import ViewSection from '../../ui/components/sections/ViewSection';
 // import EditSection from '../../ui/components/sections/EditSection';
+// import NewSection from './../../ui/components/sections/NewSection';
+// import ViewSection from '../../ui/components/sections/ViewSection';
+import Presentations from '../../ui/pages/Presentations';
+// import NewPresentation from './../../ui/components/presentations/NewPresentation';
+// import EditPresentation from './../../ui/components/presentations/EditPresentation';
+// import ViewPresentation from './../../ui/components/presentations/ViewPresenation';
 
-const onEnterPresentationsPage = (nextState) => {
-  Session.set('selectedPresentationId', nextState.params.id);
+// const onEnterPresentationsPage = (nextState) => {
+//   Session.set('selectedPresentationId', nextState.params.id);
+// };
+//
+// const onLeavePresentationsPage = () => {
+//   Session.set('selectedPresentationId', undefined);
+// };
+
+const onEnterSectionsPage = (nextState) => {
+  Session.set('selectedSectionId', nextState.params._id);
 };
 
-const onLeavePresentationsPage = () => {
-  Session.set('selectedPresentationId', undefined);
+const onLeaveSectionsPage = () => {
+  console.log('leaving page triggered');
+  Session.set('selectedSectionId', undefined);
 };
 
 const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
@@ -31,7 +43,7 @@ const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
 
   // if public page and logged in - let them in
   if (isPublicPage && isAuthenticated) {
-    browserHistory.replace('/presentations');
+    browserHistory.replace('/sections');
   } else if (isPrivatePage && !isAuthenticated) {
     // if private page and not logged in - kick them out
     browserHistory.replace('/');
@@ -49,44 +61,21 @@ export const globalOnChange = (prevState, nextState) => {
 
 Meteor.startup(() => {
   Session.set('selectedPresentationId', undefined);
+  Session.set('selectedSectionId', undefined);
   Session.set('isNavOpen', false);
   // Session.set('currentSectionId', null);
   render(
     <Router history={browserHistory} >
       <Route onEnter={globalOnEnter} onChange={globalOnChange}>
-      <Route path="/" component={App}>
-        <IndexRoute name="login" component={Login} privacy="unauth" />
-        <Route name="signup" path="/signup" component={Signup} privacy="unauth" />
-        <Route name="about" path="/about" component={About} privacy="unauth" />
-        <Route name="sections" path="/sections" privacy="auth" component={ Sections} />
-        <Route
-          name="presentations"
-          path="/presentations"
-          privacy="auth"
-          component={Presentations} />
-        <Route
-          name="presentationsView"
-          path="/presentations/:id"
-          privacy="auth"
-          component={Presentations}
-          onEnter={onEnterPresentationsPage}
-          onLeave={onLeavePresentationsPage} />
-        {/* <Route
-          name="newSection"
-          path="/sections/new" component={ NewSection } onEnter={ authenticate } />*/}
-        {/* <Route
-          name="editSection"
-          path="/sections/:_id/edit"
-          privacy="auth"
-          component={EditSection} />
-        <Route
-          name="viewSection"
-          path="/sections/:_id"
-          privacy="auth"
-          component={ViewSection}
-          onLeave={onLeaveSectionPage} /> */}
-        <Route path="*" component={NotFound} />
-      </Route>
+        <Route path="/" component={App}>
+          <IndexRoute name="login" component={Login} privacy="unauth" />
+          <Route name="signup" path="/signup" component={Signup} privacy="unauth" />
+          <Route name="about" path="/about" component={About} privacy="unauth" />
+          <Route name="sections" path="/sections" component={Sections} privacy="auth" />
+          <Route name="viewSection" path="/sections/:_id" component={Sections} privacy="auth" onEnter={onEnterSectionsPage} onLeave={onLeaveSectionsPage} />
+          <Route name="presentations" path="/presentations" component={Presentations} privacy="auth" />
+          <Route path="*" component={NotFound} />
+        </Route>
     </Route>
   </Router>,
   document.getElementById('react-root'),

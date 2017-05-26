@@ -6,13 +6,13 @@ import expect from 'expect';
 import { mount } from 'enzyme';
 
 // fixtures
-import presentations from './../../../fixtures/fixtures';
+import presentations from './../../../../fixtures/fixtures';
 
-// component
-import { PresentationsListHeader } from './PresentationsListHeader';
+// tested component
+import { NewPresentation } from './../NewPresentation';
 
 if (Meteor.isClient) {
-  describe('PresentationsListHeader', function () {
+  describe('NewPresentation', function () {
     let meteorCall;
     let Session;
 
@@ -24,7 +24,7 @@ if (Meteor.isClient) {
     });
 
     it('should call meteorCall on click', function () {
-      const wrapper = mount(<PresentationsListHeader meteorCall={meteorCall} Session={Session} />);
+      const wrapper = mount(<NewPresentation meteorCall={meteorCall} Session={Session} />);
 
       wrapper.find('button').simulate('click');
       meteorCall.calls[0].arguments[1](undefined, presentations[0]._id);
@@ -34,7 +34,7 @@ if (Meteor.isClient) {
     });
 
     it('should not set session for failed insert', function () {
-      const wrapper = mount(<PresentationsListHeader meteorCall={meteorCall} Session={Session} />);
+      const wrapper = mount(<NewPresentation meteorCall={meteorCall} Session={Session} />);
 
       wrapper.find('button').simulate('click');
       meteorCall.calls[0].arguments[1]({}, undefined);
