@@ -9,6 +9,7 @@ export const PresentationsListItem = (props) => {
   return (
     <div className={className} onClick={() => {
       props.Session.set('selectedPresentationId', props.presentation._id);
+      console.log('selectedPresentationId', props.presentation._id);
     }}>
       <h5 className="item__title">{ props.presentation.title || 'Untitled Presentation' }</h5>
       <p className="item__subtitle">{ moment(props.presentation.updatedAt).format('M/DD/YYYY') }</p>

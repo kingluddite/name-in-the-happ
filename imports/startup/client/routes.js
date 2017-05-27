@@ -21,8 +21,7 @@ import Presentations from '../../ui/pages/Presentations';
 // import ViewPresentation from './../../ui/components/presentations/ViewPresenation';
 
 const onEnterPresentationsPage = (nextState) => {
-  console.log('pres page section id', Session.get('selectedSectionId'));
-  Session.set('selectedPresentationId', nextState.params.id);
+  Session.set('selectedPresentationId', nextState.params._id);
 };
 
 const onLeavePresentationsPage = () => {
@@ -63,7 +62,6 @@ Meteor.startup(() => {
   Session.set('selectedPresentationId', undefined);
   Session.set('selectedSectionId', undefined);
   Session.set('isNavOpen', false);
-  // Session.set('currentSectionId', null);
   render(
     <Router history={browserHistory} >
       <Route onEnter={globalOnEnter} onChange={globalOnChange}>

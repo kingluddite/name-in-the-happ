@@ -6,10 +6,10 @@ import expect from 'expect';
 import { mount } from 'enzyme';
 
 // fixtures
-import presentations from './../../../../fixtures/fixtures';
+import presentations from './../../../fixtures/fixtures';
 
 // tested component
-import { NewPresentation } from './../NewPresentation';
+import { NewPresentation } from './NewPresentation';
 
 if (Meteor.isClient) {
   describe('NewPresentation', function () {
@@ -20,6 +20,7 @@ if (Meteor.isClient) {
       meteorCall = expect.createSpy();
       Session = {
         set: expect.createSpy(),
+        get: expect.createSpy(),
       };
     });
 
@@ -27,17 +28,28 @@ if (Meteor.isClient) {
       const wrapper = mount(<NewPresentation meteorCall={meteorCall} Session={Session} />);
 
       wrapper.find('button').simulate('click');
-      meteorCall.calls[0].arguments[1](undefined, presentations[0]._id);
+      meteorCall.calls[0].arguments[2](undefined, presentations[0]._id);
 
       expect(meteorCall.calls[0].arguments[0]).toBe('presentations.insert');
       expect(Session.set).toHaveBeenCalledWith('selectedPresentationId', presentations[0]._id);
     });
 
+    // it('should pass section id on meteorCall click', function () {
+    //   const sectionId = 'some section id';
+    //   const wrapper = mount(<NewPresentation meteorCall={meteorCall} Session={Session} />);
+    //
+    //   wrapper.find('button').simulate('click');
+    //   meteorCall.calls[0].arguments[2](undefined, presentations[0]._id);
+    //
+    //   expect(meteorCall.calls[0].arguments[1]).toBe(sectionId);
+    //   expect(Session.get).toHaveBeenCalledWith('sectionId', sectionId);
+    // });
+
     it('should not set session for failed insert', function () {
       const wrapper = mount(<NewPresentation meteorCall={meteorCall} Session={Session} />);
 
       wrapper.find('button').simulate('click');
-      meteorCall.calls[0].arguments[1]({}, undefined);
+      meteorCall.calls[0].arguments[2]({}, undefined);
 
       expect(meteorCall.calls[0].arguments[0]).toBe('presentations.insert');
       expect(Session.set).toNotHaveBeenCalled();

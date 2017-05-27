@@ -88,6 +88,7 @@ EditSection.propTypes = {
 export default createContainer(() => {
   const selectedSectionId = Session.get('selectedSectionId');
 
+
   return {
     selectedSectionId,
     section: SectionsCollection.findOne(selectedSectionId),

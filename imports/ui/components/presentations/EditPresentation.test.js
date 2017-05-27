@@ -6,10 +6,10 @@ import expect from 'expect';
 import { mount } from 'enzyme';
 
 // fixtures
-import presentations from './../../../../fixtures/fixtures';
+import presentations from './../../../fixtures/fixtures';
 
 // tested component
-import { EditPresentation } from './../EditPresentation';
+import { EditPresentation } from './EditPresentation';
 
 if (Meteor.isClient) {
   describe('EditPresentation', function () {
