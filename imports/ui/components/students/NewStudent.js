@@ -9,9 +9,9 @@ export class NewStudent extends Component {
 
   handleSubmit() {
     const sectionId = Session.get('sectionId');
-    // const presentationId = this.props.presentationId;
+    const presentationId = Session.get('presentationId');
 
-    this.props.meteorCall('students.insert', '', sectionId);
+    this.props.meteorCall('students.insert', '', sectionId, presentationId);
   }
 
   render() {
@@ -27,7 +27,6 @@ export class NewStudent extends Component {
 NewStudent.propTypes = {
   meteorCall: PropTypes.func.isRequired,
   Session: PropTypes.object.isRequired,
-  presentationId: PropTypes.string,
 };
 
 export default createContainer(() => {

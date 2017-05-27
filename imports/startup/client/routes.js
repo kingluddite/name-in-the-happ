@@ -85,7 +85,7 @@ Meteor.startup(() => {
           <Route name="viewPresentation" path="/presentations/:_id" component={Presentations} privacy="auth" onEnter={onEnterPresentationsPage} onLeave={onLeavePresentationsPage} />
 
           <Route name="students" path="/students" component={Students} privacy="auth" />
-          <Route name="viewPresentation" path="/students/:_id" component={Students} privacy="auth" onEnter={onEnterStudentsPage} onLeave={onLeaveStudentsPage} />
+          <Route name="viewStudents" path="/students/:_id" component={Students} privacy="auth" onEnter={onEnterStudentsPage} onLeave={onLeaveStudentsPage} />
           <Route path="*" component={NotFound} />
         </Route>
     </Route>

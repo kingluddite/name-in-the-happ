@@ -74,7 +74,7 @@ export class EditStudent extends Component {
              onClick={this.handleDeleteStudent.bind(this)}>
              Delete
            </button>
-           <NewStudent presentationId={this.props.presentationId}/>
+           <NewStudent />
          </div>
       );
     }
@@ -90,7 +90,6 @@ export class EditStudent extends Component {
 
 EditStudent.propTypes = {
   selectedStudentId: PropTypes.string,
-  presentationId: PropTypes.string.isRequired,
   presentation: PropTypes.object,
   student: PropTypes.object,
   call: PropTypes.func.isRequired,

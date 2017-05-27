@@ -1,36 +1,26 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Session } from 'meteor/session';
 
 // components
 import StudentsList from './../components/students/StudentsList';
 import EditStudent from './../components/students/EditStudent';
 
 class Students extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      presentationId: this.props.location.state.presentationId,
-    };
-  }
   render() {
     return (
       <div>
           <div className="page-content">
           <aside className="page-content__sidebar">
-            <StudentsList presentationId={this.state.presentationId} />
+            <StudentsList />
           </aside>
           <main className="page-content__main">
-            <EditStudent presentationId={this.state.presentationId} />
+            <EditStudent />{Session.get('presentationId')}
           </main>
         </div>
       </div>
     );
   }
 }
-
-Students.propTypes = {
-  location: PropTypes.object,
-};
 
 export default Students;

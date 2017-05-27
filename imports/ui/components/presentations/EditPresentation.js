@@ -83,7 +83,12 @@ export class EditPresentation extends Component {
              Delete
            </button>
            <ModalNewStudent presentationId={presentation._id}/>
-           <Link to={{ pathname: '/students', state: { presentationId: presentation._id } }}>View Students</Link>
+           <Link
+             to="/students"
+             onClick={ () => { Session.set('presentationId', presentation._id); }}
+            >
+              View Students
+            </Link>
          </div>
        </div>
       );

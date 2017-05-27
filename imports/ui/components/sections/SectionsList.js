@@ -34,7 +34,7 @@ export default createContainer(() => {
   const selectedSectionId = Session.get('selectedSectionId');
 
   Meteor.subscribe('sectionsPublication');
-
+  console.log(SectionsCollection.find().fetch());
   return {
     sections: SectionsCollection.find({}, {
       sort: { updatedAt: -1 },

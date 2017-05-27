@@ -6,8 +6,8 @@ import SimpleSchema from 'simpl-schema';
 const StudentsCollection = new Mongo.Collection('students');
 
 if (Meteor.isServer) {
-  Meteor.publish('StudentsPublication', function (sectionId, presentationId) { // eslint-disable-line func-names
-    return StudentsCollection.find({ userId: this.userId, sectionId, presentationId });
+  Meteor.publish('studentsPublication', function () { // eslint-disable-line func-names
+    return StudentsCollection.find({ userId: this.userId });
   });
 }
 
