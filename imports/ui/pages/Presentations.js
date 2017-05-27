@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Session } from 'meteor/session';
 
 // components
 import PresentationsList from './../components/presentations/PresentationsList';
@@ -15,7 +14,7 @@ class Presentations extends Component {
             <PresentationsList />
           </aside>
           <main className="page-content__main">
-            <EditPresentation />{Session.get('sectionId')}
+            <EditPresentation />
           </main>
         </div>
       </div>

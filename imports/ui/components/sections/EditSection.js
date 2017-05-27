@@ -19,6 +19,10 @@ export class EditSection extends Component {
 
   // componentDidUpdate(prevProps, prevState) {
   componentDidUpdate(prevProps) {
+    if (this.name) {
+      this.name.select();
+    }
+
     const currentSectionId = this.props.section ? this.props.section._id : undefined;
     const prevSectionId = prevProps.section ? prevProps.section._id : undefined;
 
@@ -49,6 +53,7 @@ export class EditSection extends Component {
          <input
            type="text"
            className="editor__title"
+           ref={ (input) => { this.name = input; }}
            value={this.state.name}
            placeholder="Section Name"
            onChange={this.handleNameChange.bind(this)} />

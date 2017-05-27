@@ -32,11 +32,11 @@ StudentsList.propTypes = {
 
 export default createContainer(() => {
   const selectedStudentId = Session.get('selectedStudentId');
-  // const sectionId = Session.get('sectionId');
-  // const presentationId = Session.get('presentationId');
+  const sectionId = Session.get('sectionId');
+  const presentationId = Session.get('presentationId');
 
-  Meteor.subscribe('studentsPublication');
-  console.log(StudentsCollection.find().fetch());
+  Meteor.subscribe('studentsPublication', sectionId, presentationId);
+
   return {
     students: StudentsCollection.find({}, {
       sort: { updatedAt: -1 },

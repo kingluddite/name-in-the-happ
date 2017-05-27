@@ -23,6 +23,9 @@ export class EditPresentation extends Component {
 
   // componentDidUpdate(prevProps, prevState) {
   componentDidUpdate(prevProps) {
+    if (this.title) {
+      this.title.select();
+    }
     const { presentation } = this.props;
     const currentPresentationId = presentation ? presentation._id : undefined;
     const prevPresentationId = prevProps.presentation ? prevProps.presentation._id : undefined;
@@ -69,6 +72,7 @@ export class EditPresentation extends Component {
            type="text"
            className="editor__title"
            value={title}
+           ref={ (input) => { this.title = input; }}
            placeholder="Presentation Title"
            onChange={this.handleTitleChange.bind(this)} />
          <textarea

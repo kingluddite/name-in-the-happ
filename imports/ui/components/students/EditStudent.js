@@ -22,32 +22,26 @@ export class EditStudent extends Component {
 
   // componentDidUpdate(prevProps, prevState) {
   componentDidUpdate(prevProps) {
+    if (this.name) {
+      this.name.select();
+    }
     const { student } = this.props;
     const currentStudentId = student ? student._id : undefined;
     const prevStudentId = prevProps.student ? prevProps.student._id : undefined;
 
     if (currentStudentId && currentStudentId !== prevStudentId) {
       this.setState({
-        title: student.title,
+        name: student.name,
       });
     }
   }
 
-  handleTitleChange(e) {
+  handleNameChange(e) {
     const { student } = this.props;
-    const title = e.target.value;
-    this.setState({ title });
+    const name = e.target.value;
+    this.setState({ name });
     this.props.call('students.update', student._id, {
-      title,
-    });
-  }
-
-  handleBodyChange(e) {
-    const { student } = this.props;
-    const body = e.target.value;
-    this.setState({ body });
-    this.props.call('students.update', student._id, {
-      body,
+      name,
     });
   }
 
@@ -66,9 +60,10 @@ export class EditStudent extends Component {
          <input
            type="text"
            className="editor__title"
+           ref={ (input) => { this.name = input; }}
            value={name}
            placeholder="Student Name"
-           onChange={this.handleTitleChange.bind(this)} />
+           onChange={this.handleNameChange.bind(this)} />
            <button
              className="button button--default"
              onClick={this.handleDeleteStudent.bind(this)}>
@@ -90,7 +85,6 @@ export class EditStudent extends Component {
 
 EditStudent.propTypes = {
   selectedStudentId: PropTypes.string,
-  presentation: PropTypes.object,
   student: PropTypes.object,
   call: PropTypes.func.isRequired,
   browserHistory: PropTypes.object.isRequired,
@@ -101,7 +95,7 @@ export default createContainer(() => {
 
   return {
     selectedStudentId,
-    presentation: StudentsCollection.findOne(selectedStudentId),
+    student: StudentsCollection.findOne(selectedStudentId),
     call: Meteor.call,
     browserHistory,
   };

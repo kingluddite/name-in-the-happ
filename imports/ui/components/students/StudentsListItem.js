@@ -10,7 +10,7 @@ export const StudentsListItem = (props) => {
     <div className={className} onClick={() => {
       props.Session.set('selectedStudentId', props.student._id);
     }}>
-      <h5 className="item__title">{ props.student.title || 'Unnamed Student' }</h5>
+      <h5 className="item__title">{ props.student.name || 'Unnamed Student' }</h5>
       <p className="item__subtitle">{ moment(props.student.updatedAt).format('M/DD/YYYY') }</p>
     </div>
   );
