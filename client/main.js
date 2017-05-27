@@ -10,6 +10,7 @@ import './../imports/startup/simple-schema-configuration';
 // collections
 import './../imports/api/sections';
 import './../imports/api/presentations';
+import './../imports/api/students';
 
 Tracker.autorun(() => {
   const isAuthenticated = !!Meteor.userId();
@@ -33,6 +34,15 @@ Tracker.autorun(() => {
 
   if (selectedSectionId) {
     browserHistory.replace(`/sections/${selectedSectionId}`);
+  }
+});
+
+Tracker.autorun(() => {
+  const selectedStudentId = Session.get('selectedStudentId');
+  Session.set('isNavOpen', false);
+
+  if (selectedStudentId) {
+    browserHistory.replace(`/students/${selectedStudentId}`);
   }
 });
 

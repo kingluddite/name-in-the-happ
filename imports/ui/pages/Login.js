@@ -63,6 +63,8 @@ Login.propTypes = {
   loginWithPassword: PropTypes.func.isRequired,
 };
 
-export default createContainer(() => ({
-  loginWithPassword: Meteor.loginWithPassword,
-}), Login);
+export default createContainer(() => {
+  return ({
+    loginWithPassword: Meteor.loginWithPassword,
+  });
+}, Login);

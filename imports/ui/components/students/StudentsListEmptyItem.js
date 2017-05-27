@@ -1,12 +1,12 @@
 import React from 'react';
 
-const PresentationsListEmptyItem = () => {
+const StudentsListEmptyItem = () => {
   return (
    <div className="empty-item">
-     <h1>No Presentations</h1>
+     <h1>No Students</h1>
      <p>Please add one</p>
    </div>
   );
 };
 
-export default PresentationsListEmptyItem;
+export default StudentsListEmptyItem;

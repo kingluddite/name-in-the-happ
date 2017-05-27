@@ -3,10 +3,13 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 
 // collections
 import PresentationsCollection from './../../../api/presentations';
+
+// components
+import ModalNewStudent from './../students/NewStudent';
 
 export class EditPresentation extends Component {
   constructor(props) {
@@ -20,50 +23,56 @@ export class EditPresentation extends Component {
 
   // componentDidUpdate(prevProps, prevState) {
   componentDidUpdate(prevProps) {
-    const currentPresentationId = this.props.presentation ? this.props.presentation._id : undefined;
+    const { presentation } = this.props;
+    const currentPresentationId = presentation ? presentation._id : undefined;
     const prevPresentationId = prevProps.presentation ? prevProps.presentation._id : undefined;
 
     if (currentPresentationId && currentPresentationId !== prevPresentationId) {
       this.setState({
-        title: this.props.presentation.title,
-        body: this.props.presentation.body,
+        title: presentation.title,
+        body: presentation.body,
       });
     }
   }
 
-  handleTitleChange(event) {
-    const title = event.target.value;
+  handleTitleChange(e) {
+    const { presentation } = this.props;
+    const title = e.target.value;
     this.setState({ title });
-    this.props.call('presentations.update', this.props.presentation._id, {
+    this.props.call('presentations.update', presentation._id, {
       title,
     });
   }
 
-  handleBodyChange(event) {
-    const body = event.target.value;
+  handleBodyChange(e) {
+    const { presentation } = this.props;
+    const body = e.target.value;
     this.setState({ body });
-    this.props.call('presentations.update', this.props.presentation._id, {
+    this.props.call('presentations.update', presentation._id, {
       body,
     });
   }
 
   handleDeletePresentation() {
-    this.props.call('presentations.remove', this.props.presentation._id);
+    const { presentation } = this.props;
+    this.props.call('presentations.remove', presentation._id);
     this.props.browserHistory.push('/presentations');
   }
 
   render() {
-    if (this.props.presentation) {
+    const { presentation } = this.props;
+    const { title, body } = this.state;
+    if (presentation) {
       return (
         <div className="editor">
          <input
            type="text"
            className="editor__title"
-           value={this.state.title}
+           value={title}
            placeholder="Presentation Title"
            onChange={this.handleTitleChange.bind(this)} />
          <textarea
-           value={this.state.body}
+           value={body}
            className="editor__body"
            placeholder="Enter Names of Presenters here (separate with spaces)"
            onChange={this.handleBodyChange.bind(this)} />
@@ -71,8 +80,10 @@ export class EditPresentation extends Component {
            <button
              className="button button--default"
              onClick={this.handleDeletePresentation.bind(this)}>
-             Delete Presentation
+             Delete
            </button>
+           <ModalNewStudent presentationId={presentation._id}/>
+           <Link to={{ pathname: '/students', state: { presentationId: presentation._id } }}>View Students</Link>
          </div>
        </div>
       );
