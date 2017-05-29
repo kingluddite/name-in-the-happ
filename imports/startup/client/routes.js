@@ -20,29 +20,40 @@ import Students from '../../ui/pages/Students';
 // import NewPresentation from './../../ui/components/presentations/NewPresentation';
 // import EditPresentation from './../../ui/components/presentations/EditPresentation';
 // import ViewPresentation from './../../ui/components/presentations/ViewPresenation';
-
-const onEnterPresentationsPage = (nextState) => {
-  Session.set('selectedPresentationId', nextState.params._id);
+//
+const getPageTitle = (nextState) => {
+  const path = nextState.location.pathname;
+  const pageTitle = path.replace(/\//g, '').toUpperCase();
+  Session.set('pageTitle', pageTitle);
 };
 
-const onLeavePresentationsPage = () => {
+const onEnterPresentationsViewPage = (nextState) => {
+  Session.set('selectedPresentationId', nextState.params._id);
+  Session.set('pageTitle', undefined);
+};
+
+const onLeavePresentationsViewPage = () => {
   Session.set('selectedPresentationId', undefined);
 };
 
-const onEnterSectionsPage = (nextState) => {
+const onEnterSectionsViewPage = (nextState) => {
   Session.set('selectedSectionId', nextState.params._id);
+  Session.set('pageTitle', 'Sections');
 };
 
-const onLeaveSectionsPage = () => {
+const onLeaveSectionsViewPage = () => {
   Session.set('selectedSectionId', undefined);
+  Session.set('pageTitle', undefined);
 };
 
-const onEnterStudentsPage = (nextState) => {
+const onEnterStudentsViewPage = (nextState) => {
   Session.set('selectedStudentId', nextState.params._id);
+  Session.set('pageTitle', undefined);
 };
 
-const onLeaveStudentsPage = () => {
+const onLeaveStudentsViewPage = () => {
   Session.set('selectedStudentId', undefined);
+  Session.set('pageTitle', undefined);
 };
 
 const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
@@ -61,6 +72,10 @@ const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
 export const globalOnEnter = (nextState) => {
   const lastRoute = nextState.routes[nextState.routes.length - 1];
   Session.set('currentPagePrivacy', lastRoute.privacy);
+  // get page title
+  const path = nextState.location.pathname.split('/')[1];
+  const pageTitle = path.replace(/\//g, '').toUpperCase();
+  Session.set('pageTitle', pageTitle);
 };
 
 export const globalOnChange = (prevState, nextState) => {
@@ -80,12 +95,12 @@ Meteor.startup(() => {
           <Route name="signup" path="/signup" component={Signup} privacy="unauth" />
           <Route name="about" path="/about" component={About} privacy="unauth" />
           <Route name="sections" path="/sections" component={Sections} privacy="auth" />
-          <Route name="viewSection" path="/sections/:_id" component={Sections} privacy="auth" onEnter={onEnterSectionsPage} onLeave={onLeaveSectionsPage} />
+          <Route name="viewSection" path="/sections/:_id" component={Sections} privacy="auth" onEnter={onEnterSectionsViewPage} onLeave={onLeaveSectionsViewPage} />
           <Route name="presentations" path="/presentations" component={Presentations} privacy="auth" />
-          <Route name="viewPresentation" path="/presentations/:_id" component={Presentations} privacy="auth" onEnter={onEnterPresentationsPage} onLeave={onLeavePresentationsPage} />
+          <Route name="viewPresentation" path="/presentations/:_id" component={Presentations} privacy="auth" onEnter={onEnterPresentationsViewPage} onLeave={onLeavePresentationsViewPage} />
 
           <Route name="students" path="/students" component={Students} privacy="auth" />
-          <Route name="viewStudents" path="/students/:_id" component={Students} privacy="auth" onEnter={onEnterStudentsPage} onLeave={onLeaveStudentsPage} />
+          <Route name="viewStudents" path="/students/:_id" component={Students} privacy="auth" onEnter={onEnterStudentsViewPage} onLeave={onLeaveStudentsViewPage} />
           <Route path="*" component={NotFound} />
         </Route>
     </Route>
