@@ -6,6 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import { browserHistory, Link } from 'react-router';
 
 // collections
+import SectionsCollection from './../../../api/sections';
 import PresentationsCollection from './../../../api/presentations';
 
 // components
@@ -66,11 +67,12 @@ export class EditPresentation extends Component {
   }
 
   render() {
-    const { presentation } = this.props;
+    const { presentation, section } = this.props;
     const { title, body } = this.state;
     if (presentation) {
       return (
         <div className="editor">
+         <span>{section.name}</span>
          <input
            type="text"
            className="editor__title"
@@ -120,6 +122,7 @@ export class EditPresentation extends Component {
 
 EditPresentation.propTypes = {
   selectedPresentationId: PropTypes.string,
+  section: PropTypes.object,
   presentation: PropTypes.object,
   call: PropTypes.func.isRequired,
   browserHistory: PropTypes.object.isRequired,
@@ -127,9 +130,12 @@ EditPresentation.propTypes = {
 
 export default createContainer(() => {
   const selectedPresentationId = Session.get('selectedPresentationId');
+  const sectionId = Session.get('sectionId');
+  Meteor.subscribe('sectionsPublication', sectionId);
 
   return {
     selectedPresentationId,
+    section: SectionsCollection.findOne(sectionId),
     presentation: PresentationsCollection.findOne(selectedPresentationId),
     call: Meteor.call,
     browserHistory,
