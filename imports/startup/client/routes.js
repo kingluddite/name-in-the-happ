@@ -27,19 +27,25 @@ import Students from '../../ui/pages/Students';
 //   const pageTitle = path.replace(/\//g, '').toUpperCase();
 //   Session.set('pageTitle', pageTitle);
 // };
+const onEnterHomePage = (nextState) => {
+  Session.set('selectedPresentationId', nextState.params._id);
+  Session.set('pageTitle', undefined);
+  console.log('yo');
+};
 
 const onEnterPresentationsViewPage = (nextState) => {
   Session.set('selectedPresentationId', nextState.params._id);
-  Session.set('pageTitle', undefined);
+  Session.set('pageTitle', 'PRESENTATIONS');
 };
 
 const onLeavePresentationsViewPage = () => {
   Session.set('selectedPresentationId', undefined);
+  Session.set('pageTitle', undefined);
 };
 
 const onEnterSectionsViewPage = (nextState) => {
   Session.set('selectedSectionId', nextState.params._id);
-  Session.set('pageTitle', 'Sections');
+  Session.set('pageTitle', 'SECTIONS');
 };
 
 const onLeaveSectionsViewPage = () => {
@@ -49,7 +55,7 @@ const onLeaveSectionsViewPage = () => {
 
 const onEnterStudentsViewPage = (nextState) => {
   Session.set('selectedStudentId', nextState.params._id);
-  Session.set('pageTitle', undefined);
+  Session.set('pageTitle', 'STUDENTS');
 };
 
 const onLeaveStudentsViewPage = () => {
@@ -88,11 +94,12 @@ Meteor.startup(() => {
   Session.set('selectedSectionId', undefined);
   Session.set('selectedStudentId', undefined);
   Session.set('isNavOpen', false);
+  Session.set('pageTitle', undefined);
   render(
     <Router history={browserHistory} >
       <Route onEnter={globalOnEnter} onChange={globalOnChange}>
         <Route path="/" component={App}>
-          <IndexRoute name="login" component={Login} privacy="unauth" />
+          <IndexRoute name="login" component={Login} privacy="unauth" onEnter={onEnterHomePage} />
           <Route name="signup" path="/signup" component={Signup} privacy="unauth" />
           <Route name="about" path="/about" component={About} privacy="unauth" />
           <Route name="sections" path="/sections" component={Sections} privacy="auth" />

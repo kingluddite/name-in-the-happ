@@ -4,7 +4,8 @@ import { Session } from 'meteor/session';
 import Header from './../components/Header';
 
 const App = ({ children }) => {
-  const pageTitle = Session.get('pageTitle') || undefined;
+  console.log(Session.get('pageTitle'));
+  const pageTitle = Session.get('pageTitle');
   return (
     <div>
       <Header title="Name from the Happ" pageTitle={pageTitle} />

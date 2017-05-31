@@ -15,6 +15,21 @@ export class Header extends Component {
       return undefined;
     };
 
+    const renderLogout = () => {
+      if (Session.get('currentPagePrivacy') === 'auth') {
+        return (
+         <div>
+           <button
+             className="button"
+             onClick={() => { this.props.handleLogout(); }}>
+             Logout
+           </button>
+         </div>
+        );
+      }
+      return undefined;
+    };
+
     return (
       <header className="header">
         <div className="header__content">
@@ -26,13 +41,7 @@ export class Header extends Component {
           <div>
             <h2>{this.props.pageTitle}</h2>
           </div>
-          <div>
-            <button
-              className="button"
-              onClick={() => { this.props.handleLogout(); }}>
-              Logout
-            </button>
-          </div>
+          {renderLogout()}
         </div>
       </header>
     );
