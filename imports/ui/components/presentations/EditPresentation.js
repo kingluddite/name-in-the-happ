@@ -9,7 +9,7 @@ import { browserHistory, Link } from 'react-router';
 import PresentationsCollection from './../../../api/presentations';
 
 // components
-import ModalNewStudent from './../students/NewStudent';
+import ModalNewStudent from './../students/ModalNewStudent';
 
 export class EditPresentation extends Component {
   constructor(props) {
@@ -21,11 +21,14 @@ export class EditPresentation extends Component {
     };
   }
 
+  // componentDidMount() {
+  //   if (this.title) {
+  //     this.title.select();
+  //   }
+  // }
+
   // componentDidUpdate(prevProps, prevState) {
   componentDidUpdate(prevProps) {
-    if (this.title) {
-      this.title.select();
-    }
     const { presentation } = this.props;
     const currentPresentationId = presentation ? presentation._id : undefined;
     const prevPresentationId = prevProps.presentation ? prevProps.presentation._id : undefined;
@@ -80,19 +83,27 @@ export class EditPresentation extends Component {
            className="editor__body"
            placeholder="Enter Names of Presenters here (separate with spaces)"
            onChange={this.handleBodyChange.bind(this)} />
-         <div>
+         <div className="editor__button--container">
            <button
              className="button button--default"
              onClick={this.handleDeletePresentation.bind(this)}>
-             Delete
+              Delete
            </button>
            <ModalNewStudent presentationId={presentation._id}/>
            <Link
              to="/students"
+             className="button button--pill"
              onClick={ () => { Session.set('presentationId', presentation._id); }}
             >
               View Students
             </Link>
+            <Link
+              to={`/presentations/${presentation._id}/watch`}
+              className="button button--pill"
+              onClick={ () => { Session.set('presentationId', presentation._id); }}
+             >
+               View Presentation
+             </Link>
          </div>
        </div>
       );

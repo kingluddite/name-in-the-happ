@@ -13,13 +13,14 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   /* eslint func-names: ["error", "as-needed"] */
-  'students.insert': function (name, sectionId, presentationId) {
+  'students.insert': function (name, title, sectionId, presentationId) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
 
     return StudentsCollection.insert({
       name,
+      title,
       groupProject: false,
       currentSpeaker: false,
       notPresent: false,
@@ -59,6 +60,10 @@ Meteor.methods({
         min: 1,
       },
       name: {
+        type: String,
+        optional: true,
+      },
+      title: {
         type: String,
         optional: true,
       },

@@ -3,6 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
+import { Link } from 'react-router';
 
 // collections
 import PresentationsCollection from '../../../api/presentations';
@@ -19,6 +20,9 @@ export const PresentationsList = (props) => {
 
   return (
     <div className="item-list">
+      <Link className="button--link" to="/sections">
+        <i className="fa fa-arrow-left" aria-hidden="true"> BACK</i>
+      </Link>
       <NewPresentation />
       {(props.presentations.length === 0) ? <PresentationsListEmptyItem /> : undefined}
       {renderPresentations}

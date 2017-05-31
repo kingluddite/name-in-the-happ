@@ -23,7 +23,9 @@ export class Header extends Component {
             onClick={this.props.handleNavToggle} src={navImageSrc} />
           <h1>{this.props.title}</h1>
           <h2 className="header__slogan">{renderSlogan()}</h2>
-          <div>{this.props.pageTitle}</div>
+          <div>
+            <h2>{this.props.pageTitle}</h2>
+          </div>
           <div>
             <button
               className="button"

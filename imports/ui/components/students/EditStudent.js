@@ -8,23 +8,21 @@ import { browserHistory } from 'react-router';
 // collections
 import StudentsCollection from './../../../api/students';
 
-// components
-import NewStudent from './../students/NewStudent';
-
 export class EditStudent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       name: '',
+      title: '',
     };
   }
 
   // componentDidUpdate(prevProps, prevState) {
   componentDidUpdate(prevProps) {
-    if (this.name) {
-      this.name.select();
-    }
+    // if (this.name) {
+    //   this.name.select();
+    // }
     const { student } = this.props;
     const currentStudentId = student ? student._id : undefined;
     const prevStudentId = prevProps.student ? prevProps.student._id : undefined;
@@ -32,6 +30,7 @@ export class EditStudent extends Component {
     if (currentStudentId && currentStudentId !== prevStudentId) {
       this.setState({
         name: student.name,
+        title: student.title,
       });
     }
   }
@@ -45,6 +44,15 @@ export class EditStudent extends Component {
     });
   }
 
+  handleTitleChange(e) {
+    const { student } = this.props;
+    const title = e.target.value;
+    this.setState({ title });
+    this.props.call('students.update', student._id, {
+      title,
+    });
+  }
+
   handleDeleteStudent() {
     const { student } = this.props;
     this.props.call('students.remove', student._id);
@@ -53,7 +61,7 @@ export class EditStudent extends Component {
 
   render() {
     const { student } = this.props;
-    const { name } = this.state;
+    const { name, title } = this.state;
     if (student) {
       return (
         <div className="editor">
@@ -64,12 +72,20 @@ export class EditStudent extends Component {
            value={name}
            placeholder="Student Name"
            onChange={this.handleNameChange.bind(this)} />
-           <button
-             className="button button--default"
-             onClick={this.handleDeleteStudent.bind(this)}>
-             Delete
-           </button>
-           <NewStudent />
+           <input
+             type="text"
+             className="editor__title"
+             ref={ (input) => { this.title = input; }}
+             value={title}
+             placeholder="Project Title"
+             onChange={this.handleTitleChange.bind(this)} />
+           <div className="editor__button--container">
+             <button
+               className="button button--default"
+               onClick={this.handleDeleteStudent.bind(this)}>
+               Delete
+             </button>
+           </div>
          </div>
       );
     }

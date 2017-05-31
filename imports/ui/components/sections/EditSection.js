@@ -19,9 +19,9 @@ export class EditSection extends Component {
 
   // componentDidUpdate(prevProps, prevState) {
   componentDidUpdate(prevProps) {
-    if (this.name) {
-      this.name.select();
-    }
+    // if (this.name) {
+    //   this.name.select();
+    // }
 
     const currentSectionId = this.props.section ? this.props.section._id : undefined;
     const prevSectionId = prevProps.section ? prevProps.section._id : undefined;
@@ -57,17 +57,17 @@ export class EditSection extends Component {
            value={this.state.name}
            placeholder="Section Name"
            onChange={this.handleNameChange.bind(this)} />
-           <div>
+           <div className="editor__button--container">
              <button
                className="button button--default"
                onClick={this.handleDeleteSection.bind(this)}>
-               Delete Section
+               Delete
              </button>
              <Link
                to="/presentations"
                onClick={ () => { Session.set('sectionId', this.props.section._id); }}
-               className="button button--default">
-               View Presentations
+               className="button button--pill">
+               View
              </Link>
            </div>
          </div>

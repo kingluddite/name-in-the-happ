@@ -5,7 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import Modal from 'react-modal';
 
-export class NewStudent extends Component {
+export class ModalNewStudent extends Component {
   constructor(props) {
     super(props);
 
@@ -27,7 +27,7 @@ export class NewStudent extends Component {
     // console.log(namesArray);
     e.preventDefault();
     namesArray.map((name) => {
-      return this.props.meteorCall('students.insert', name, sectionId, presentationId, (err, res) => {
+      return this.props.meteorCall('students.insert', name, sectionId, presentationId, (err) => {
         if (!err) {
           this.closeModal();
         } else {
@@ -56,14 +56,21 @@ export class NewStudent extends Component {
   render() {
     return (
       <div>
-        <button className="button" onClick={this.openModal}>+ Add Students</button>
+        <button
+          className="button button--pill"
+          onClick={this.openModal}>
+            <i className="fa fa-plus" aria-hidden="true"></i> Students
+        </button>
         <Modal
           isOpen={this.state.modalIsOpen}
           contentLabel="Add Students"
           onAfterOpen={() => { return this.names.focus(); }}
           onRequestClose={this.closeModal}
-          className="boxed-view__box"
+          className="boxed-view__modal"
           >
+          <button className="button--close" onClick={this.closeModal}>
+            <i className="fa fa-times" aria-hidden="true"></i>
+          </button>
           <h1>Add Students</h1>
           {this.state.error ? <p>{this.state.error}</p> : undefined}
           <p>If you want to add multiple students, just separate them with spaces</p>
@@ -76,14 +83,13 @@ export class NewStudent extends Component {
             ></textarea>
             <button className="button">Add Students</button>
           </form>
-          <button className="button" onClick={this.closeModal}>close</button>
         </Modal>
       </div>
     );
   }
 }
 
-NewStudent.propTypes = {
+ModalNewStudent.propTypes = {
   meteorCall: PropTypes.func.isRequired,
   Session: PropTypes.object.isRequired,
   presentationId: PropTypes.string,
@@ -94,4 +100,4 @@ export default createContainer(() => {
     meteorCall: Meteor.call,
     Session,
   });
-}, NewStudent);
+}, ModalNewStudent);

@@ -33,12 +33,28 @@
 .button--link {
   display: inline-block;
   text-decoration: none;
+  color: $black;
+  padding: $space;
+  &:hover {
+    background-color: $burning-orange;
+    color: $white;
+  }
+}
+
+.button--close {
+  display: inline-block;
+  font-size: 3rem;
+  float: right;
 }
 
 .button--pill {
   background-color: transparent;
   border: 1px solid $black;
   color: $black;
+  &:hover {
+    background-color: $burning-orange;
+    color: $white;
+  }
 }
 
 .button--delete {
@@ -59,4 +75,9 @@
     background-color: $summer-green;
     color: $white;
   }
+}
+
+.editor__button--container {
+  display: flex;
+  justify-content: space-between;
 }

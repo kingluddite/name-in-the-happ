@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
-import { Link } from 'react-router';
 
 export class NewStudent extends Component {
 
@@ -17,7 +16,6 @@ export class NewStudent extends Component {
   render() {
     return (
       <div className="item-list__header">
-        <Link to="/presentations" className="button">Back</Link>
         <button className="button" onClick={this.handleSubmit.bind(this)}>Add Students</button>
       </div>
     );

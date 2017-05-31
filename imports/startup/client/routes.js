@@ -16,16 +16,17 @@ import Sections from '../../ui/pages/Sections';
 // import NewSection from './../../ui/components/sections/NewSection';
 // import ViewSection from '../../ui/components/sections/ViewSection';
 import Presentations from '../../ui/pages/Presentations';
+import WatchPresentation from '../../ui/components/presentations/WatchPresentation';
 import Students from '../../ui/pages/Students';
 // import NewPresentation from './../../ui/components/presentations/NewPresentation';
 // import EditPresentation from './../../ui/components/presentations/EditPresentation';
 // import ViewPresentation from './../../ui/components/presentations/ViewPresenation';
 //
-const getPageTitle = (nextState) => {
-  const path = nextState.location.pathname;
-  const pageTitle = path.replace(/\//g, '').toUpperCase();
-  Session.set('pageTitle', pageTitle);
-};
+// const getPageTitle = (nextState) => {
+//   const path = nextState.location.pathname;
+//   const pageTitle = path.replace(/\//g, '').toUpperCase();
+//   Session.set('pageTitle', pageTitle);
+// };
 
 const onEnterPresentationsViewPage = (nextState) => {
   Session.set('selectedPresentationId', nextState.params._id);
@@ -98,9 +99,9 @@ Meteor.startup(() => {
           <Route name="viewSection" path="/sections/:_id" component={Sections} privacy="auth" onEnter={onEnterSectionsViewPage} onLeave={onLeaveSectionsViewPage} />
           <Route name="presentations" path="/presentations" component={Presentations} privacy="auth" />
           <Route name="viewPresentation" path="/presentations/:_id" component={Presentations} privacy="auth" onEnter={onEnterPresentationsViewPage} onLeave={onLeavePresentationsViewPage} />
-
           <Route name="students" path="/students" component={Students} privacy="auth" />
           <Route name="viewStudents" path="/students/:_id" component={Students} privacy="auth" onEnter={onEnterStudentsViewPage} onLeave={onLeaveStudentsViewPage} />
+          <Route name="watchPresentation" path="/presentations/:_id/watch" component={WatchPresentation} privacy="auth" />
           <Route path="*" component={NotFound} />
         </Route>
     </Route>
