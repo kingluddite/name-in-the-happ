@@ -4,7 +4,6 @@ import { Session } from 'meteor/session';
 import Header from './../components/Header';
 
 const App = ({ children }) => {
-  console.log(Session.get('pageTitle'));
   const pageTitle = Session.get('pageTitle');
   return (
     <div>

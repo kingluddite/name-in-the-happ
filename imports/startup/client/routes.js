@@ -22,45 +22,33 @@ import Students from '../../ui/pages/Students';
 // import EditPresentation from './../../ui/components/presentations/EditPresentation';
 // import ViewPresentation from './../../ui/components/presentations/ViewPresenation';
 //
-// const getPageTitle = (nextState) => {
-//   const path = nextState.location.pathname;
-//   const pageTitle = path.replace(/\//g, '').toUpperCase();
-//   Session.set('pageTitle', pageTitle);
-// };
+
 const onEnterHomePage = (nextState) => {
   Session.set('selectedPresentationId', nextState.params._id);
-  Session.set('pageTitle', undefined);
-  console.log('yo');
 };
 
 const onEnterPresentationsViewPage = (nextState) => {
   Session.set('selectedPresentationId', nextState.params._id);
-  Session.set('pageTitle', 'PRESENTATIONS');
 };
 
 const onLeavePresentationsViewPage = () => {
   Session.set('selectedPresentationId', undefined);
-  Session.set('pageTitle', undefined);
 };
 
 const onEnterSectionsViewPage = (nextState) => {
   Session.set('selectedSectionId', nextState.params._id);
-  Session.set('pageTitle', 'SECTIONS');
 };
 
 const onLeaveSectionsViewPage = () => {
   Session.set('selectedSectionId', undefined);
-  Session.set('pageTitle', undefined);
 };
 
 const onEnterStudentsViewPage = (nextState) => {
   Session.set('selectedStudentId', nextState.params._id);
-  Session.set('pageTitle', 'STUDENTS');
 };
 
 const onLeaveStudentsViewPage = () => {
   Session.set('selectedStudentId', undefined);
-  Session.set('pageTitle', undefined);
 };
 
 const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
@@ -80,8 +68,13 @@ export const globalOnEnter = (nextState) => {
   const lastRoute = nextState.routes[nextState.routes.length - 1];
   Session.set('currentPagePrivacy', lastRoute.privacy);
   // get page title
+  // grab text after first `/` in URL
   const path = nextState.location.pathname.split('/')[1];
-  const pageTitle = path.replace(/\//g, '').toUpperCase();
+  // remove all `/` from URL
+  let pageTitle = path.replace(/\//g, '').toUpperCase();
+  // are we on the home page? then pageTitle is LOGIN
+  if (pageTitle.length === 0) pageTitle = 'LOGIN';
+
   Session.set('pageTitle', pageTitle);
 };
 
@@ -94,7 +87,7 @@ Meteor.startup(() => {
   Session.set('selectedSectionId', undefined);
   Session.set('selectedStudentId', undefined);
   Session.set('isNavOpen', false);
-  Session.set('pageTitle', undefined);
+  // Session.set('pageTitle', undefined);
   render(
     <Router history={browserHistory} >
       <Route onEnter={globalOnEnter} onChange={globalOnChange}>
