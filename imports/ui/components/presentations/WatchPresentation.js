@@ -4,17 +4,45 @@ import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import { randomArrItem } from './../../../helpers/myHelpers';
 
 // collections
 import PresentationsCollection from '../../../api/presentations';
 import StudentsCollection from '../../../api/students';
 
 export class WatchPresentation extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      presentationStarted: false,
+      currentSpeaker: {},
+    };
+  }
 
   renderStudents() {
     return this.props.students.map((student) => {
       return <li key={student._id}>{student.name}</li>;
     });
+  }
+
+  beginPresentation() {
+    const randomStudent = randomArrItem(this.props.students);
+    randomStudent.currentSpeaker = true;
+    this.setState({
+      presentationStarted: true,
+      currentSpeaker: randomStudent,
+    });
+      // setTimeout(function() {
+      //   console.log(randomStudent.currentSpeaker);
+      // });
+
+      // console.log(randomStudent[currentSpeaker]);
+      // randomStudent = {
+      //   currentSpeaker: true,
+      // };
+      // randomStudent.currentSpeaker = true;
+      // console.log(randomStudent.toString());
   }
 
   render() {
@@ -34,7 +62,17 @@ export class WatchPresentation extends Component {
           </aside>
           <main className="page-content__main">
             <div className="editor">
-              show presentation here
+              {this.state.currentSpeaker.name}
+              <div>
+                {!this.state.presenationStarted ? (
+                  <button
+                    className="button" onClick={this.beginPresentation.bind(this)}>
+                    Begin
+                  </button>
+                ) : undefined}
+                <button className="button">Skip</button>
+                <button className="button">Absent</button>
+              </div>
             </div>
           </main>
         </div>

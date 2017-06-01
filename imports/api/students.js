@@ -18,6 +18,27 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
 
+    new SimpleSchema({
+      name: {
+        type: String,
+        min: 1,
+      },
+      currentSpeaker: {
+        type: Boolean,
+      },
+      notPresent: {
+        type: Boolean,
+      },
+      completed: {
+        type: Boolean,
+      },
+      onDeck: {
+        type: Boolean,
+      },
+    }).validate({
+      _id,
+    });
+
     return StudentsCollection.insert({
       name,
       groupProject: false,
