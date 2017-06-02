@@ -7,7 +7,14 @@ const PresentationsCollection = new Mongo.Collection('presentations');
 
 if (Meteor.isServer) {
   Meteor.publish('presentationsPublication', function (sectionId) { // eslint-disable-line func-names
-    return PresentationsCollection.find({ userId: this.userId, sectionId });
+    const userId = this.userId;
+    const allPresWithSections = PresentationsCollection.find({ userId, sectionId });
+
+    if (allPresWithSections) {
+      return allPresWithSections;
+    }
+
+    return this.ready();
   });
 }
 
@@ -56,6 +63,10 @@ Meteor.methods({
       },
       title: {
         type: String,
+        optional: true,
+      },
+      startDate: {
+        type: Date,
         optional: true,
       },
       body: {

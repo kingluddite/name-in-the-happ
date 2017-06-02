@@ -9,7 +9,6 @@ export const NewSection = (props) => {
     props.meteorCall('sections.insert', (err, res) => {
       if (res) {
         props.Session.set('selectedSectionId', res);
-        console.log('sid from add', res);
       }
     });
   };

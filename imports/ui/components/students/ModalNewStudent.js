@@ -24,7 +24,7 @@ export class ModalNewStudent extends Component {
     const presentationId = this.props.presentationId;
     const { names } = this.state;
     const namesArray = names.split(' ');
-    // console.log(namesArray);
+
     e.preventDefault();
     namesArray.map((name) => {
       return this.props.meteorCall('students.insert', name, sectionId, presentationId, (err) => {

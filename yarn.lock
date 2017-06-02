@@ -400,6 +400,10 @@ circular-json@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.1.tgz#be8b36aefccde8b3ca7aa2d6afc07a37242c0d2d"
 
+classnames@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
+
 cli-cursor@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/cli-cursor/-/cli-cursor-1.0.2.tgz#64da3f7d56a54412e59794bd62dc35295e8f2987"
@@ -499,7 +503,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-class@^15.5.2:
+create-react-class@^15.5.2, create-react-class@^15.5.x:
   version "15.5.3"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.5.3.tgz#fb0f7cae79339e9a179e194ef466efa3923820fe"
   dependencies:
@@ -1593,7 +1597,7 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-moment@^2.18.1:
+moment@^2.17.1, moment@^2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
@@ -1915,6 +1919,16 @@ react-addons-test-utils@^15.5.1:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
+react-datepicker@^0.46.0:
+  version "0.46.0"
+  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-0.46.0.tgz#dd0c58efde9931964a248854e073151374fc937f"
+  dependencies:
+    classnames "^2.2.5"
+    moment "^2.17.1"
+    prop-types "^15.5.8"
+    react-onclickoutside "^5.11.1"
+    tether "^1.4.0"
+
 react-dom@^15.5.4:
   version "15.5.4"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.5.4.tgz#ba0c28786fd52ed7e4f2135fe0288d462aef93da"
@@ -1937,6 +1951,12 @@ react-modal@^1.7.7:
     exenv "1.2.0"
     lodash.assign "^4.2.0"
     prop-types "^15.5.7"
+
+react-onclickoutside@^5.11.1:
+  version "5.11.1"
+  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-5.11.1.tgz#00314e52567cf55faba94cabbacd119619070623"
+  dependencies:
+    create-react-class "^15.5.x"
 
 react-router@3.0.0:
   version "3.0.0"
@@ -2211,6 +2231,10 @@ table@^3.7.8:
     lodash "^4.0.0"
     slice-ansi "0.0.4"
     string-width "^2.0.0"
+
+tether@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/tether/-/tether-1.4.0.tgz#0f9fa171f75bf58485d8149e94799d7ae74d1c1a"
 
 text-table@~0.2.0:
   version "0.2.0"

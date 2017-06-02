@@ -21,6 +21,7 @@ Tracker.autorun(() => {
 
 Tracker.autorun(() => {
   const selectedPresentationId = Session.get('selectedPresentationId');
+
   Session.set('isNavOpen', false);
 
   if (selectedPresentationId) {

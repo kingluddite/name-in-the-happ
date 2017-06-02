@@ -11,7 +11,7 @@ if (Meteor.isClient) {
   describe('Header', function () {
     it('should set button text to logout', function () {
       const wrapper = mount(<Header title="Test Title" />);
-      // console.log(wrapper.find('button'));
+
       const buttonText = wrapper.find('button').text();
       expect(buttonText).toBe('Logout');
     });

@@ -33,16 +33,6 @@ export class WatchPresentation extends Component {
       presentationStarted: true,
       currentSpeaker: randomStudent,
     });
-      // setTimeout(function() {
-      //   console.log(randomStudent.currentSpeaker);
-      // });
-
-      // console.log(randomStudent[currentSpeaker]);
-      // randomStudent = {
-      //   currentSpeaker: true,
-      // };
-      // randomStudent.currentSpeaker = true;
-      // console.log(randomStudent.toString());
   }
 
   render() {

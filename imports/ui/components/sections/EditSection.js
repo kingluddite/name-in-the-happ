@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
-import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
+import React, { Component } from 'react';
 import { browserHistory, Link } from 'react-router';
+import PropTypes from 'prop-types';
 
 // collections
 import SectionsCollection from './../../../api/sections';
@@ -19,10 +19,6 @@ export class EditSection extends Component {
 
   // componentDidUpdate(prevProps, prevState) {
   componentDidUpdate(prevProps) {
-    // if (this.name) {
-    //   this.name.select();
-    // }
-
     const currentSectionId = this.props.section ? this.props.section._id : undefined;
     const prevSectionId = prevProps.section ? prevProps.section._id : undefined;
 
@@ -46,31 +42,37 @@ export class EditSection extends Component {
     this.props.browserHistory.push('/sections');
   }
 
+  handleViewPres() {
+    const sectionId = this.props.section._id;
+    this.props.browserHistory.push(`/sections/${sectionId}/presentations`);
+  }
+
   render() {
     if (this.props.section) {
       return (
         <div className="editor">
-         <input
+          <input
            type="text"
+           autoFocus
            className="editor__title"
            ref={ (input) => { this.name = input; }}
            value={this.state.name}
            placeholder="Section Name"
-           onChange={this.handleNameChange.bind(this)} />
-           <div className="editor__button--container">
-             <button
-               className="button button--default"
-               onClick={this.handleDeleteSection.bind(this)}>
-               Delete
-             </button>
-             <Link
-               to="/presentations"
-               onClick={ () => { Session.set('sectionId', this.props.section._id); }}
-               className="button button--pill">
-               View
-             </Link>
-           </div>
+           onChange={this.handleNameChange.bind(this)}
+         />
+         <div className="editor__button--container">
+           <button
+             className="button button--default"
+             onClick={this.handleViewPres.bind(this)}>
+             View
+           </button>
+           <button
+             className="button button--default"
+             onClick={this.handleDeleteSection.bind(this)}>
+             Delete
+           </button>
          </div>
+       </div>
       );
     }
     return (
@@ -92,7 +94,6 @@ EditSection.propTypes = {
 
 export default createContainer(() => {
   const selectedSectionId = Session.get('selectedSectionId');
-
 
   return {
     selectedSectionId,

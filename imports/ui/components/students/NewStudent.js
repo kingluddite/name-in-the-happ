@@ -9,8 +9,7 @@ export class NewStudent extends Component {
   handleSubmit() {
     const sectionId = Session.get('sectionId');
     const presentationId = Session.get('presentationId');
-    // console.log('sid', sectionId);
-    // console.log('pid', presentationId);
+
     this.props.meteorCall('students.insert', '', sectionId, presentationId);
   }
 

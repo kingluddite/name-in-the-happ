@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Accounts } from 'meteor/accounts-base';
 import { Session } from 'meteor/session';
+import { browserHistory } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
 
 export class Header extends Component {
@@ -36,7 +37,7 @@ export class Header extends Component {
           <img
             className="header__nav-toggle"
             onClick={this.props.handleNavToggle} src={navImageSrc} />
-          <h1>{this.props.title}</h1>
+          <h1 onClick={this.props.handleH1Click}>{this.props.title}</h1>
           <h2 className="header__slogan">{renderSlogan()}</h2>
           <div>
             <h2>{this.props.pageTitle}</h2>
@@ -55,6 +56,7 @@ Header.propTypes = {
   handleLogout: PropTypes.func.isRequired,
   isNavOpen: PropTypes.bool.isRequired,
   handleNavToggle: PropTypes.func.isRequired,
+  handleH1Click: PropTypes.func.isRequired,
   slogan: PropTypes.string,
 };
 
@@ -65,6 +67,7 @@ Header.defaultProps = {
 export default createContainer(() => {
   return {
     handleLogout: () => { return Accounts.logout(); },
+    handleH1Click: () => { browserHistory.push('/'); },
     handleNavToggle: () => {
       Session.set('isNavOpen', !Session.get('isNavOpen'));
     },
