@@ -6,6 +6,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 export const PresentationsListItem = (props) => {
   const handleSessionSet = () => {
+    console.log(props.presentation.sectionId)
     props.Session.set('selectedPresentationId', props.presentation._id);
     props.Session.set('sectionId', props.presentation.sectionId);
   };
