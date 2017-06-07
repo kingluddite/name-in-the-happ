@@ -63,8 +63,13 @@
       "mocha/no-exclusive-tests": "error",
       "import/no-extraneous-dependencies": 0,
       "import/extensions": 0,
-      "arrow-body-style": [2, "always"],
-      "import/no-named-as-default": ["off"],
+      "arrow-body-style": [
+        2,
+        "always"
+      ],
+      "import/no-named-as-default": [
+        "off"
+      ],
       "no-underscore-dangle": [
         "error",
         {
