@@ -40,10 +40,10 @@ StudentsList.propTypes = {
   students: PropTypes.array.isRequired,
 };
 
-export default createContainer(() => {
+export default createContainer(({ params }) => {
   const selectedStudentId = Session.get('selectedStudentId');
-  const sectionId = Session.get('sectionId');
-  const presentationId = Session.get('presentationId');
+  const sectionId = params.sectionId;
+  const presentationId = params.presentationId;
 
   Meteor.subscribe('studentsPublication', sectionId, presentationId);
 

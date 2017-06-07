@@ -7,7 +7,15 @@ const StudentsCollection = new Mongo.Collection('students');
 
 if (Meteor.isServer) {
   Meteor.publish('studentsPublication', function (sectionId, presentationId) { // eslint-disable-line func-names
-    return StudentsCollection.find({ userId: this.userId, sectionId, presentationId });
+    const userId = this.userId;
+    // return StudentsCollection.find({ userId: this.userId, sectionId, presentationId });
+    const allStudentWithSectionPres = StudentsCollection.find({ userId, sectionId, presentationId });
+
+    if (allStudentWithSectionPres) {
+      return allStudentWithSectionPres;
+    }
+
+    return this.ready();
   });
 }
 

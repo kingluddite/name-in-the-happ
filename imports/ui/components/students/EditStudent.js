@@ -106,8 +106,12 @@ EditStudent.propTypes = {
   browserHistory: PropTypes.object.isRequired,
 };
 
-export default createContainer(() => {
+export default createContainer(({ params }) => {
   const selectedStudentId = Session.get('selectedStudentId');
+  const sectionId = params.sectionId;
+  const presentationId = params.presentationId;
+
+  Meteor.subscribe('studentsPublication', sectionId, presentationId);
 
   return {
     selectedStudentId,

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // components
 import StudentsList from './../components/students/StudentsList';
@@ -11,15 +12,19 @@ class Students extends Component {
       <div>
           <div className="page-content">
           <aside className="page-content__sidebar">
-            <StudentsList />
+            <StudentsList params={this.props.params} />
           </aside>
           <main className="page-content__main">
-            <EditStudent />
+            <EditStudent params={this.props.params} />
           </main>
         </div>
       </div>
     );
   }
 }
+
+Students.propTypes = {
+  params: PropTypes.object.isRequired,
+};
 
 export default Students;

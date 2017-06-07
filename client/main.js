@@ -20,6 +20,15 @@ Tracker.autorun(() => {
 });
 
 Tracker.autorun(() => {
+  const selectedSectionId = Session.get('selectedSectionId');
+  Session.set('isNavOpen', false);
+
+  if (selectedSectionId) {
+    browserHistory.replace(`/sections/${selectedSectionId}`);
+  }
+});
+
+Tracker.autorun(() => {
   const selectedPresentationId = Session.get('selectedPresentationId');
   const sectionId = Session.get('sectionId');
 
@@ -32,20 +41,15 @@ Tracker.autorun(() => {
 });
 
 Tracker.autorun(() => {
-  const selectedSectionId = Session.get('selectedSectionId');
-  Session.set('isNavOpen', false);
-
-  if (selectedSectionId) {
-    browserHistory.replace(`/sections/${selectedSectionId}`);
-  }
-});
-
-Tracker.autorun(() => {
   const selectedStudentId = Session.get('selectedStudentId');
+  const sectionId = Session.get('sectionId');
+  const presentationId = Session.get('presentationId');
+
   Session.set('isNavOpen', false);
 
-  if (selectedStudentId) {
-    browserHistory.replace(`/students/${selectedStudentId}`);
+  if (selectedStudentId && sectionId && presentationId) {
+    const path = `/sections/${sectionId}/presentations/${presentationId}/students/${selectedStudentId}`;
+    browserHistory.replace(path);
   }
 });
 

@@ -142,12 +142,6 @@ export class EditPresentation extends Component {
                ></textarea>
               <button className="button button--textarea button--pill">Add Students</button>
            </form>
-           <hr />
-         {/* <textarea
-           value={this.state.body}
-           className="editor__body"
-           placeholder="Enter Names of Presenters here (separate with spaces)"
-           onChange={this.handleBodyChange.bind(this)} /> */}
          <div className="editor__button--container">
            <Link
              to={`/presentations/${presentation._id}/watch`}
