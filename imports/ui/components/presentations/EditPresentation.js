@@ -12,9 +12,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 // collections
 import SectionsCollection from './../../../api/sections';
 import PresentationsCollection from './../../../api/presentations';
+import StudentsCollection from './../../../api/students';
 
 // components
-import ModalNewStudent from './../students/ModalNewStudent';
+import StudentsList from './../students/StudentsList';
 
 export class EditPresentation extends Component {
   constructor(props) {
@@ -24,10 +25,18 @@ export class EditPresentation extends Component {
       title: '',
       body: '',
       startDate: moment(),
+      names: [],
+      studentCount: 0,
     };
 
     this.handleDateChange = this.handleDateChange.bind(this);
   }
+
+  // componentWillMount() {
+  //   this.setState({
+  //     studentCount: allStudents.length,
+  //   });
+  // }
 
   componentDidUpdate(prevProps) {
     // working with moment
@@ -51,40 +60,66 @@ export class EditPresentation extends Component {
     const { presentation } = this.props;
     const title = e.target.value;
     this.setState({ title });
-    this.props.call('presentations.update', presentation._id, {
+    this.props.meteorCall('presentations.update', presentation._id, {
       title,
     });
   }
 
   handleDateChange(startDate) {
     this.setState({ startDate });
-    this.props.call('presentations.update', this.props.presentation._id, {
+    this.props.meteorCall('presentations.update', this.props.presentation._id, {
       startDate: startDate.toDate(),
     });
   }
 
-  handleBodyChange(e) {
-    const { presentation } = this.props;
-    const body = e.target.value;
-    this.setState({ body });
-    this.props.call('presentations.update', presentation._id, {
-      body,
+  handleBodySubmit(e) {
+    e.preventDefault();
+    const sectionId = this.props.section._id;
+    const presentationId = this.props.presentation._id;
+
+    // console.log(`pid`, presentationId);
+    const { names } = this.state;
+    const namesArray = names.split(' ');
+
+    namesArray.map((name) => {
+      return this.props.meteorCall('students.insert', name, sectionId, presentationId, (err) => {
+        if (!err) {
+          this.names.value = '';
+        } else {
+          this.setState({ error: err.reason });
+        }
+      });
     });
   }
 
+  handleBodyChange(e) {
+    this.setState({
+      names: e.target.value,
+    });
+  }
+
+  // handleBodyChange(e) {
+  //   const { presentation } = this.props;
+  //   const body = e.target.value;
+  //   this.setState({ body });
+  //   this.props.call('presentations.update', presentation._id, {
+  //     body,
+  //   });
+  // }
+
   handleDeletePresentation() {
     const { presentation } = this.props;
-    this.props.call('presentations.remove', presentation._id);
+    this.props.meteorCall('presentations.remove', presentation._id);
     this.props.browserHistory.push('/presentations');
   }
 
   render() {
-    const { presentation, section } = this.props;
+    const { presentation, section, studentCount } = this.props;
 
     if (presentation) {
       return (
         <div className="editor">
-         {/* <span>{section.name}</span> */}
+         <span>{section.name}</span>
          <input
            type="text"
            className="editor__title"
@@ -99,11 +134,26 @@ export class EditPresentation extends Component {
              value={presentation.startDate}
              ref={ (input) => { this.startDate = input; }}
            />
-         <textarea
+           <div className="editor__students">
+             Students In Presentation <span className="editor__students-count">{studentCount}</span>
+             <button className="button">View</button>
+           </div>
+           <form className="form" onSubmit={this.handleBodySubmit.bind(this)}>
+             <textarea
+               placeholder="Enter Student Names Here (separate with spaces)"
+               value={this.state.names}
+               ref={ (textarea) => { this.names = textarea; }}
+               onChange={this.handleBodyChange.bind(this)}
+               className="editor__body"
+               ></textarea>
+              <button className="button button--textarea">Add Students</button>
+           </form>
+           <hr />
+         {/* <textarea
            value={this.state.body}
            className="editor__body"
            placeholder="Enter Names of Presenters here (separate with spaces)"
-           onChange={this.handleBodyChange.bind(this)} />
+           onChange={this.handleBodyChange.bind(this)} /> */}
          <div className="editor__button--container">
            <Link
              to={`/presentations/${presentation._id}/watch`}
@@ -112,7 +162,6 @@ export class EditPresentation extends Component {
              >
                View Presentation
              </Link>
-           <ModalNewStudent presentationId={presentation._id}/>
            <Link
              to="/students"
              className="button button--pill"
@@ -143,22 +192,25 @@ export class EditPresentation extends Component {
 EditPresentation.propTypes = {
   selectedPresentationId: PropTypes.string,
   section: PropTypes.object,
+  studentCount: PropTypes.number,
   presentation: PropTypes.object,
-  call: PropTypes.func.isRequired,
   browserHistory: PropTypes.object.isRequired,
+  meteorCall: PropTypes.func.isRequired,
 };
 
-export default createContainer(({ sectionId }) => {
+export default createContainer(({ params }) => {
   const selectedPresentationId = Session.get('selectedPresentationId');
-  // const sectionId = this.props.sectionId;
-  console.log(sectionId);
-  Meteor.subscribe('sectionsPublication', sectionId);
+  const sectionId = params.sectionId;
+  Meteor.subscribe('presentationsPublication', sectionId);
+  Meteor.subscribe('sectionsPublication');
+  Meteor.subscribe('studentsPublication', sectionId, selectedPresentationId);
 
   return {
     selectedPresentationId,
+    studentCount: StudentsCollection.find().fetch().length,
     section: SectionsCollection.findOne(sectionId),
     presentation: PresentationsCollection.findOne(selectedPresentationId),
-    call: Meteor.call,
     browserHistory,
+    meteorCall: Meteor.call,
   };
 }, EditPresentation);

@@ -31,3 +31,16 @@
   margin: $large-space * 2;
   font-style: italic;
 }
+
+.editor__students {
+  padding: 2rem;
+  border: 1px solid $black;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+  display: flex;
+}
+
+.editor__students-count {
+  font-size: 2rem;
+  font-weight: bold;
+}

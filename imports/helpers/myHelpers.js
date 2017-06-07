@@ -1,13 +1,5 @@
 import { Session } from 'meteor/session';
 
-export function testThis() {
-  console.log('yo from helper');
-}
-
-export function testTwo() {
-  console.log('another test');
-}
-
 export function randomArrItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -23,9 +15,10 @@ export function getPageTitle(nextState) {
   }
   // const path = nextState.location.pathname.split('/')[1];
   // remove all `/` from URL
-  let pageTitle = pathname.replace(/\//g, '').toUpperCase();
-  // are we on the home page? then pageTitle is LOGIN
-  if (pageTitle.length === 0) pageTitle = 'LOGIN';
   console.log(pathname);
-  Session.set('pageTitle', pageTitle);
+  // let pageTitle = pathname.replace(/\//g, '').toUpperCase();
+  // are we on the home page? then pageTitle is LOGIN
+  // if (pageTitle.length === 0) pageTitle = 'LOGIN';
+  // console.log(pathname);
+  // Session.set('pageTitle', pageTitle);
 }

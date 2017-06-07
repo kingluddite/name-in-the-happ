@@ -21,11 +21,13 @@ Tracker.autorun(() => {
 
 Tracker.autorun(() => {
   const selectedPresentationId = Session.get('selectedPresentationId');
+  const sectionId = Session.get('sectionId');
 
   Session.set('isNavOpen', false);
 
-  if (selectedPresentationId) {
-    browserHistory.replace(`/presentations/${selectedPresentationId}`);
+  if (selectedPresentationId && sectionId) {
+    const path = `/sections/${sectionId}/presentations/${selectedPresentationId}`;
+    browserHistory.replace(path);
   }
 });
 

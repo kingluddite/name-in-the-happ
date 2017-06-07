@@ -25,28 +25,42 @@ Meteor.methods({
       },
       currentSpeaker: {
         type: Boolean,
+        defaultValue: false,
+        optional: true,
       },
       notPresent: {
         type: Boolean,
+        defaultValue: false,
+        optional: true,
       },
       completed: {
         type: Boolean,
+        defaultValue: false,
+        optional: true,
       },
       onDeck: {
         type: Boolean,
+        defaultValue: false,
+        optional: true,
+      },
+      groupProject: {
+        type: Boolean,
+        defaultValue: false,
+        optional: true,
       },
     }).validate({
-      _id,
+      name,
     });
 
     return StudentsCollection.insert({
       name,
-      groupProject: false,
+      sectionId,
+      presentationId,
       currentSpeaker: false,
       notPresent: false,
       completed: false,
-      sectionId,
-      presentationId,
+      onDeck: false,
+      groupProject: false,
       userId: this.userId,
       updatedAt: moment().valueOf(), // new Date().getTime()
     });

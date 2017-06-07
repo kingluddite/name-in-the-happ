@@ -19,7 +19,7 @@ import WatchPresentation from '../../ui/components/presentations/WatchPresentati
 import Students from '../../ui/pages/Students';
 
 const onEnterPresentationsViewPage = (nextState) => {
-  Session.set('selectedPresentationId', nextState.params._id);
+  Session.set('selectedPresentationId', nextState.params.presentationId);
 };
 
 const onLeavePresentationsViewPage = () => {
@@ -27,7 +27,7 @@ const onLeavePresentationsViewPage = () => {
 };
 
 const onEnterSectionsViewPage = (nextState) => {
-  Session.set('selectedSectionId', nextState.params._id);
+  Session.set('selectedSectionId', nextState.params.sectionId);
 };
 
 const onLeaveSectionsViewPage = () => {
@@ -35,7 +35,7 @@ const onLeaveSectionsViewPage = () => {
 };
 
 const onEnterStudentsViewPage = (nextState) => {
-  Session.set('selectedStudentId', nextState.params._id);
+  Session.set('selectedStudentId', nextState.params.studentId);
 };
 
 const onLeaveStudentsViewPage = () => {
@@ -80,12 +80,12 @@ Meteor.startup(() => {
           <Route name="signup" path="/signup" component={Signup} privacy="unauth" />
           <Route name="about" path="/about" component={About} privacy="unauth" />
           <Route name="sections" path="/sections" component={Sections} privacy="auth"/>
-          <Route name="viewSection" path="/sections/:_id" component={Sections} privacy="auth" onEnter={onEnterSectionsViewPage} onLeave={onLeaveSectionsViewPage} />
-          <Route name="presentations" path="/sections/:_id/presentations" component={Presentations} privacy="auth" />
-          <Route name="viewPresentation" path="/sections/:_id/presentations/:_id" component={Presentations} privacy="auth" onEnter={onEnterPresentationsViewPage} onLeave={onLeavePresentationsViewPage} />
-          <Route name="students" path="/students" component={Students} privacy="auth" />
-          <Route name="viewStudents" path="/students/:_id" component={Students} privacy="auth" onEnter={onEnterStudentsViewPage} onLeave={onLeaveStudentsViewPage} />
-          <Route name="watchPresentation" path="/presentations/:_id/watch" component={WatchPresentation} privacy="auth" />
+          <Route name="viewSection" path="/sections/:sectionId" component={Sections} privacy="auth" onEnter={onEnterSectionsViewPage} onLeave={onLeaveSectionsViewPage} />
+          <Route name="presentations" path="/sections/:sectionId/presentations" component={Presentations} privacy="auth" />
+          <Route name="viewPresentation" path="/sections/:sectionId/presentations/:presentationId" component={Presentations} privacy="auth" onEnter={onEnterPresentationsViewPage} onLeave={onLeavePresentationsViewPage} />
+          <Route name="students" path="/sections/:sectionId/presentations/:presentationId/students" component={Students} privacy="auth" />
+          <Route name="viewStudents" path="/sections/:sectionId/presentations/:presentationId/students/:studentId" component={Students} privacy="auth" onEnter={onEnterStudentsViewPage} onLeave={onLeaveStudentsViewPage} />
+          <Route name="watchPresentation" path="/sections/:sectionId/presentations/:presentationId/watch" component={WatchPresentation} privacy="auth" />
           <Route path="*" component={NotFound} />
         </Route>
     </Route>

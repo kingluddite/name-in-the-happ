@@ -12,7 +12,7 @@ export const PresentationsListItem = (props) => {
       props.Session.set('sectionId', props.presentation.sectionId);
     }}>
       <h5 className="item__title">{ props.presentation.title || 'Untitled Presentation' }</h5>
-      <p className="item__subtitle">{ moment(props.presentation.updatedAt).format('M/DD/YYYY') }</p>
+      <p className="item__subtitle">{ moment(props.presentation.startDate).format('M/DD/YYYY') }</p>
     </div>
   );
 };

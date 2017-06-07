@@ -36,8 +36,9 @@ PresentationsList.propTypes = {
 
   // export default PresentationList;
 
-export default createContainer(({ sectionId }) => {
+export default createContainer(({ params }) => {
   const selectedPresentationId = Session.get('selectedPresentationId');
+  const sectionId = params.sectionId;
 
   Meteor.subscribe('presentationsPublication', sectionId, () => {
   });

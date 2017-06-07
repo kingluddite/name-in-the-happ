@@ -12,10 +12,10 @@ class Presentations extends Component {
       <div>
           <div className="page-content">
           <aside className="page-content__sidebar">
-            <PresentationsList sectionId={this.props.params._id} />
+            <PresentationsList params={this.props.params} />
           </aside>
           <main className="page-content__main">
-            <EditPresentation sectionId={this.props.params._id} />
+            <EditPresentation params={this.props.params} />
           </main>
         </div>
       </div>
