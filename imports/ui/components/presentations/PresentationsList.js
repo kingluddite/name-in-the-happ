@@ -29,7 +29,7 @@ export const PresentationsList = (props) => {
           <i className="fa fa-arrow-left" aria-hidden="true"></i> BACK
         </button>
       </div>
-      <NewPresentation />
+      <NewPresentation sectionId={props.params.sectionId} />
       {(props.presentations.length === 0) ? <PresentationsListEmptyItem /> : undefined}
       {renderPresentations}
     </div>

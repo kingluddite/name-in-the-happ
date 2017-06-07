@@ -5,7 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 
 export const NewPresentation = (props) => {
-  const sectionId = Session.get('sectionId');
+  const sectionId = props.sectionId;
   const handleButtonClick = () => {
     props.meteorCall('presentations.insert', sectionId, (err, res) => {
       if (res) {
@@ -24,6 +24,7 @@ export const NewPresentation = (props) => {
 NewPresentation.propTypes = {
   meteorCall: PropTypes.func.isRequired,
   Session: PropTypes.object.isRequired,
+  sectionId: PropTypes.string.isRequired,
 };
 
 export default createContainer(() => {

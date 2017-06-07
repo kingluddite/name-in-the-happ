@@ -26,6 +26,7 @@
   "devDependencies": {
     "babel-eslint": "^7.2.3",
     "enzyme": "^2.8.2",
+    "esformatter-jsx": "^8.0.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",

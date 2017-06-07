@@ -76,7 +76,7 @@ export class EditPresentation extends Component {
 
       this.setState({
         errors: '',
-      });
+        });
 
       namesArray.map((name) => {
         return this.props.meteorCall('students.insert', name, sectionId, presentationId, (err) => {

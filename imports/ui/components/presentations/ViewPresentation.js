@@ -20,18 +20,18 @@ export class ViewPresentation extends Component {
     if (this.props.presentation) {
       return (
         <div className="editor">
-         <h1>Presentation Title</h1>
-         <p>Names in Presentation</p>
-       </div>
-      );
+          <h1>Presentation Title</h1>
+          <p>Names in Presentation</p>
+        </div>
+        );
     }
     return (
       <div className="editor">
         <p className="editor__message">
-          { this.props.selectedPresentationId ? 'Presentation not found.' : 'Pick or create a presentation to get started.'}
+          { this.props.selectedPresentationId ? 'Presentation not found.' : 'Pick or create a presentation to get started.' }
         </p>
       </div>
-    );
+      );
   }
 }
 

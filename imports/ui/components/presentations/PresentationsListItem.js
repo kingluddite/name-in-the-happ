@@ -5,16 +5,19 @@ import { Session } from 'meteor/session';
 import { createContainer } from 'meteor/react-meteor-data';
 
 export const PresentationsListItem = (props) => {
+  const handleSessionSet = () => {
+    props.Session.set('selectedPresentationId', props.presentation._id);
+    props.Session.set('sectionId', props.presentation.sectionId);
+  };
   const className = props.presentation.selected ? 'item item--selected' : 'item';
   return (
-    <div className={className} onClick={() => {
-      props.Session.set('selectedPresentationId', props.presentation._id);
-      props.Session.set('sectionId', props.presentation.sectionId);
-    }}>
+    <div className={ className } onClick={ handleSessionSet }>
       <h5 className="item__title">{ props.presentation.title || 'Untitled Presentation' }</h5>
-      <p className="item__subtitle">{ moment(props.presentation.startDate).format('M/DD/YYYY') }</p>
+      <p className="item__subtitle">
+        { moment(props.presentation.startDate).format('M/DD/YYYY') }
+      </p>
     </div>
-  );
+    );
 };
 
 PresentationsListItem.propTypes = {
@@ -23,5 +26,7 @@ PresentationsListItem.propTypes = {
 };
 
 export default createContainer(() => {
-  return { Session };
+  return {
+    Session
+  };
 }, PresentationsListItem);

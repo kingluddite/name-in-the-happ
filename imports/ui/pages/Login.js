@@ -17,11 +17,11 @@ export class Login extends Component {
     this.email.focus();
   }
 
-  handleSubmit(e) {
+  handleSubmit(event) {
     const email = this.email.value.trim();
     const password = this.password.value.trim();
 
-    e.preventDefault();
+    event.preventDefault();
 
     this.props.loginWithPassword({ email }, password, (err) => {
       if (err) {
@@ -36,19 +36,17 @@ export class Login extends Component {
     return (
       <div className="boxed-view">
         <div className="boxed-view__box">
-        {this.state.error ? <p className="errors">{this.state.error}</p> : undefined}
-
-        <form
-          className="boxed-view__form"
-          onSubmit={this.handleSubmit.bind(this)}
-          noValidate
-          >
-          <input type="email" ref={ (input) => { this.email = input; }} placeholder="Email" />
-          <input
-            type="password"
-            ref={ (input) => { this.password = input; }} placeholder="Password"/>
-          <button className="button form__button" type="submit">Login</button>
-        </form>
+            {this.state.error ? <p className="errors">{this.state.error}</p> : undefined}
+            <form
+              className="boxed-view__form" onSubmit={this.handleSubmit.bind(this)}
+              noValidate
+              >
+              <input type="email" ref={ (input) => { this.email = input; }} placeholder="Email" />
+              <input
+                type="password"
+                ref={ (input) => { this.password = input; }} placeholder="Password"/>
+              <button className="button form__button" type="submit">Login</button>
+            </form>
 
         <Link to="/signup">Not a Member? Signup Now</Link>
       </div>
