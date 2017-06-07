@@ -41,6 +41,14 @@
   }
 }
 
+.button--back {
+  color: $white;
+  background-color: $black;
+  border: 0;
+  padding: $input-spacing;
+  font-weight: 200;
+}
+
 .button--close {
   display: inline-block;
   font-size: 3rem;

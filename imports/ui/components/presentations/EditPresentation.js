@@ -15,7 +15,6 @@ import PresentationsCollection from './../../../api/presentations';
 import StudentsCollection from './../../../api/students';
 
 // components
-import StudentsList from './../students/StudentsList';
 
 export class EditPresentation extends Component {
   constructor(props) {
@@ -31,12 +30,6 @@ export class EditPresentation extends Component {
 
     this.handleDateChange = this.handleDateChange.bind(this);
   }
-
-  // componentWillMount() {
-  //   this.setState({
-  //     studentCount: allStudents.length,
-  //   });
-  // }
 
   componentDidUpdate(prevProps) {
     // working with moment
@@ -77,7 +70,6 @@ export class EditPresentation extends Component {
     const sectionId = this.props.section._id;
     const presentationId = this.props.presentation._id;
 
-    // console.log(`pid`, presentationId);
     const { names } = this.state;
     const namesArray = names.split(' ');
 
@@ -98,14 +90,11 @@ export class EditPresentation extends Component {
     });
   }
 
-  // handleBodyChange(e) {
-  //   const { presentation } = this.props;
-  //   const body = e.target.value;
-  //   this.setState({ body });
-  //   this.props.call('presentations.update', presentation._id, {
-  //     body,
-  //   });
-  // }
+  handleViewStudent() {
+    const sectionId = this.props.params.sectionId;
+    const presentationId = this.props.params.presentationId;
+    this.props.browserHistory.push(`/sections/${sectionId}/presentations/${presentationId}/students`);
+  }
 
   handleDeletePresentation() {
     const { presentation } = this.props;
@@ -136,7 +125,12 @@ export class EditPresentation extends Component {
            />
            <div className="editor__students">
              Students In Presentation <span className="editor__students-count">{studentCount}</span>
-             <button className="button">View</button>
+             <button
+               className="button button--pill"
+               onClick={this.handleViewStudent.bind(this)}
+               >
+                View
+              </button>
            </div>
            <form className="form" onSubmit={this.handleBodySubmit.bind(this)}>
              <textarea
@@ -146,7 +140,7 @@ export class EditPresentation extends Component {
                onChange={this.handleBodyChange.bind(this)}
                className="editor__body"
                ></textarea>
-              <button className="button button--textarea">Add Students</button>
+              <button className="button button--textarea button--pill">Add Students</button>
            </form>
            <hr />
          {/* <textarea
@@ -162,13 +156,6 @@ export class EditPresentation extends Component {
              >
                View Presentation
              </Link>
-           <Link
-             to="/students"
-             className="button button--pill"
-             onClick={ () => { Session.set('presentationId', presentation._id); }}
-            >
-              View Students
-            </Link>
             <button
               className="button button--default"
               onClick={this.handleDeletePresentation.bind(this)}>
@@ -196,6 +183,7 @@ EditPresentation.propTypes = {
   presentation: PropTypes.object,
   browserHistory: PropTypes.object.isRequired,
   meteorCall: PropTypes.func.isRequired,
+  params: PropTypes.object.isRequired,
 };
 
 export default createContainer(({ params }) => {

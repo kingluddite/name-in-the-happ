@@ -3,7 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
-import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 
 // collections
 import StudentsCollection from '../../../api/students';
@@ -14,15 +14,21 @@ import StudentsListItem from './StudentsListItem';
 import StudentsListEmptyItem from './StudentsListEmptyItem';
 
 export const StudentsList = (props) => {
+  const handleBackClick = () => {
+    browserHistory.goBack();
+  };
+
   const renderStudents = props.students.map((student) => {
     return <StudentsListItem key={student._id} student={student} />;
   });
 
   return (
     <div className="item-list">
-      <Link className="button--link" to="/presentations">
-        <i className="fa fa-arrow-left" aria-hidden="true"> BACK</i>
-      </Link>
+      <div className="item-list__header">
+        <button className="button--back" onClick={handleBackClick}>
+          <i className="fa fa-arrow-left" aria-hidden="true"></i> BACK
+        </button>
+      </div>
       <NewStudent />
       {(props.students.length === 0) ? <StudentsListEmptyItem /> : undefined}
       {renderStudents}
