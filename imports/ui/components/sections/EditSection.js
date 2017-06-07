@@ -1,86 +1,104 @@
-import React, { Component } from 'react';
-import { Meteor } from 'meteor/meteor';
-import Modal from 'react-modal';
+import { createContainer } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
+import { Meteor } from 'meteor/meteor';
+import React, { Component } from 'react';
+import { browserHistory, Link } from 'react-router';
+import PropTypes from 'prop-types';
 
+// collections
+import SectionsCollection from './../../../api/sections';
 
-class EditSection extends Component {
+export class EditSection extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      error: '',
-      modalIsOpen: true,
-      currentSectionId: Session.get('currentSectionId'),
+      name: '',
     };
-
-    // binding
-    this.closeModal = this.closeModal.bind(this);
   }
 
-  componentDidMount() {
-    // this.name.focus();
-    console.log(this.state.currentSectionId);
+  // componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
+    const currentSectionId = this.props.section ? this.props.section._id : undefined;
+    const prevSectionId = prevProps.section ? prevProps.section._id : undefined;
+
+    if (currentSectionId && currentSectionId !== prevSectionId) {
+      this.setState({
+        name: this.props.section.name,
+      });
+    }
   }
 
-  closeModal() {
-    this.setState({
-      modalIsOpen: false,
-      error: '',
+  handleNameChange(event) {
+    const name = event.target.value;
+    this.setState({ name });
+    this.props.call('sections.update', this.props.section._id, {
+      name,
     });
   }
 
-  handleSubmit(e) {
-    const name = this.name.value.trim();
-    const code = this.code.value.trim();
-
-    e.preventDefault();
-
-    // if (name && code) {
-    Meteor.call('sections.insert', name, code, (err) => {
-      if (!err) {
-        this.name.value = '';
-        this.code.value = '';
-      } else {
-        this.setState({ error: err.reason });
-      }
-    });
+  handleDeleteSection() {
+    this.props.call('sections.remove', this.props.section._id);
+    this.props.browserHistory.push('/sections');
   }
-  // }
+
+  handleViewPres() {
+    const sectionId = this.props.section._id;
+    this.props.browserHistory.push(`/sections/${sectionId}/presentations`);
+  }
 
   render() {
+    if (this.props.section) {
+      return (
+        <div className="editor">
+          <input
+           type="text"
+           autoFocus
+           className="editor__title"
+           ref={ (input) => { this.name = input; }}
+           value={this.state.name}
+           placeholder="Section Name"
+           onChange={this.handleNameChange.bind(this)}
+         />
+         <div className="editor__button--container">
+           <button
+             className="button button--default"
+             onClick={this.handleViewPres.bind(this)}>
+             View
+           </button>
+           <button
+             className="button button--default"
+             onClick={this.handleDeleteSection.bind(this)}>
+             Delete
+           </button>
+         </div>
+       </div>
+      );
+    }
     return (
-      <div>
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          contentLabel="Add Section"
-          onAfterOpen={() => this.name.focus()}
-          onRequestClose={this.closeModal}
-          >
-            <h2>Update Section</h2>
-            { this.state.error ? <p className="errors">{this.state.error}</p> : undefined }
-            <div className="item item__form">
-              <form className="form" onSubmit={this.handleSubmit.bind(this)}>
-                <input
-                  className="form__input" type="text"
-                  ref={ (input) => { this.name = input; }}
-                  placeholder="Section Name" />
-                  <input
-                    type="text"
-                    ref={ (input) => { this.code = input; }}
-                    placeholder="Class Code" />
-                  <button className="button">Update Section</button>
-                </form>
-                <button
-                  className="button"
-                  onClick={this.closeModal}>
-                  Close
-                </button>
-              </div>
-            </Modal>
+      <div className="editor">
+        <p className="editor__message">
+          { this.props.selectedSectionId ? 'Section not found.' : 'Pick or create a section to get started.'}
+        </p>
       </div>
     );
   }
 }
 
-export default EditSection;
+EditSection.propTypes = {
+  selectedSectionId: PropTypes.string,
+  section: PropTypes.object,
+  call: PropTypes.func.isRequired,
+  browserHistory: PropTypes.object.isRequired,
+};
+
+export default createContainer(() => {
+  const selectedSectionId = Session.get('selectedSectionId');
+
+  return {
+    selectedSectionId,
+    section: SectionsCollection.findOne(selectedSectionId),
+    call: Meteor.call,
+    browserHistory,
+  };
+}, EditSection);

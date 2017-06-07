@@ -13,6 +13,15 @@
   padding: 2.4rem;
   text-align: center;
   width: 30rem;
+  margin: 0 auto;
+}
+
+.boxed-view__modal {
+  background-color: $boxed-view-bg;
+  border: 1px solid $boxed-view-border-color;
+  padding: 2.4rem;
+  width: 30rem;
+  margin: 0 auto;
 }
 
 .boxed-view__form {

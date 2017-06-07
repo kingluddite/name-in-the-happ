@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // components
-import PresentationsList from './../components/presentations/PresentationsList';
-import EditPresentation from './../components/presentations/EditPresentation';
+import StudentsList from './../components/students/StudentsList';
+import EditStudent from './../components/students/EditStudent';
 
-class Presentations extends Component {
+class Students extends Component {
 
   render() {
     return (
       <div>
           <div className="page-content">
           <aside className="page-content__sidebar">
-            <PresentationsList params={this.props.params} />
+            <StudentsList params={this.props.params} />
           </aside>
           <main className="page-content__main">
-            <EditPresentation params={this.props.params} />
+            <EditStudent params={this.props.params} />
           </main>
         </div>
       </div>
@@ -23,8 +23,8 @@ class Presentations extends Component {
   }
 }
 
-Presentations.propTypes = {
+Students.propTypes = {
   params: PropTypes.object.isRequired,
 };
 
-export default Presentations;
+export default Students;

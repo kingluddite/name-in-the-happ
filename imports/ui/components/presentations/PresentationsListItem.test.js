@@ -5,7 +5,10 @@ import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
 
+// fixtures
 import presentations from './../../../fixtures/fixtures';
+
+// tested component
 import { PresentationsListItem } from './PresentationsListItem';
 
 if (Meteor.isClient) {

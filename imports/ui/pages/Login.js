@@ -50,7 +50,7 @@ export class Login extends Component {
           <button className="button form__button" type="submit">Login</button>
         </form>
 
-        <Link to="/signup">Have an account?</Link>
+        <Link to="/signup">Not a Member? Signup Now</Link>
       </div>
       {/* END .boxed-view__box */}
     </div>
@@ -63,6 +63,8 @@ Login.propTypes = {
   loginWithPassword: PropTypes.func.isRequired,
 };
 
-export default createContainer(() => ({
-  loginWithPassword: Meteor.loginWithPassword,
-}), Login);
+export default createContainer(() => {
+  return ({
+    loginWithPassword: Meteor.loginWithPassword,
+  });
+}, Login);

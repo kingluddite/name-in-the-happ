@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
-import PropTypes from 'prop-types';
 import { Session } from 'meteor/session';
 
-export const PresentationsListHeader = (props) => {
+export const NewPresentation = (props) => {
+  const sectionId = Session.get('sectionId');
   const handleButtonClick = () => {
-    props.meteorCall('presentations.insert', (err, res) => {
+    props.meteorCall('presentations.insert', sectionId, (err, res) => {
       if (res) {
         props.Session.set('selectedPresentationId', res);
       }
@@ -20,7 +21,7 @@ export const PresentationsListHeader = (props) => {
   );
 };
 
-PresentationsListHeader.propTypes = {
+NewPresentation.propTypes = {
   meteorCall: PropTypes.func.isRequired,
   Session: PropTypes.object.isRequired,
 };
@@ -30,4 +31,4 @@ export default createContainer(() => {
     meteorCall: Meteor.call,
     Session,
   });
-}, PresentationsListHeader);
+}, NewPresentation);

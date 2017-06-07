@@ -6,21 +6,28 @@ import SimpleSchema from 'simpl-schema';
 const PresentationsCollection = new Mongo.Collection('presentations');
 
 if (Meteor.isServer) {
-  Meteor.publish('presentationsPublication', function () { // eslint-disable-line func-names
-    return PresentationsCollection.find({ userId: this.userId });
+  Meteor.publish('presentationsPublication', function (sectionId) { // eslint-disable-line func-names
+    const userId = this.userId;
+    const allPresWithSections = PresentationsCollection.find({ userId, sectionId });
+
+    if (allPresWithSections) {
+      return allPresWithSections;
+    }
+
+    return this.ready();
   });
 }
 
 Meteor.methods({
   /* eslint func-names: ["error", "as-needed"] */
-  'presentations.insert': function () {
+  'presentations.insert': function (sectionId) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }
 
     return PresentationsCollection.insert({
       title: '',
-      body: '',
+      sectionId,
       userId: this.userId,
       updatedAt: moment().valueOf(), // new Date().getTime()
     });
@@ -55,6 +62,10 @@ Meteor.methods({
       },
       title: {
         type: String,
+        optional: true,
+      },
+      startDate: {
+        type: Date,
         optional: true,
       },
       body: {

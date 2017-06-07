@@ -12,6 +12,7 @@
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-addons-pure-render-mixin": "^15.5.2",
+    "react-datepicker": "^0.46.0",
     "react-dom": "^15.5.4",
     "react-flip-move": "^2.9.8",
     "react-modal": "^1.7.7",

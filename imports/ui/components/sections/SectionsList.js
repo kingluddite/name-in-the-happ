@@ -1,55 +1,48 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
+import { Session } from 'meteor/session';
 
-// Collections
-import SectionsCollection from './../../../api/sections';
+// collections
+import SectionsCollection from '../../../api/sections';
 
-// Components
+// components
+import NewSection from './NewSection';
 import SectionsListItem from './SectionsListItem';
+import SectionsListEmptyItem from './SectionsListEmptyItem';
 
-class SectionsList extends Component {
-  constructor(props) {
-    super(props);
+export const SectionsList = (props) => {
+  const renderSections = props.sections.map((section) => {
+    return <SectionsListItem key={section._id} section={section} />;
+  });
 
-    this.state = {
-      sections: [],
-    };
-  }
-  componentDidMount() {
-    this.sectionsTracker = Tracker.autorun(() => {
-      Meteor.subscribe('sectionsPub');
+  return (
+    <div className="item-list">
+      <NewSection />
+      {(props.sections.length === 0) ? <SectionsListEmptyItem /> : undefined}
+      {renderSections}
+    </div>
+  );
+};
 
-      const sectionsCollection = SectionsCollection.find().fetch();
-      this.setState({ sections: sectionsCollection });
-    });
-  }
+SectionsList.propTypes = {
+  sections: PropTypes.array.isRequired,
+};
 
-  componentWillUnmount() {
-    this.sectionsTracker.stop();
-  }
+export default createContainer(() => {
+  const selectedSectionId = Session.get('selectedSectionId');
 
-  renderSectionsListItems() {
-    if (this.state.sections.length === 0) {
-      return (
-        <div className="item item__empty">
-          <p className="item__status-message">No Sections Found</p>
-        </div>
-      );
-    }
-    return this.state.sections.map(section => (
-      <SectionsListItem key={section._id} section={section} />
-    ));
-  }
+  Meteor.subscribe('sectionsPublication');
 
-  render() {
-    return (
-      <div>
-        {this.renderSectionsListItems()}
-      </div>
-    );
-  }
-}
-
-export default SectionsList;
-
+  return {
+    sections: SectionsCollection.find({}, {
+      sort: { updatedAt: -1 },
+    }).fetch().map((section) => {
+      return {
+        ...section,
+        selected: section._id === selectedSectionId,
+      };
+    }),
+  };
+}, SectionsList);
