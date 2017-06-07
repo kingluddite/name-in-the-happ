@@ -26,6 +26,7 @@ export class EditPresentation extends Component {
       startDate: moment(),
       names: [],
       studentCount: 0,
+      errors: '',
     };
 
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -65,23 +66,32 @@ export class EditPresentation extends Component {
     });
   }
 
-  handleBodySubmit(e) {
+  handleStudentsSubmit(e) {
     e.preventDefault();
-    const sectionId = this.props.section._id;
-    const presentationId = this.props.presentation._id;
+    if (this.state.names.length > 0) {
+      const sectionId = this.props.section._id;
+      const presentationId = this.props.presentation._id;
+      const { names } = this.state;
+      const namesArray = names.split(' ');
 
-    const { names } = this.state;
-    const namesArray = names.split(' ');
-
-    namesArray.map((name) => {
-      return this.props.meteorCall('students.insert', name, sectionId, presentationId, (err) => {
-        if (!err) {
-          this.names.value = '';
-        } else {
-          this.setState({ error: err.reason });
-        }
+      this.setState({
+        errors: '',
       });
-    });
+
+      namesArray.map((name) => {
+        return this.props.meteorCall('students.insert', name, sectionId, presentationId, (err) => {
+          if (!err) {
+            this.names.value = '';
+          } else {
+            this.setState({ error: err.reason });
+          }
+        });
+      });
+    } else {
+      this.setState({
+        errors: 'Please suppy a student name before submitting',
+      });
+    }
   }
 
   handleBodyChange(e) {
@@ -98,8 +108,9 @@ export class EditPresentation extends Component {
 
   handleDeletePresentation() {
     const { presentation } = this.props;
+    const sectionId = this.props.params.sectionId;
     this.props.meteorCall('presentations.remove', presentation._id);
-    this.props.browserHistory.push('/presentations');
+    this.props.browserHistory.push(`/sections/${sectionId}/presentations`);
   }
 
   render() {
@@ -132,7 +143,8 @@ export class EditPresentation extends Component {
                 View
               </button>
            </div>
-           <form className="form" onSubmit={this.handleBodySubmit.bind(this)}>
+           {this.state.errors ? <p className="errors">{this.state.errors}</p> : undefined}
+           <form className="form" onSubmit={this.handleStudentsSubmit.bind(this)}>
              <textarea
                placeholder="Enter Student Names Here (separate with spaces)"
                value={this.state.names}

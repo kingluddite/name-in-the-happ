@@ -54,9 +54,11 @@ export class EditStudent extends Component {
   }
 
   handleDeleteStudent() {
+    const sectionId = this.props.params.sectionId;
+    const presentationId = this.props.params.presentationId;
     const { student } = this.props;
     this.props.call('students.remove', student._id);
-    this.props.browserHistory.push('/students');
+    this.props.browserHistory.push(`/sections/${sectionId}/presentations/${presentationId}/students`);
   }
 
   render() {
@@ -104,6 +106,7 @@ EditStudent.propTypes = {
   student: PropTypes.object,
   call: PropTypes.func.isRequired,
   browserHistory: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
 };
 
 export default createContainer(({ params }) => {

@@ -27,7 +27,6 @@ Meteor.methods({
 
     return PresentationsCollection.insert({
       title: '',
-      body: '',
       sectionId,
       userId: this.userId,
       updatedAt: moment().valueOf(), // new Date().getTime()

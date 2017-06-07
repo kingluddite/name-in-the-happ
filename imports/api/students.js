@@ -9,7 +9,7 @@ if (Meteor.isServer) {
   Meteor.publish('studentsPublication', function (sectionId, presentationId) { // eslint-disable-line func-names
     const userId = this.userId;
     // return StudentsCollection.find({ userId: this.userId, sectionId, presentationId });
-    const allStudentWithSectionPres = StudentsCollection.find({ userId, sectionId, presentationId });
+    const allStudentWithSectionPres = StudentsCollection.find({ userId, sectionId, presentationId }); // eslint-disable-line max-len
 
     if (allStudentWithSectionPres) {
       return allStudentWithSectionPres;
@@ -29,7 +29,6 @@ Meteor.methods({
     new SimpleSchema({
       name: {
         type: String,
-        min: 1,
       },
       currentSpeaker: {
         type: Boolean,

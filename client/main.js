@@ -19,6 +19,7 @@ Tracker.autorun(() => {
   onAuthChange(isAuthenticated, currentPagePrivacy);
 });
 
+// sections - on SectionsListItem when item clicked Session changed
 Tracker.autorun(() => {
   const selectedSectionId = Session.get('selectedSectionId');
   Session.set('isNavOpen', false);
@@ -28,6 +29,7 @@ Tracker.autorun(() => {
   }
 });
 
+// presentations - on PresentationsListItem when item clicked Session changed
 Tracker.autorun(() => {
   const selectedPresentationId = Session.get('selectedPresentationId');
   const sectionId = Session.get('sectionId');
@@ -40,6 +42,7 @@ Tracker.autorun(() => {
   }
 });
 
+// students - on StudentsListItem when item clicked Session changed
 Tracker.autorun(() => {
   const selectedStudentId = Session.get('selectedStudentId');
   const sectionId = Session.get('sectionId');
@@ -53,6 +56,8 @@ Tracker.autorun(() => {
   }
 });
 
+// isNavOpen checks to see if we are on mobile layout and if user clicks
+// tribar to open sidebar
 Tracker.autorun(() => {
   const isNavOpen = Session.get('isNavOpen');
 
