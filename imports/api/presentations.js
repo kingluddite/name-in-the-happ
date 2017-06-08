@@ -68,10 +68,6 @@ Meteor.methods({
         type: Date,
         optional: true,
       },
-      body: {
-        type: String,
-        optional: true,
-      },
     }).validate({
       _id,
       ...updates,

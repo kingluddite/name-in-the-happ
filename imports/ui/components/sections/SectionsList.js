@@ -1,8 +1,8 @@
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import PropTypes from 'prop-types';
-import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
+import { Meteor } from 'meteor/meteor';
+import PropTypes from 'prop-types';
 
 // collections
 import SectionsCollection from '../../../api/sections';

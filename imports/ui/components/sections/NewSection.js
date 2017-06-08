@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Session } from 'meteor/session';
 
 export const NewSection = (props) => {
-  const handleButtonClick = () => {
+  const handleAddSection = () => {
     props.meteorCall('sections.insert', (err, res) => {
       if (res) {
         props.Session.set('selectedSectionId', res);
@@ -15,7 +15,7 @@ export const NewSection = (props) => {
 
   return (
     <div className="item-list__header">
-      <button className="button" onClick={handleButtonClick}>Create Section</button>
+      <button className="button" onClick={handleAddSection}>Create Section</button>
     </div>
   );
 };

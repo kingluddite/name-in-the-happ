@@ -7,6 +7,7 @@ const SectionsCollection = new Mongo.Collection('sections');
 
 if (Meteor.isServer) {
   Meteor.publish('sectionsPublication', function () { // eslint-disable-line func-names
+
     return SectionsCollection.find({ userId: this.userId });
   });
 }

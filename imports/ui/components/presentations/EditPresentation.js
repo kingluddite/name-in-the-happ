@@ -72,14 +72,15 @@ export class EditPresentation extends Component {
       const sectionId = this.props.section._id;
       const presentationId = this.props.presentation._id;
       const { names } = this.state;
-      const namesArray = names.split(' ');
+      const namesArray = names.split(',');
 
       this.setState({
         errors: '',
         });
 
       namesArray.map((name) => {
-        return this.props.meteorCall('students.insert', name, sectionId, presentationId, (err) => {
+
+        return this.props.meteorCall('students.insert', name.trim(), sectionId, presentationId, (err) => {
           if (!err) {
             this.names.value = '';
           } else {
@@ -94,7 +95,7 @@ export class EditPresentation extends Component {
     }
   }
 
-  handleBodyChange(event) {
+  handleStudentNameChanges(event) {
     this.setState({
       names: event.target.value,
     });
@@ -155,7 +156,7 @@ export class EditPresentation extends Component {
                placeholder="Enter Student Names Here (separate with spaces)"
                value={this.state.names}
                ref={ (textarea) => { this.names = textarea; }}
-               onChange={this.handleBodyChange.bind(this)}
+               onChange={this.handleStudentNameChanges.bind(this)}
                className="editor__body"
                ></textarea>
               <button className="button button--textarea button--pill">Add Students</button>

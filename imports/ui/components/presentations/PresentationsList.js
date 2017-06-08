@@ -15,9 +15,6 @@ import PresentationsListEmptyItem from './PresentationsListEmptyItem';
 import BackButton from './../BackButton';
 
 export const PresentationsList = (props) => {
-  const handleBackClick = () => {
-    browserHistory.goBack();
-  };
 
   const renderPresentations = props.presentations.map((presentation) => {
     return <PresentationsListItem key={presentation._id} presentation={presentation} />;
