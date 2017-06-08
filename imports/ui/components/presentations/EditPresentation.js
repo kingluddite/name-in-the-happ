@@ -2,7 +2,7 @@ import { Session } from 'meteor/session';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { browserHistory, Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import DatePicker from 'react-datepicker';
 import PropTypes from 'prop-types';
 import moment from 'moment';
