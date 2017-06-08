@@ -12,11 +12,9 @@ import StudentsCollection from '../../../api/students';
 import NewStudent from './NewStudent';
 import StudentsListItem from './StudentsListItem';
 import StudentsListEmptyItem from './StudentsListEmptyItem';
+import BackButton from './../BackButton';
 
 export const StudentsList = (props) => {
-  const handleBackClick = () => {
-    browserHistory.goBack();
-  };
 
   const renderStudents = props.students.map((student) => {
     return <StudentsListItem key={student._id} student={student} />;
@@ -24,11 +22,7 @@ export const StudentsList = (props) => {
 
   return (
     <div className="item-list">
-      <div className="item-list__header">
-        <button className="button--back" onClick={handleBackClick}>
-          <i className="fa fa-arrow-left" aria-hidden="true"></i> BACK
-        </button>
-      </div>
+      <BackButton />
       <NewStudent />
       {(props.students.length === 0) ? <StudentsListEmptyItem /> : undefined}
       {renderStudents}

@@ -56,6 +56,7 @@ const onAuthChange = (isAuthenticated, currentPagePrivacy) => {
 };
 
 export const globalOnEnter = (nextState) => {
+  console.log(nextState);
   const lastRoute = nextState.routes[nextState.routes.length - 1];
   Session.set('currentPagePrivacy', lastRoute.privacy);
 
