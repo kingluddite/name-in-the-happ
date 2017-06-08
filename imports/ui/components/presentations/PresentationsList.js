@@ -12,6 +12,7 @@ import PresentationsCollection from '../../../api/presentations';
 import NewPresentation from './NewPresentation';
 import PresentationsListItem from './PresentationsListItem';
 import PresentationsListEmptyItem from './PresentationsListEmptyItem';
+import BackButton from './../BackButton';
 
 export const PresentationsList = (props) => {
   const handleBackClick = () => {
@@ -25,9 +26,7 @@ export const PresentationsList = (props) => {
   return (
     <div className="item-list">
       <div className="item-list__header">
-        <button className="button--back" onClick={handleBackClick}>
-          <i className="fa fa-arrow-left" aria-hidden="true"></i> BACK
-        </button>
+        <BackButton />
       </div>
       <NewPresentation sectionId={props.params.sectionId} />
       {(props.presentations.length === 0) ? <PresentationsListEmptyItem /> : undefined}

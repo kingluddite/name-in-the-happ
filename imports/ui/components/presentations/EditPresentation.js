@@ -50,9 +50,9 @@ export class EditPresentation extends Component {
     }
   }
 
-  handleTitleChange(e) {
+  handleTitleChange(event) {
     const { presentation } = this.props;
-    const title = e.target.value;
+    const title = event.target.value;
     this.setState({ title });
     this.props.meteorCall('presentations.update', presentation._id, {
       title,
@@ -66,8 +66,8 @@ export class EditPresentation extends Component {
     });
   }
 
-  handleStudentsSubmit(e) {
-    e.preventDefault();
+  handleStudentsSubmit(event) {
+    event.preventDefault();
     if (this.state.names.length > 0) {
       const sectionId = this.props.section._id;
       const presentationId = this.props.presentation._id;
@@ -94,9 +94,9 @@ export class EditPresentation extends Component {
     }
   }
 
-  handleBodyChange(e) {
+  handleBodyChange(event) {
     this.setState({
-      names: e.target.value,
+      names: event.target.value,
     });
   }
 
@@ -104,6 +104,12 @@ export class EditPresentation extends Component {
     const sectionId = this.props.params.sectionId;
     const presentationId = this.props.params.presentationId;
     this.props.browserHistory.push(`/sections/${sectionId}/presentations/${presentationId}/students`);
+  }
+
+  handleWatchPresentation() {
+    const sectionId = this.props.params.sectionId;
+    const presentationId = this.props.params.presentationId;
+    this.props.browserHistory.push(`/sections/${sectionId}/presentations/${presentationId}/watch`);
   }
 
   handleDeletePresentation() {
@@ -155,13 +161,12 @@ export class EditPresentation extends Component {
               <button className="button button--textarea button--pill">Add Students</button>
            </form>
          <div className="editor__button--container">
-           <Link
-             to={`/presentations/${presentation._id}/watch`}
+           <button
              className="button button--pill"
-             onClick={ () => { Session.set('presentationId', presentation._id); }}
+             onClick={this.handleWatchPresentation.bind(this)}
              >
                View Presentation
-             </Link>
+             </button>
             <button
               className="button button--default"
               onClick={this.handleDeletePresentation.bind(this)}>

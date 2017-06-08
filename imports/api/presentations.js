@@ -20,7 +20,6 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   /* eslint func-names: ["error", "as-needed"] */
-  'presentations.insert': function (sectionId) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');
     }

@@ -7,8 +7,11 @@ import { Link } from 'react-router';
 import { randomArrItem } from './../../../helpers/myHelpers';
 
 // collections
-import PresentationsCollection from '../../../api/presentations';
-import StudentsCollection from '../../../api/students';
+import PresentationsCollection from './../../../api/presentations';
+import StudentsCollection from './../../../api/students';
+
+// components
+import BackButton from './../BackButton';
 
 export class WatchPresentation extends Component {
   constructor(props) {
@@ -41,9 +44,7 @@ export class WatchPresentation extends Component {
           <div className="page-content">
           <aside className="page-content__sidebar">
             <div className="item-list">
-              <Link className="button--link" to="/presentations">
-                <i className="fa fa-arrow-left" aria-hidden="true"> BACK</i>
-              </Link>
+              <BackButton />
               <h3>Students In Class</h3>
               <ul>
                 {this.renderStudents()}

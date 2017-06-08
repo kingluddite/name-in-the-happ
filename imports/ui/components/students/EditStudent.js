@@ -62,23 +62,21 @@ export class EditStudent extends Component {
   }
 
   render() {
-    const { student } = this.props;
-    const { name, title } = this.state;
-    if (student) {
+    if (this.props.student) {
       return (
         <div className="editor">
          <input
            type="text"
            className="editor__title"
            ref={ (input) => { this.name = input; }}
-           value={name}
+           value={this.state.name}
            placeholder="Student Name"
            onChange={this.handleNameChange.bind(this)} />
            <input
              type="text"
              className="editor__title"
              ref={ (input) => { this.title = input; }}
-             value={title}
+             value={this.state.title}
              placeholder="Project Title"
              onChange={this.handleTitleChange.bind(this)} />
            <div className="editor__button--container">
