@@ -4,6 +4,23 @@
   color: $white;
 }
 
+.header__logo-name-container {
+    height: 6rem;
+  }
+
+.header__logo-name-container img {
+    max-width:15%;
+    width: 100%;
+    height: auto;
+    display: block;
+    float: left;
+  }
+
+.header__logo-name-container h1 {
+    display: block;
+    float: left;
+  }
+
 .header__content {
   align-items: center;
   display: flex;
@@ -35,4 +52,6 @@
   @include desktop() {
     display: none;
   }
+
+
 }
