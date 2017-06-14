@@ -32,7 +32,7 @@
 
 .item:hover {
   background-color: $light-grey;
-  border-left: $item-border-width solid $burning-orange;
+  border-left: $item-border-width solid $orange;
 }
 
 .item__name {
@@ -55,7 +55,7 @@
 }
 
 .item__empty {
-  border: 10px solid $burning-orange;
+  border: 10px solid $orange;
 }
 
 .item__form {

@@ -12,12 +12,12 @@
 
   &:hover,
   &:focus {
-    background: $putty;
+    background: $orange;
     color: $text-color;
   }
 
   &:active {
-    background: $putty;
+    background: $orange;
     transform: scale(1.1);
   }
 }
@@ -36,7 +36,7 @@
   color: $black;
   padding: $space;
   &:hover {
-    background-color: $burning-orange;
+    background-color: $orange;
     color: $white;
   }
 }
@@ -60,7 +60,7 @@
   border: 1px solid $black;
   color: $black;
   &:hover {
-    background-color: $burning-orange;
+    background-color: $orange;
     color: $white;
   }
 }
@@ -70,7 +70,7 @@
   border: 1px solid $black;
   color: $black;
   &:hover {
-    background-color: $red;
+    background-color: $coralred;
     color: $white;
   }
 }
@@ -84,7 +84,7 @@
   border: 1px solid $black;
   color: $black;
   &:hover {
-    background-color: $summer-green;
+    background-color: $mossgreen;
     color: $white;
   }
 }

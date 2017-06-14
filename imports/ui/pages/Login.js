@@ -35,6 +35,7 @@ export class Login extends Component {
   render() {
     return (
       <div className="boxed-view">
+        <img className="logo" src="./../../public/images/namehapp_logo.svg" alt="" />
         <div className="boxed-view__box">
             {this.state.error ? <p className="errors">{this.state.error}</p> : undefined}
             <form
