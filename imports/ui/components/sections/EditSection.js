@@ -47,6 +47,11 @@ export class EditSection extends Component {
     this.props.browserHistory.push(`/sections/${sectionId}/presentations`);
   }
 
+  handleFocus(event) {
+    event.target.select();
+    console.log( this.props.myFunc );
+  }
+
   render() {
     if (this.props.section) {
       return (
@@ -54,6 +59,7 @@ export class EditSection extends Component {
           <input
            type="text"
            autoFocus
+           onFocus={this.handleFocus}
            className="editor__title"
            ref={ (input) => { this.name = input; }}
            value={this.state.name}
@@ -92,9 +98,9 @@ EditSection.propTypes = {
   browserHistory: PropTypes.object.isRequired,
 };
 
-export default createContainer(() => {
+export default createContainer((props) => {
   const selectedSectionId = Session.get('selectedSectionId');
-
+  console.log( props.myFunc() );
   return {
     selectedSectionId,
     section: SectionsCollection.findOne(selectedSectionId),

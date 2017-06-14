@@ -81,6 +81,10 @@ export class EditPresentation extends Component {
         return this.props.meteorCall('students.insert', name.trim(), sectionId, presentationId, (err) => {
           if (!err) {
             this.names.value = '';
+            this.setState({
+                names: [],
+            });
+
           } else {
             this.setState({ error: err.reason });
           }
@@ -168,7 +172,6 @@ export class EditPresentation extends Component {
            <form className="form" onSubmit={this.handleStudentsSubmit.bind(this)}>
              <textarea
                placeholder="Enter Student Names Here (separate with spaces)"
-               value={this.state.names}
                ref={ (textarea) => { this.names = textarea; }}
                onChange={this.handleStudentNameChanges.bind(this)}
                className="editor__body"
