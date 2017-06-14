@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
-import { Session } from 'meteor/session';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
 import { randomArrItem } from './../../../helpers/myHelpers';
 
 // collections
@@ -19,9 +17,14 @@ export class WatchPresentation extends Component {
 
     this.state = {
       presentationStarted: false,
-      currentSpeaker: {},
+      currentPresenter: {},
+      onDeck: {},
+      students: [],
+      firstPresenter: false,
+      presentationComplete: false,
     };
   }
+
 
   renderStudents() {
     return this.props.students.map((student) => {
@@ -29,14 +32,60 @@ export class WatchPresentation extends Component {
     });
   }
 
-  beginPresentation() {
-    const randomStudent = randomArrItem(this.props.students);
-    randomStudent.currentSpeaker = true;
+  nextStudent() {
+    if (this.state.students.length === 0 && !this.state.currentPresenter && !this.state.onDeck) {
+      this.setState({
+        presentationComplete: true
+      });
+      console.log('It is over!');
+    }
+    let randomStudent;
+    const onDeckStudent = this.state.onDeck;
+    if (!this.state.firstPresenter) {
+      randomStudent = onDeckStudent;
+    } else {
+      randomStudent = randomArrItem(this.state.students);
+      this.setState({
+        firstPresenter: false,
+      });
+    }
+    const remainingPresenters = this.state.students.filter((el) => {
+      return el._id !== randomStudent._id;
+    });
     this.setState({
-      presentationStarted: true,
-      currentSpeaker: randomStudent,
+      students: remainingPresenters,
+      currentPresenter: randomStudent,
+    });
+    this.onDeck();
+  }
+
+  onDeck() {
+    if (!this.state.onDeck) return;
+    const onDeckStudent = randomArrItem(this.state.students);
+    const remainingPresenters = this.state.students.filter((el) => {
+      return el._id !== onDeckStudent._id;
+    });
+    this.setState({
+      students: remainingPresenters,
+      onDeck: onDeckStudent,
     });
   }
+
+
+  beginPresentation() {
+    // const allStudents = this.props.students;
+    // const randomStudent = randomArrItem(allStudents);
+    // const alreadyPresented = [];
+    // alreadyPresented.push(randomStudent._id);
+
+    this.setState({
+      presentationStarted: true,
+      students: this.props.students,
+      firstPresenter: true,
+    });
+    // this.nextStudent();
+  }
+
 
   render() {
     return (
@@ -53,15 +102,17 @@ export class WatchPresentation extends Component {
           </aside>
           <main className="page-content__main">
             <div className="editor">
-              {this.state.currentSpeaker.name}
+               <div>Students left to present: {this.state.students.length}</div>
+              <div>Current Presenter: {this.state.currentPresenter ? this.state.currentPresenter.name : undefined} </div>
+              <div>Next Presenter: {this.state.onDeck ? this.state.onDeck.name : undefined} </div>
               <div>
-                {!this.state.presenationStarted ? (
+                {!this.state.presentationStarted ? (
                   <button
                     className="button" onClick={this.beginPresentation.bind(this)}>
                     Begin
                   </button>
                 ) : undefined}
-                <button className="button">Skip</button>
+                <button className="button" onClick={this.nextStudent.bind(this)}>Next</button>
                 <button className="button">Absent</button>
               </div>
             </div>
@@ -78,9 +129,9 @@ WatchPresentation.propTypes = {
   call: PropTypes.func.isRequired,
 };
 
-export default createContainer(() => {
-  const sectionId = Session.get('sectionId');
-  const presentationId = Session.get('presentationId');
+export default createContainer(({ params }) => {
+  const sectionId = params.sectionId;
+  const presentationId = params.presentationId;
 
   Meteor.subscribe('studentsPublication', sectionId, presentationId);
 

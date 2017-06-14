@@ -9,7 +9,6 @@ import { getPageTitle } from './../../helpers/myHelpers';
 
 // Components
 import App from '../../ui/layouts/App';
-import About from '../../ui/pages/About';
 import Login from '../../ui/pages/Login';
 import NotFound from '../../ui/pages/NotFound';
 import Signup from '../../ui/pages/Signup';
@@ -79,7 +78,6 @@ Meteor.startup(() => {
         <Route path="/" component={App}>
           <IndexRoute name="login" component={Login} privacy="unauth" />
           <Route name="signup" path="/signup" component={Signup} privacy="unauth" />
-          <Route name="about" path="/about" component={About} privacy="unauth" />
           <Route name="sections" path="/sections" component={Sections} privacy="auth"/>
           <Route name="viewSection" path="/sections/:sectionId" component={Sections} privacy="auth" onEnter={onEnterSectionsViewPage} onLeave={onLeaveSectionsViewPage} />
           <Route name="presentations" path="/sections/:sectionId/presentations" component={Presentations} privacy="auth" />

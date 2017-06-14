@@ -22,7 +22,6 @@ export class EditPresentation extends Component {
 
     this.state = {
       title: '',
-      body: '',
       startDate: moment(),
       names: [],
       studentCount: 0,
@@ -44,7 +43,6 @@ export class EditPresentation extends Component {
     if (currentPresentationId && currentPresentationId !== prevPresentationId) {
       this.setState({
         title: presentation.title,
-        body: presentation.body,
         startDate: moment(presentation.startDate),
       });
     }
@@ -76,7 +74,7 @@ export class EditPresentation extends Component {
 
       this.setState({
         errors: '',
-        });
+      });
 
       namesArray.map((name) => {
 
@@ -118,6 +116,22 @@ export class EditPresentation extends Component {
     const sectionId = this.props.params.sectionId;
     this.props.meteorCall('presentations.remove', presentation._id);
     this.props.browserHistory.push(`/sections/${sectionId}/presentations`);
+  }
+
+  showViewPresentationBtn() {
+    if (this.props.studentCount > 3) {
+      return (
+        <button
+          className="button button--pill"
+          onClick={this.handleWatchPresentation.bind(this)}
+        >
+          View Presentation
+        </button>
+      );
+    }
+    return (
+      <p>Enter At Least 4 students to begin a presenation.</p>
+    );
   }
 
   render() {
@@ -162,12 +176,7 @@ export class EditPresentation extends Component {
               <button className="button button--textarea button--pill">Add Students</button>
            </form>
          <div className="editor__button--container">
-           <button
-             className="button button--pill"
-             onClick={this.handleWatchPresentation.bind(this)}
-             >
-               View Presentation
-             </button>
+            {this.showViewPresentationBtn()}
             <button
               className="button button--default"
               onClick={this.handleDeletePresentation.bind(this)}>
