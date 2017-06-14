@@ -8,6 +8,9 @@ import PropTypes from 'prop-types';
 // collections
 import SectionsCollection from './../../../api/sections';
 
+// components
+// import Breadcrumbs from './../Breadcrumbs';
+
 export class EditSection extends Component {
   constructor(props) {
     super(props);
@@ -49,12 +52,12 @@ export class EditSection extends Component {
 
   handleFocus(event) {
     event.target.select();
-    console.log( this.props.myFunc );
   }
 
   render() {
     if (this.props.section) {
       return (
+          // <Breadcrumbs params={this.props.params} />
         <div className="editor">
           <input
            type="text"
@@ -82,6 +85,7 @@ export class EditSection extends Component {
       );
     }
     return (
+        // <Breadcrumbs />
       <div className="editor">
         <p className="editor__message">
           { this.props.selectedSectionId ? 'Section not found.' : 'Pick or create a section to get started.'}
@@ -98,9 +102,9 @@ EditSection.propTypes = {
   browserHistory: PropTypes.object.isRequired,
 };
 
-export default createContainer((props) => {
+export default createContainer(({ params }) => {
   const selectedSectionId = Session.get('selectedSectionId');
-  console.log( props.myFunc() );
+
   return {
     selectedSectionId,
     section: SectionsCollection.findOne(selectedSectionId),

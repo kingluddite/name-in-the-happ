@@ -15,6 +15,7 @@ import PresentationsCollection from './../../../api/presentations';
 import StudentsCollection from './../../../api/students';
 
 // components
+import Breadcrumbs from './../Breadcrumbs';
 
 export class EditPresentation extends Component {
   constructor(props) {
@@ -144,15 +145,15 @@ export class EditPresentation extends Component {
     if (presentation) {
       return (
         <div className="editor">
-         <span>{section.name}</span>
-         <input
-           type="text"
-           className="editor__title"
-           value={this.state.title}
-           ref={ (input) => { this.title = input; }}
-           placeholder="Presentation Title"
-           onChange={this.handleTitleChange.bind(this)} />
-           <DatePicker
+          <Breadcrumbs params={this.props.params} /> <span>{section.name}</span>
+          <input
+            type="text"
+            className="editor__title"
+            value={this.state.title}
+            ref={ (input) => { this.title = input; }}
+            placeholder="Presentation Title"
+            onChange={this.handleTitleChange.bind(this)} />
+        <DatePicker
              selected={this.state.startDate}
              onChange={this.handleDateChange}
              placeholder="Start Date"
@@ -191,11 +192,12 @@ export class EditPresentation extends Component {
     }
     return (
       <div className="editor">
-        {/* <span>{section.name}</span> */}
-        <p className="editor__message">
-          { this.props.selectedPresentationId ? 'Presentation not found.' : 'Pick or create a presentation to get started.'}
-        </p>
-      </div>
+          <Breadcrumbs params={this.props.params} />
+            {/* <span>{section.name}</span> */}
+            <p className="editor__message">
+              { this.props.selectedPresentationId ? 'Presentation not found.' : 'Pick or create a presentation to get started.'}
+            </p>
+     </div>
     );
   }
 }

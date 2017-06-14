@@ -18,11 +18,11 @@ class Sections extends Component {
     return (
       <div>
           <div className="page-content">
-          <aside className="page-content__sidebar" onClick={this.handleClick.bind(this)}>
-            <SectionsList />
+          <aside className="page-content__sidebar">
+            <SectionsList params={this.props.params} />
           </aside>
-          <main className="page-content__main" onKeyUp={this.handleKeyUp.bind(this)}>
-            <EditSection myFunc={this.siblingBFunc.bind(this)} />
+          <main className="page-content__main">
+            <EditSection params={this.props.params}  />
           </main>
         </div>
       </div>
