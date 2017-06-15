@@ -25,7 +25,6 @@ export const StudentsList = (props) => {
   });
   return (
     <div className="item-list">
-  {console.log(props.sectionExists ? props.section : 'nope')}
         <div className="item-list__header">
             <BackButton />
         </div>

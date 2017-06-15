@@ -10,7 +10,9 @@ import StudentsCollection from './../../../api/students';
 
 // components
 import BackButton from './../BackButton';
-import Card from './../Card';
+import EndPresentation from './EndPresentation';
+import StartPresentation from './StartPresentation';
+import PlayPresentation from './PlayPresentation';
 
 export class WatchPresentation extends Component {
   constructor(props) {
@@ -24,6 +26,10 @@ export class WatchPresentation extends Component {
       firstPresenter: false,
       presentationComplete: false,
     };
+
+    this.beginPresentation = this.beginPresentation.bind(this);
+    this.nextStudent = this.nextStudent.bind(this);
+    this.skipStudent = this.skipStudent.bind(this);
   }
 
   renderStudents() {
@@ -32,8 +38,16 @@ export class WatchPresentation extends Component {
     });
   }
 
+  beginPresentation() {
+    this.setState({
+      presentationStarted: true,
+      students: this.props.students,
+      firstPresenter: true,
+    });
+  }
+
   nextStudent() {
-    if (this.state.students.length === 0 && !this.state.currentPresenter && !this.state.onDeck) {
+    if (this.state.students.length === 0) {
       this.setState({
         presentationComplete: true
       });
@@ -70,19 +84,31 @@ export class WatchPresentation extends Component {
     });
   }
 
-  beginPresentation() {
-    this.setState({
-      presentationStarted: true,
-      students: this.props.students,
-      firstPresenter: true,
-    });
-  }
-
   skipStudent() {
     this.nextStudent();
   }
 
   render() {
+    let page;
+    if (this.state.presentationStarted) {
+        console.log('play');
+        page = <PlayPresentation
+                 remainingPresenters={this.state.students.length}
+                 onDeckName={this.state.onDeck ? this.state.onDeck.name : undefined}
+                 currentPresenterName={this.state.currentPresenter ? this.state.currentPresenter.name : undefined}
+                 skipStudent={this.skipStudent}
+                 nextStudent={this.nextStudent}
+               />;
+    } else if (this.state.presentationComplete) {
+        console.log('end');
+        page = <EndPresentation />;
+    } else if (!this.state.presentationStarted) {
+        console.log('start');
+        page = <StartPresentation beginPresentation={this.beginPresentation} />;
+    } else {
+        page = '';
+    }
+
     return (
       <div>
           <div className="page-content">
@@ -97,23 +123,7 @@ export class WatchPresentation extends Component {
           </aside>
           <main className="page-content__main">
             <div className="editor">
-            {this.state.presentationComplete ? <h1>PRESENTATION OVER</h1> : undefined}
-            Number Left To Present {this.state.students.length}
-            Next Presenter: {this.state.onDeck.name}
-              <div>
-                  <span>Presenter</span>
-                  <h2 className="watch__heading">Name: {this.state.currentPresenter.name}</h2>
-              </div>
-              <div>
-                {!this.state.presentationStarted ? (
-                  <button
-                    className="button" onClick={this.beginPresentation.bind(this)}>
-                    Begin
-                  </button>
-                ) : undefined}
-                <button className="button" onClick={this.nextStudent.bind(this)}>Next</button>
-                <button className="button" onClick={this.skipStudent.bind(this)}>Skip</button>
-              </div>
+            {page}
             </div>
           </main>
         </div>
