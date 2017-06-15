@@ -60,7 +60,7 @@ p {
 }
 
 strong {
-  color: $emperor;
+  color: $brand-primary;
 };
 
 [type=text],
@@ -81,4 +81,9 @@ textarea {
 a {
   color: $brand-primary;
   text-decoration: none;
+}
+
+.editor span {
+  font-size: 30px;
+  color: $cerulean;
 }
