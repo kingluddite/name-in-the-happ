@@ -78,6 +78,10 @@ export class WatchPresentation extends Component {
     });
   }
 
+  skipStudent() {
+    this.nextStudent();
+  }
+
   render() {
     return (
       <div>
@@ -94,12 +98,12 @@ export class WatchPresentation extends Component {
           <main className="page-content__main">
             <div className="editor">
             {this.state.presentationComplete ? <h1>PRESENTATION OVER</h1> : undefined}
-            <div className="collection">
-                <a href="#!" className="collection-item"><span className="badge">{this.state.students.length}</span>Number Left To Present</a>
-                {this.state.onDeck ?
-                <a href="#!" className="collection-item"><span className=" badge">Next Presenter</span>{this.state.onDeck.name}</a> : undefined}
-            </div>
-              <div>{this.state.currentPresenter ? <Card studentName={this.state.currentPresenter.name} presenter="Current Presenter" /> : undefined} </div>
+            Number Left To Present {this.state.students.length}
+            Next Presenter: {this.state.onDeck.name}
+              <div>
+                  <span>Presenter</span>
+                  <h2 className="watch__heading">Name: {this.state.currentPresenter.name}</h2>
+              </div>
               <div>
                 {!this.state.presentationStarted ? (
                   <button
@@ -108,6 +112,7 @@ export class WatchPresentation extends Component {
                   </button>
                 ) : undefined}
                 <button className="button" onClick={this.nextStudent.bind(this)}>Next</button>
+                <button className="button" onClick={this.skipStudent.bind(this)}>Skip</button>
               </div>
             </div>
           </main>
