@@ -6,8 +6,8 @@ export const Breadcrumbs = (props) => {
   return (
     <div>
       <ul className="crouton">
-      <li><Link to="/sections">Sections</Link></li>
-      {props.params.presentationId ? <li><Link to="/presentations">Presentations</Link></li> : undefined}
+        <li><Link to="/sections">Sections</Link></li>
+        <li><Link to="/sections/id/presentations">Presentations</Link></li>
       </ul>
     </div>
   );
