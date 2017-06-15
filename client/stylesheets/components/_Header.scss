@@ -5,20 +5,23 @@
 }
 
 .header__logo-name-container {
+    display: inline-block;
     height: 6rem;
   }
 
 .header__logo-name-container img {
-    max-width:15%;
-    width: 100%;
+    width: 5rem;
     height: auto;
-    display: block;
+    margin: 1rem;
     float: left;
   }
 
 .header__logo-name-container h1 {
-    display: block;
-    float: left;
+    display: none;
+
+    @include desktop {
+      display: inline-block;
+    }
   }
 
 .header__content {
@@ -48,6 +51,7 @@
   cursor: pointer;
   height: 2rem;
   width: 2rem;
+  float: left;
 
   @include desktop() {
     display: none;
