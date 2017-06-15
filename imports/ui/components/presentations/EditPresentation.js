@@ -145,31 +145,43 @@ export class EditPresentation extends Component {
     if (presentation) {
       return (
         <div className="editor">
-          <Breadcrumbs params={this.props.params} /> <span>{section.name}</span>
-          <input
-            type="text"
-            className="editor__title"
-            value={this.state.title}
-            ref={ (input) => { this.title = input; }}
-            placeholder="Presentation Title"
-            onChange={this.handleTitleChange.bind(this)} />
-        <DatePicker
-             selected={this.state.startDate}
-             onChange={this.handleDateChange}
-             placeholder="Start Date"
-             value={presentation.startDate}
-             ref={ (input) => { this.startDate = input; }}
-           />
-           <div className="editor__students">
-             Students In Presentation <span className="editor__students-count">{studentCount}</span>
-             <button
-               className="button button--pill"
-               onClick={this.handleViewStudent.bind(this)}
-               >
-                View
-              </button>
+          <Breadcrumbs
+            className="editor__breadcrumbs"
+            params={this.props.params} />
+          <div className="editor__container">
+
+            <div className="editor__title">
+              <span className="editor__title-section">{section.name}</span>
+              <input
+                className="editor__title-input"
+                type="text"
+                value={this.state.title}
+                ref={ (input) => { this.title = input; }}
+                placeholder="Presentation Title"
+                onChange={this.handleTitleChange.bind(this)} />
+              <div>
+                <span className="editor__title-label">Presentation Date:	&nbsp;</span>
+                <DatePicker
+                 selected={this.state.startDate}
+                 onChange={this.handleDateChange}
+                 placeholder="Click to Edit Date"
+                 value={presentation.startDate}
+                 ref={ (input) => { this.startDate = input; }}
+               />
+               </div>
            </div>
-           {this.state.errors ? <p className="errors">{this.state.errors}</p> : undefined}
+             <div className="editor__students">
+               Students In Presentation
+               <span className="editor__students-count">{studentCount}</span>
+               <button
+                 className="button button--studentview button--pill"
+                 onClick={this.handleViewStudent.bind(this)}
+                 >
+                  View
+               </button>
+               {this.state.errors ? <p className="errors">{this.state.errors}</p> : undefined}
+             </div>
+           </div>
            <form className="form" onSubmit={this.handleStudentsSubmit.bind(this)}>
              <textarea
                placeholder="Enter Student Names Here (separate with spaces)"
