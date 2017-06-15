@@ -7,10 +7,11 @@ import { Session } from 'meteor/session';
 export class NewStudent extends Component {
 
   handleSubmit() {
-    const sectionId = Session.get('sectionId');
-    const presentationId = Session.get('presentationId');
-
-    this.props.meteorCall('students.insert', '', sectionId, presentationId);
+    const sectionId = this.props.params.sectionId;
+    const presentationId = this.props.params.presentationId;
+    this.props.meteorCall('students.insert', '', sectionId, presentationId, (err) => {
+        console.log(err);
+    });
   }
 
   render() {

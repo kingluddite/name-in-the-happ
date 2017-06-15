@@ -25,7 +25,7 @@ export const StudentsList = (props) => {
         <div className="item-list__header">
             <BackButton />
         </div>
-      <NewStudent />
+      <NewStudent params={props.params} />
       {(props.students.length === 0) ? <StudentsListEmptyItem /> : undefined}
       {renderStudents}
     </div>
