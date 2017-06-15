@@ -6,26 +6,34 @@ import { Session } from 'meteor/session';
 import { browserHistory } from 'react-router';
 
 // collections
+import SectionsCollection from '../../../api/sections';
 import StudentsCollection from '../../../api/students';
+import PresentationsCollection from '../../../api/presentations';
 
 // components
 import NewStudent from './NewStudent';
 import StudentsListItem from './StudentsListItem';
 import StudentsListEmptyItem from './StudentsListEmptyItem';
 import BackButton from './../BackButton';
+import StudentsListHeading from './StudentsListHeading';
+
 
 export const StudentsList = (props) => {
 
   const renderStudents = props.students.map((student) => {
     return <StudentsListItem key={student._id} student={student} />;
   });
-
   return (
     <div className="item-list">
+  {console.log(props.sectionExists ? props.section : 'nope')}
         <div className="item-list__header">
             <BackButton />
         </div>
       <NewStudent params={props.params} />
+      <StudentsListHeading
+        sectionName={props.sectionExists ? props.section.name : undefined}
+        presentationTitle={props.presentationExists ? props.presentation.title : undefined}
+      />
       {(props.students.length === 0) ? <StudentsListEmptyItem /> : undefined}
       {renderStudents}
     </div>
@@ -36,14 +44,32 @@ StudentsList.propTypes = {
   students: PropTypes.array.isRequired,
 };
 
+// https://guide.meteor.com/react.html#using-createContainer
+// how to handle data not loaded
 export default createContainer(({ params }) => {
   const selectedStudentId = Session.get('selectedStudentId');
   const sectionId = params.sectionId;
-  const presentationId = params.presentationId;
+  const sectionHandle = Meteor.subscribe('sectionsPublication');
+  const loadingSection = !sectionHandle.ready();
+  const section = SectionsCollection.findOne(sectionId);
+  const sectionExists = !loadingSection && !!section;
 
-  Meteor.subscribe('studentsPublication', sectionId, presentationId);
+  const presentationId = params.presentationId;
+  const presentationHandle = Meteor.subscribe('presentationsPublication', sectionId);
+  const loadingPresentation = !presentationHandle.ready();
+  const presentation = PresentationsCollection.findOne(presentationId);
+  const presentationExists = !loadingPresentation && !!presentation;
+
+  const studentsHandle = Meteor.subscribe('studentsPublication', sectionId, presentationId);
+  const loadingStudents = !studentsHandle.ready();
 
   return {
+    loadingSection,
+    section,
+    sectionExists,
+    loadingPresentation,
+    presentation,
+    presentationExists,
     students: StudentsCollection.find({}, {
       sort: { updatedAt: -1 },
     }).fetch().map((student) => {
