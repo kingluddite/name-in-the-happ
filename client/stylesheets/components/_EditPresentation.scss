@@ -2,19 +2,50 @@
   background-color: $white;
   border: 1px solid $light-grey;
   width: 100%;
-  display: flex;
-  flex-direction: column;
   padding: $large-space;
 }
 
-.editor__title {
-  border: 0;
+.editor__container {
   border-bottom: 2px solid $light-grey;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: $large-space;
+  padding-bottom: $input-spacing;
+}
+
+.editor__breadcrumbs {
+  width: 100%;
+}
+
+.editor__title {
+  display: flex;
+  border: 0;
+  flex-direction: column;
   font-size: $large-font-size;
   margin-bottom: $large-space;
   outline: none;
   padding: $input-spacing;
+  width: 50%;
 }
+
+.editor__title-label {
+  font-size: $base-font-size;
+}
+
+.editor__title-input {
+  font-size: $base-font-size;
+  font-weight: bold;
+  width: 100%;
+}
+
+.editor__title-section {
+  color: $brand-primary;
+  font-size: $large-font-size;
+  font-weight: bold;
+  margin-bottom: $space;
+}
+
 
 .editor__body {
   flex-grow: 1;
@@ -33,14 +64,20 @@
 }
 
 .editor__students {
-  padding: 2rem;
+  background-color: $brand-primary;
   border: 1px solid $black;
-  margin-bottom: 1rem;
-  justify-content: space-between;
   display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+  padding: 2rem;
+  text-align: center;
+  width: 50%;
 }
 
 .editor__students-count {
-  font-size: 2rem;
+  font-size: 6rem;
   font-weight: bold;
+  color: $concrete;
+  padding: $large-space;
 }
