@@ -37,7 +37,6 @@ export class WatchPresentation extends Component {
       this.setState({
         presentationComplete: true
       });
-      console.log('It is over!');
     }
     let randomStudent;
     const onDeckStudent = this.state.onDeck;

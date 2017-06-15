@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import SectionsCollection from './../../../api/sections';
 
 // components
-// import Breadcrumbs from './../Breadcrumbs';
+import Breadcrumbs from './../Breadcrumbs';
 
 export class EditSection extends Component {
   constructor(props) {
@@ -57,8 +57,8 @@ export class EditSection extends Component {
   render() {
     if (this.props.section) {
       return (
-          // <Breadcrumbs params={this.props.params} />
         <div className="editor">
+          <Breadcrumbs />
           <input
            type="text"
            autoFocus
@@ -85,8 +85,8 @@ export class EditSection extends Component {
       );
     }
     return (
-        // <Breadcrumbs />
       <div className="editor">
+        <Breadcrumbs />
         <p className="editor__message">
           { this.props.selectedSectionId ? 'Section not found.' : 'Pick or create a section to get started.'}
         </p>
