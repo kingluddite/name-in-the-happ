@@ -27,7 +27,7 @@ export class WatchPresentation extends Component {
       presentationComplete: false,
     };
 
-    this.beginPresentation = this.beginPresentation.bind(this);
+    this.startPresentation = this.startPresentation.bind(this);
     this.nextStudent = this.nextStudent.bind(this);
     this.skipStudent = this.skipStudent.bind(this);
   }
@@ -38,7 +38,7 @@ export class WatchPresentation extends Component {
     });
   }
 
-  beginPresentation() {
+  startPresentation() {
     this.setState({
       presentationStarted: true,
       students: this.props.students,
@@ -104,7 +104,7 @@ export class WatchPresentation extends Component {
         page = <EndPresentation />;
     } else if (!this.state.presentationStarted) {
         console.log('start');
-        page = <StartPresentation beginPresentation={this.beginPresentation} />;
+        page = <StartPresentation startPresentation={this.startPresentation} />;
     } else {
         page = '';
     }
