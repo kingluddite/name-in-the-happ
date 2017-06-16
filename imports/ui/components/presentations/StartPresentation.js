@@ -4,7 +4,7 @@ export class StartPresentation extends Component {
 
   render() {
     return (
-      <div>
+      <div className="watch--start-button-container">
         <button
           className="button button--start"
           onClick={this.props.beginPresentation}>
