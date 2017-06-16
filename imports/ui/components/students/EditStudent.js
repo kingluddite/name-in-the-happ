@@ -35,18 +35,18 @@ export class EditStudent extends Component {
     }
   }
 
-  handleNameChange(e) {
+  handleNameChange(event) {
     const { student } = this.props;
-    const name = e.target.value;
+    const name = event.target.value;
     this.setState({ name });
     this.props.call('students.update', student._id, {
       name,
     });
   }
 
-  handleTitleChange(e) {
+  handleTitleChange(event) {
     const { student } = this.props;
-    const title = e.target.value;
+    const title = event.target.value;
     this.setState({ title });
     this.props.call('students.update', student._id, {
       title,

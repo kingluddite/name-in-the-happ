@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // components
 import SectionsList from './../components/sections/SectionsList';
 import EditSection from './../components/sections/EditSection';
 
 class Sections extends Component {
-  handleKeyUp(e) {
-    console.log(e);
-  }
-  handleClick(e) {
-    console.log( 'handle click' )
-  }
-  siblingBFunc() {
-    return 'hello';
-  }
+
   render() {
     return (
       <div>
@@ -22,12 +15,16 @@ class Sections extends Component {
             <SectionsList params={this.props.params} />
           </aside>
           <main className="page-content__main">
-            <EditSection params={this.props.params}  />
+            <EditSection params={this.props.params} />
           </main>
         </div>
       </div>
     );
   }
 }
+
+Sections.propTypes = {
+  params: PropTypes.object.isRequired,
+};
 
 export default Sections;

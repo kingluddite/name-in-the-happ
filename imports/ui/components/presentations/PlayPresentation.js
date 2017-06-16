@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export const PlayPresentation = (props) => {
-
   return (
     <div>
        Number Left To Present {props.remainingPresenters}
@@ -18,6 +18,14 @@ export const PlayPresentation = (props) => {
       </div>
     </div>
   );
+};
+
+PlayPresentation.propTypes = {
+  nextStudent: PropTypes.func.isRequired,
+  skipStudent: PropTypes.func.isRequired,
+  remainingPresenters: PropTypes.string.isRequired,
+  onDeckName: PropTypes.string.isRequired,
+  currentPresenterName: PropTypes.string.isRequired,
 };
 
 export default PlayPresentation;

@@ -78,14 +78,12 @@ export class EditPresentation extends Component {
       });
 
       namesArray.map((name) => {
-
         return this.props.meteorCall('students.insert', name.trim(), sectionId, presentationId, (err) => {
           if (!err) {
             this.names.value = '';
             this.setState({
-                names: [],
+              names: [],
             });
-
           } else {
             this.setState({ error: err.reason });
           }
@@ -160,7 +158,7 @@ export class EditPresentation extends Component {
                 placeholder="Presentation Title"
                 onChange={this.handleTitleChange.bind(this)} />
               <div>
-                <span className="editor__title-label">Presentation Date:	&nbsp;</span>
+                <span className="editor__title-label">Presentation Date: </span>
                 <DatePicker
                  selected={this.state.startDate}
                  onChange={this.handleDateChange}

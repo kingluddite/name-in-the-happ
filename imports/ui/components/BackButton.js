@@ -1,7 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
-export const BackButton = (props) => {
+export const BackButton = () => {
   const handleBackClick = () => {
     browserHistory.goBack();
   };

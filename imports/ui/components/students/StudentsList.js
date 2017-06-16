@@ -3,7 +3,6 @@ import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
-import { browserHistory } from 'react-router';
 
 // collections
 import SectionsCollection from '../../../api/sections';
@@ -19,7 +18,6 @@ import StudentsListHeading from './StudentsListHeading';
 
 
 export const StudentsList = (props) => {
-
   const renderStudents = props.students.map((student) => {
     return <StudentsListItem key={student._id} student={student} />;
   });
@@ -41,6 +39,11 @@ export const StudentsList = (props) => {
 
 StudentsList.propTypes = {
   students: PropTypes.array.isRequired,
+  section: PropTypes.object.isRequired,
+  sectionExists: PropTypes.bool.isRequired,
+  presentation: PropTypes.object.isRequired,
+  presentationExists: PropTypes.bool.isRequired,
+  params: PropTypes.object.isRequired,
 };
 
 // https://guide.meteor.com/react.html#using-createContainer
@@ -69,6 +72,7 @@ export default createContainer(({ params }) => {
     loadingPresentation,
     presentation,
     presentationExists,
+    loadingStudents,
     students: StudentsCollection.find({}, {
       sort: { updatedAt: -1 },
     }).fetch().map((student) => {

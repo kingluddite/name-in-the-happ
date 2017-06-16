@@ -26,6 +26,7 @@ export class NewStudent extends Component {
 NewStudent.propTypes = {
   meteorCall: PropTypes.func.isRequired,
   Session: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
 };
 
 export default createContainer(() => {

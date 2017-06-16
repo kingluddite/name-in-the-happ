@@ -3,7 +3,6 @@ import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
-import { browserHistory } from 'react-router';
 
 // collections
 import PresentationsCollection from '../../../api/presentations';
@@ -15,7 +14,6 @@ import PresentationsListEmptyItem from './PresentationsListEmptyItem';
 import BackButton from './../BackButton';
 
 export const PresentationsList = (props) => {
-
   const renderPresentations = props.presentations.map((presentation) => {
     return <PresentationsListItem key={presentation._id} presentation={presentation} />;
   });
@@ -34,6 +32,7 @@ export const PresentationsList = (props) => {
 
 PresentationsList.propTypes = {
   presentations: PropTypes.array.isRequired,
+  params: PropTypes.object.isRequired,
 };
 
 export default createContainer(({ params }) => {

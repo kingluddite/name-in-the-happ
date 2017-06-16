@@ -49,7 +49,7 @@ export class WatchPresentation extends Component {
   nextStudent() {
     if (this.state.students.length === 0) {
       this.setState({
-        presentationComplete: true
+        presentationComplete: true,
       });
     }
     let randomStudent;
@@ -89,24 +89,28 @@ export class WatchPresentation extends Component {
   }
 
   render() {
+    console.log(this.props.students);
     let page;
     if (this.state.presentationStarted) {
-        console.log('play');
-        page = <PlayPresentation
-                 remainingPresenters={this.state.students.length}
-                 onDeckName={this.state.onDeck ? this.state.onDeck.name : undefined}
-                 currentPresenterName={this.state.currentPresenter ? this.state.currentPresenter.name : undefined}
-                 skipStudent={this.skipStudent}
-                 nextStudent={this.nextStudent}
+      console.log('play');
+      page = <PlayPresentation
+           remainingPresenters={this.state.students.length}
+           onDeckName={this.state.onDeck ? this.state.onDeck.name : undefined}
+           currentPresenterName={
+            this.state.currentPresenter ?
+              this.state.currentPresenter.name
+              : undefined}
+           skipStudent={this.skipStudent}
+           nextStudent={this.nextStudent}
                />;
     } else if (this.state.presentationComplete) {
-        console.log('end');
-        page = <EndPresentation />;
+      console.log('end');
+      page = <EndPresentation />;
     } else if (!this.state.presentationStarted) {
-        console.log('start');
-        page = <StartPresentation startPresentation={this.startPresentation} />;
+      console.log('start');
+      page = <StartPresentation startPresentation={this.startPresentation} />;
     } else {
-        page = '';
+      page = '';
     }
 
     return (

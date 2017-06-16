@@ -17,7 +17,7 @@ export const PresentationsListItem = (props) => {
         { moment(props.presentation.startDate).format('M/DD/YYYY') }
       </p>
     </div>
-    );
+  );
 };
 
 PresentationsListItem.propTypes = {
@@ -27,6 +27,6 @@ PresentationsListItem.propTypes = {
 
 export default createContainer(() => {
   return {
-    Session
+    Session,
   };
 }, PresentationsListItem);

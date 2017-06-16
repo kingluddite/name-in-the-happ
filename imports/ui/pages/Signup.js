@@ -17,8 +17,8 @@ export class Signup extends Component {
     this.email.focus();
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit(event) {
+    event.preventDefault();
     const email = this.email.value.trim();
     const password = this.password.value.trim();
 
@@ -34,6 +34,7 @@ export class Signup extends Component {
       }
     });
   }
+
   render() {
     return (
       <div className="boxed-view">

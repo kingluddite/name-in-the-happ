@@ -2,7 +2,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { browserHistory, Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
 
 // collections
@@ -102,7 +102,7 @@ EditSection.propTypes = {
   browserHistory: PropTypes.object.isRequired,
 };
 
-export default createContainer(({ params }) => {
+export default createContainer(() => {
   const selectedSectionId = Session.get('selectedSectionId');
 
   return {
