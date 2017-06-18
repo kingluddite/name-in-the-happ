@@ -13,19 +13,19 @@ export const PlayPresentation = (props) => {
         </h2>
       </div>
       <div>
-        <button className="button" onClick={props.nextStudent}>Next</button>
-        <button className="button" onClick={props.skipStudent}>Skip</button>
+        <button className="button" onClick={props.nextPresenter}>Next</button>
+        <button className="button" onClick={props.skipPresenter}>Skip</button>
       </div>
     </div>
   );
 };
 
 PlayPresentation.propTypes = {
-  nextStudent: PropTypes.func.isRequired,
-  skipStudent: PropTypes.func.isRequired,
-  remainingPresenters: PropTypes.string.isRequired,
-  onDeckName: PropTypes.string.isRequired,
-  currentPresenterName: PropTypes.string.isRequired,
+  nextPresenter: PropTypes.func.isRequired,
+  skipPresenter: PropTypes.func.isRequired,
+  remainingPresenters: PropTypes.number,
+  onDeckName: PropTypes.string,
+  currentPresenterName: PropTypes.string,
 };
 
 export default PlayPresentation;

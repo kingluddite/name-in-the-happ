@@ -19,17 +19,35 @@ export class WatchPresentation extends Component {
     super(props);
 
     this.state = {
-      presentationStarted: false,
+      presentationPlaying: false,
       currentPresenter: {},
-      onDeck: {},
-      students: [],
+      onDeckPresenter: {},
+      students: this.props.students,
+      remainingPresenters: [],
       firstPresenter: false,
       presentationComplete: false,
     };
 
     this.startPresentation = this.startPresentation.bind(this);
-    this.nextStudent = this.nextStudent.bind(this);
-    this.skipStudent = this.skipStudent.bind(this);
+    this.pickRandomPresenter = this.pickRandomPresenter.bind(this);
+    this.nextPresenter = this.nextPresenter.bind(this);
+    this.skipPresenter = this.skipPresenter.bind(this);
+    this.resetPresentation = this.resetPresentation.bind(this);
+  }
+
+  // data is loaded asynchronously
+  // and it might not be available in the constructor
+  // However, the callback function you pass to createContainer is
+  // evaluated again when the data is loaded
+  // and it automatically updates the props of your component
+  // To catch this change, implement the componentWillReceiveProps
+  // function in your React component
+  // https://stackoverflow.com/questions/36702239/meteor-reactjs-in-constructor-collection-is-empty
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      students: nextProps.students,
+      remainingPresenters: nextProps.students,
+    });
   }
 
   renderStudents() {
@@ -39,75 +57,112 @@ export class WatchPresentation extends Component {
   }
 
   startPresentation() {
+    const randomPresenter = this.pickRandomPresenter();
+    const onDeckPresenter = this.pickRandomPresenter();
+    const remainingPresenters = this.removeFromPresenterList(randomPresenter);
+    // remainingPresenters = this.removeFromPresenterList(onDeckPresenter);
     this.setState({
-      presentationStarted: true,
-      students: this.props.students,
+      presentationPlaying: true,
       firstPresenter: true,
+      currentPresenter: randomPresenter,
+      onDeckPresenter,
+      remainingPresenters,
     });
   }
 
-  nextStudent() {
-    if (this.state.students.length === 0) {
+  resetPresentation() {
+    this.setState({
+      presentationPlaying: false,
+      currentPresenter: {},
+      onDeckPresenter: {},
+      students: this.props.students,
+      remainingPresenters: this.props.students,
+      firstPresenter: false,
+      presentationComplete: false,
+    });
+  }
+
+  nextPresenter() {
+    // check if the presentation is completed
+    this.isPresentationComplete();
+    // our current presenter is the presenter on deck
+    const currentPresenter = this.state.onDeckPresenter;
+    // our on deck present is picked randomly
+    const onDeckPresenter = this.pickRandomPresenter();
+    const remainingPresenters = this.removeFromPresenterList(onDeckPresenter);
+    this.setState({
+      currentPresenter,
+      remainingPresenters,
+      onDeckPresenter,
+    });
+  }
+
+  isPresentationComplete() {
+    if (this.state.remainingPresenters.length === 0 && this.state.onDeckPresenter === undefined) {
       this.setState({
         presentationComplete: true,
+        presentationPlaying: false,
       });
     }
+  }
+
+  removeFromPresenterList(presenter) {
+    // remove presenter from the presenter list
+    const remainingPresenters = this.state.remainingPresenters.filter((el) => {
+      return el._id !== presenter._id;
+    });
+    return remainingPresenters;
+  }
+
+  pickRandomPresenter() {
+    // pick a random student
     let randomStudent;
-    const onDeckStudent = this.state.onDeck;
     if (!this.state.firstPresenter) {
-      randomStudent = onDeckStudent;
+      randomStudent = randomArrItem(this.props.students);
     } else {
-      randomStudent = randomArrItem(this.state.students);
+      randomStudent = randomArrItem(this.state.remainingPresenters);
+    }
+    return randomStudent;
+  }
+
+  skipPresenter() {
+    // make sure there is someone on deck and the presenters remaining are not 0
+    if (this.state.remainingPresenters.length === 0 && this.state.onDeckPresenter === undefined) {
+      // grab the current presenter
+      const oldCurrentPresenter = this.state.currentPresenter;
+      // grab all the remaining presenters
+      const remainingPresenters = this.state.remainingPresenters;
+      // add the current presenter to the remaining presenters
+      remainingPresenters.push(oldCurrentPresenter);
+      // make on deck person current presenter
+      const newCurrentPresenter = this.state.onDeckPresenter;
+      // grab new random on deck presenter
+      const newOnDeckPresenter = this.pickRandomPresenter();
+      const newRemainingPresenters = this.removeFromPresenterList(newCurrentPresenter);
       this.setState({
-        firstPresenter: false,
+        currentPresenter: newCurrentPresenter,
+        remainingPresenters: newRemainingPresenters,
+        onDeckPresenter: newOnDeckPresenter,
       });
     }
-    const remainingPresenters = this.state.students.filter((el) => {
-      return el._id !== randomStudent._id;
-    });
-    this.setState({
-      students: remainingPresenters,
-      currentPresenter: randomStudent,
-    });
-    this.onDeck();
-  }
-
-  onDeck() {
-    if (!this.state.onDeck) return;
-    const onDeckStudent = randomArrItem(this.state.students);
-    const remainingPresenters = this.state.students.filter((el) => {
-      return el._id !== onDeckStudent._id;
-    });
-    this.setState({
-      students: remainingPresenters,
-      onDeck: onDeckStudent,
-    });
-  }
-
-  skipStudent() {
-    this.nextStudent();
   }
 
   render() {
-    console.log(this.props.students);
     let page;
-    if (this.state.presentationStarted) {
-      console.log('play');
+    if (this.state.presentationPlaying) {
       page = <PlayPresentation
-           remainingPresenters={this.state.students.length}
-           onDeckName={this.state.onDeck ? this.state.onDeck.name : undefined}
+           remainingPresenters={this.state.remainingPresenters.length}
+           onDeckName={this.state.onDeckPresenter ? this.state.onDeckPresenter.name : undefined}
            currentPresenterName={
             this.state.currentPresenter ?
               this.state.currentPresenter.name
               : undefined}
-           skipStudent={this.skipStudent}
-           nextStudent={this.nextStudent}
+           skipPresenter={this.skipPresenter}
+           nextPresenter={this.nextPresenter}
                />;
     } else if (this.state.presentationComplete) {
-      console.log('end');
-      page = <EndPresentation />;
+      page = <EndPresentation reset={this.resetPresentation} />;
     } else if (!this.state.presentationStarted) {
-      console.log('start');
       page = <StartPresentation startPresentation={this.startPresentation} />;
     } else {
       page = '';
@@ -140,17 +195,24 @@ WatchPresentation.propTypes = {
   presentation: PropTypes.object,
   students: PropTypes.array,
   call: PropTypes.func.isRequired,
+  studentsExist: PropTypes.bool,
 };
 
 export default createContainer(({ params }) => {
   const sectionId = params.sectionId;
   const presentationId = params.presentationId;
+  const studentsHandle = Meteor.subscribe('studentsPublication', sectionId, presentationId);
 
-  Meteor.subscribe('studentsPublication', sectionId, presentationId);
+  const loadingStudents = !studentsHandle.ready();
+  const students = StudentsCollection.find().fetch();
+  const studentsExist = !loadingStudents && !!students;
 
   return {
+    studentsHandle,
+    loadingStudents,
+    students,
+    studentsExist,
     presentation: PresentationsCollection.findOne(presentationId),
-    students: StudentsCollection.find().fetch(),
     call: Meteor.call,
   };
 }, WatchPresentation);
