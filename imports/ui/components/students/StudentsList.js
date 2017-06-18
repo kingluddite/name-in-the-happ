@@ -16,7 +16,6 @@ import StudentsListEmptyItem from './StudentsListEmptyItem';
 import BackButton from './../BackButton';
 import StudentsListHeading from './StudentsListHeading';
 
-
 export const StudentsList = (props) => {
   const renderStudents = props.students.map((student) => {
     return <StudentsListItem key={student._id} student={student} />;
